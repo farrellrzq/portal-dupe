@@ -1,0 +1,28 @@
+export type LandingProps = {
+  Id: string;
+  Code: string;
+  Name: string;
+  Domain: string;
+  imageSite: null | string;
+  LandingImage: null | string;
+  Description: string;
+  ParentId: string;
+  ContactId: null | string;
+  Email: null | string;
+  Youtube: null | string;
+  Facebook: null | string;
+  Twitter: null | string;
+  Instagram: null | string;
+  Alamat: null | string;
+  kecamatan: null | string;
+  kelurahan: null | string;
+  pic: null | string;
+  URLmaps: null | string;
+  WhatsApp: null | string;
+  Telp: null | string;
+  StatusAkreditasi: null | string;
+  JadwalBuka: null | string;
+  KodeSuratResmi: null | string;
+  Visi: null | string;
+  Misi: null | string;
+};

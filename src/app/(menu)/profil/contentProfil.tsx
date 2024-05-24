@@ -1,0 +1,200 @@
+
+import React from "react";
+import { getProfileSite, groupByJenjang, getDataSiswa, getPendudukBerakteData, groupBySubdimensi } from '@/controllers/Controller';
+import { formatterNumber, sumJumlah, getWidgetData } from '@/controllers/HomeController';
+import Image from 'next/image'
+
+export default async function contentProfil() {
+  const { total, totalMale, totalFemale, sorten, yearPenduduk, dataPenyakit }: any = await getWidgetData();
+  const pendudukBerakte = await getPendudukBerakteData();
+  const profilSite = await getProfileSite();
+  const dataSiswa = await getDataSiswa();
+  const dataAkta = pendudukBerakte?.data;
+  const getSiswa = dataSiswa?.data;
+
+  const bySub = groupBySubdimensi(dataAkta);
+  const has = formatterNumber(sumJumlah(bySub['Belum Memiliki']));
+  const hasnt = formatterNumber(sumJumlah(bySub['Memiliki']));
+  const sumPenyakit = sumJumlah(dataPenyakit);
+  const siswa = groupByJenjang(getSiswa);
+  const dataSd = formatterNumber(sumJumlah(siswa['SD']));
+  const dataSmp = formatterNumber(sumJumlah(siswa['SMP']));
+  const dataSma = formatterNumber(sumJumlah(siswa['SMA']));
+
+
+
+  return (
+    <div
+      className="rounded-t-[15rem] bg-white dark:bg-jacarta-700 md:flex-nowrap md:space-x-8 md:p-[4.25rem] lg:space-x-16">
+      {/* <!-- Info --> */}
+      <div className="flex flex-wrap ">
+        <div className="py-20 px-12 lg:w-[55%] lg:pl-16">
+          <div className="">
+            {/* <!-- Collection / Likes / Actions --> */}
+
+            <h1 className="mb-3 font-display text-4xl font-semibold text-jacarta-700 dark:text-white">Tentang Kami
+            </h1>
+
+            <p className="mb-10 text-sm dark:text-jacarta-300" style={{ textTransform: 'lowercase' }} dangerouslySetInnerHTML={{ __html: profilSite?.Description || '|' }}>
+            </p>
+
+            <hr />
+            <p className="mb-10 dark:text-jacarta-300">
+              Silahkan hubungi kami jika ada pertanyaan masukkan maupun keluhan.
+            </p>
+            <div className="flex space-x-5 mt-8">
+              {profilSite?.Facebook ? (
+                <a
+                  href={profilSite.Facebook}
+                  target="_blank"
+                  className="group"
+                >
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    data-prefix="fab"
+                    data-icon="facebook"
+                    className="h-5 w-5 fill-jacarta-300 group-hover:fill-green-600 dark:group-hover:fill-white"
+                    role="img"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 512 512"
+                  >
+                    <path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"></path>
+                  </svg>
+                </a>
+              ) : null}
+              {profilSite?.Twitter ? (
+                <a
+                  href={profilSite.Twitter}
+                  target="_blank"
+                  className="group"
+                >
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    data-prefix="fab"
+                    data-icon="twitter"
+                    className="h-5 w-5 fill-jacarta-300 group-hover:fill-green-600 dark:group-hover:fill-white"
+                    role="img"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 512 512"
+                  >
+                    <path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path>
+                  </svg>
+                </a>
+              ) : null}
+              {profilSite?.Instagram ? (
+                <a
+                  href={profilSite.Instagram}
+                  target="_blank"
+                  className="group"
+                >
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    data-prefix="fab"
+                    data-icon="instagram"
+                    className="h-5 w-5 fill-jacarta-300 group-hover:fill-green-600 dark:group-hover:fill-white"
+                    role="img"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 448 512"
+                  >
+                    <path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"></path>
+                  </svg>
+                </a>
+              ) : null}
+              {profilSite?.Youtube ? (
+                <a
+                  href={profilSite.Youtube}
+                  target="_blank"
+                  className="group"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 48 48"
+                    aria-hidden="true"
+                    focusable="false"
+                    className="h-5 w-5 fill-jacarta-300 group-hover:fill-green-600 dark:group-hover:fill-white"
+                  >
+                    <path d="M43.6 9.4c-0.4-2.8-2.8-5.2-5.6-5.6C35.2 3.6 24 3 24 3S12.8 3.6 9.6 3.8C6.8 4.2 4.4 6.6 4 9.4C3.6 12.4 3 24 3 24s0.6 11.6 1 14.6c0.4 2.8 2.8 5.2 5.6 5.6C12.8 44.4 24 45 24 45s11.2-0.6 14.4-0.8c2.8-0.4 5.2-2.8 5.6-5.6C44.4 35.2 45 24 45 24S44.4 12.4 43.6 9.4zM18.8 32V16l13.6 8L18.8 32z"></path>
+                  </svg>
+                </a>
+              ) : null}
+            </div>
+          </div>
+        </div>
+        {/* <!-- Image --> */}
+        <div className="lg:w-[45%]">
+          <div className="relative">
+            <Image src="/img/about/GDPR-cuate.png" alt="" className="absolute w-full top-0 animate-fly" width={500}
+              height={500} />
+          </div>
+        </div>
+      </div>
+      <div className="mt-25">
+        <table id="basic-2" className="border p-4 dark:text-jacarta-300 w-[20rem] lg:w-full">
+          <thead className="dark:text-jacarta-300">
+            <tr className="border-b dark:border-gray-600">
+              <th className="p-8 text-xs  border dark:border-gray-600">Keterangan</th>
+              <th className="p-8 text-xs  border dark:border-gray-600">Jumlah</th>
+              <th className="p-8 text-xs  border dark:border-gray-600">Tahun</th>
+            </tr>
+          </thead>
+          <tbody className="dark:text-jacarta-300 dark:bg-dark-50">
+            <tr className="whitespace-nowrap text-start border-b dark:border-gray-600">
+              <td className="px-6 py-4 border dark:border-gray-600 text-sm dark:text-light">Jumlah Penduduk</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">{total}</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">{yearPenduduk}</td>
+            </tr>
+            <tr className="whitespace-nowrap text-start border-b dark:border-gray-600">
+              <td className="px-6 py-4 border dark:border-gray-600 text-sm dark:text-light">Jumlah Penduduk Laki -Laki</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">{totalMale}</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">{yearPenduduk}</td>
+            </tr>
+            <tr className="whitespace-nowrap text-start border-b dark:border-gray-600">
+              <td className="px-6 py-4 border dark:border-gray-600 text-sm dark:text-light">Jumlah Penduduk Perempuan</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">{totalFemale}</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">{yearPenduduk}</td>
+            </tr>
+            <tr className="whitespace-nowrap text-start border-b dark:border-gray-600">
+              <td className="px-6 py-4 border dark:border-gray-600 text-sm dark:text-light">Penduduk Berakte</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">{has}</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">2022</td>
+            </tr>
+            <tr className="whitespace-nowrap text-start border-b dark:border-gray-600">
+              <td className="px-6 py-4 border dark:border-gray-600 text-sm dark:text-light">Penduduk Tanpa Akte</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">{hasnt}</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">2022
+              </td>
+            </tr>
+            <tr className="whitespace-nowrap text-start border-b dark:border-gray-600">
+              <td className="px-6 py-4 border dark:border-gray-600 text-sm dark:text-light">Penduduk Tingkat Pendidikan Sd</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">{dataSd}</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">2023</td>
+            </tr>
+            <tr className="whitespace-nowrap text-start border-b dark:border-gray-600">
+              <td className="px-6 py-4 border dark:border-gray-600 text-sm dark:text-light">Penduduk Tingkat Pendidikan Smp</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">{dataSmp}</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">2023</td>
+            </tr>
+            <tr className="whitespace-nowrap text-start border-b dark:border-gray-600">
+              <td className="px-6 py-4 border dark:border-gray-600 text-sm dark:text-light">Penduduk Tingkat Pendidikan Sma</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">{dataSma}</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">2023</td>
+            </tr>
+            <tr className="whitespace-nowrap text-start border-b dark:border-gray-600">
+              <td className="px-6 py-4 border dark:border-gray-600 text-sm dark:text-light">Penyakit Terbanyak</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">{sorten}</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">Latest</td>
+            </tr>
+            <tr className="whitespace-nowrap text-start border-b dark:border-gray-600">
+              <td className="px-6 py-4 border dark:border-gray-600 text-sm dark:text-light">Jumlah Penyakit Terbanyak</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">{formatterNumber(sumPenyakit)}</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">Latest</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )
+}

@@ -1,0 +1,46 @@
+/* Membuat header transparan awalnya */
+.scroll-header {
+    display: block;
+}
+
+/* Ketika di-scroll, header akan ditampilkan dan latar belakangnya akan berubah */
+.scroll-header.scroll-show {
+    display: none;
+}
+
+/* Efek transisi ketika header muncul */
+.scroll-header-transition {
+    transition: background-color 0.5s ease-in-out;
+}
+
+
+.webkit-center {
+  text-align: -webkit-center;
+}
+
+.running-text {
+    white-space: nowrap;
+    overflow: hidden;
+    animation: marquee 60s linear infinite;
+  }
+  
+  @keyframes running-text {
+    from {
+      transform: translateX(1322px);
+    }
+    to {
+      transform: translateX(-2322px);
+    }
+  }
+
+  @keyframes marquee{
+    0%{transform:translateX(2322px)}
+    to{transform:translateX(-2322px)}
+  }
+  .animate-marquee{animation:marquee 60s linear infinite}
+  @keyframes marqueeRight
+  {
+    0%{transform:translateX(2322px)}
+    to{transform:translateX(0)}
+  }
+  .animate-marqueeRight{animation:marqueeRight 60s linear infinite}
