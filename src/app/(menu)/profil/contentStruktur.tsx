@@ -2,7 +2,6 @@
 import React, { useState } from 'react'
 import { LandasanProps } from '@/controllers/types/profil-controller.type';
 import { DomainSiteProps } from '@/controllers/types/controller.type';
-import contentImgSotk from './contentImgSotk';
 
 export default function ContentStruktur({ pegawai }: { pegawai: LandasanProps[] | null }, { StrukturImg }: { StrukturImg: DomainSiteProps[] | null }) {
 
