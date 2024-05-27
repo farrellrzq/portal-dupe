@@ -8,6 +8,7 @@ import ContentMaklumat from './contentMaklumat'
 import ContentMotto from './contentMotto'
 import ModalSearchBerita from '../modal/page'
 import Tabcontent from "./tabContent";
+import ContentImgSotk from "./contentImgSotk";
 import type { Metadata } from "next";
 import { getLandasan, getTupoksi, dataPegawai } from '@/controllers/ProfilController';
 
@@ -57,6 +58,7 @@ export default async function page() {
 
             {/* <!-- Collections Tab --> */}
             <div className="tab-pane fade" id="struktur" role="tabpanel">
+              <ContentImgSotk />
               <ContentStruktur pegawai={pegawai} />
             </div>
             {/* <!-- end collections tab --> */}

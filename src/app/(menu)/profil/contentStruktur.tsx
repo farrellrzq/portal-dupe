@@ -1,9 +1,10 @@
 'use client'
 import React, { useState } from 'react'
 import { LandasanProps } from '@/controllers/types/profil-controller.type';
+import { DomainSiteProps } from '@/controllers/types/controller.type';
 import contentImgSotk from './contentImgSotk';
 
-export default function ContentStruktur({ pegawai }: { pegawai: LandasanProps[] | null }) {
+export default function ContentStruktur({ pegawai }: { pegawai: LandasanProps[] | null }, { StrukturImg }: { StrukturImg: DomainSiteProps[] | null }) {
 
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
@@ -40,7 +41,6 @@ export default function ContentStruktur({ pegawai }: { pegawai: LandasanProps[] 
 
     return (
         <div className="rounded-t-[15rem] bg-white dark:bg-jacarta-700 md:p-[4.25rem]">
-
             <div className="container mx-auto">
                 <div className="w-full">
                     <div className="border-b border-gray-600 shadow">

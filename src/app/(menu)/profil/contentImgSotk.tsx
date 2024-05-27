@@ -1,6 +1,6 @@
 import { getDomainSite } from '@/controllers/Controller';
 
-export default async function contentImgSotk() {
+export default async function ContentImgSotk() {
     const { StrukturImg } = await getDomainSite();
 
     return (
