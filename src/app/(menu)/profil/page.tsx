@@ -58,7 +58,7 @@ export default async function page() {
 
             {/* <!-- Collections Tab --> */}
             <div className="tab-pane fade" id="struktur" role="tabpanel">
-              <ContentImgSotk />
+              {/* <ContentImgSotk /> */}
               <ContentStruktur pegawai={pegawai} />
             </div>
             {/* <!-- end collections tab --> */}
