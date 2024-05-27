@@ -1,10 +1,27 @@
 
 import React from "react";
-import { getProfileSite } from '@/controllers/Controller';
+import { getProfileSite, groupByJenjang, getDataSiswa, getPendudukBerakteData, groupBySubdimensi } from '@/controllers/Controller';
+import { formatterNumber, sumJumlah, getWidgetData } from '@/controllers/HomeController';
 import Image from 'next/image'
 
 export default async function contentProfil() {
+  const { total, totalMale, totalFemale, sorten, yearPenduduk, dataPenyakit }: any = await getWidgetData();
+  const pendudukBerakte = await getPendudukBerakteData();
   const profilSite = await getProfileSite();
+  const dataSiswa = await getDataSiswa();
+  const dataAkta = pendudukBerakte?.data;
+  const getSiswa = dataSiswa?.data;
+
+  const bySub = groupBySubdimensi(dataAkta);
+  const has = formatterNumber(sumJumlah(bySub['Belum Memiliki']));
+  const hasnt = formatterNumber(sumJumlah(bySub['Memiliki']));
+  const sumPenyakit = sumJumlah(dataPenyakit);
+  const siswa = groupByJenjang(getSiswa);
+  const dataSd = formatterNumber(sumJumlah(siswa['SD']));
+  const dataSmp = formatterNumber(sumJumlah(siswa['SMP']));
+  const dataSma = formatterNumber(sumJumlah(siswa['SMA']));
+
+
 
   return (
     <div
@@ -113,6 +130,70 @@ export default async function contentProfil() {
               height={500} />
           </div>
         </div>
+      </div>
+      <div className="mt-25">
+        <table id="basic-2" className="border p-4 dark:text-jacarta-300 w-[20rem] lg:w-full">
+          <thead className="dark:text-jacarta-300">
+            <tr className="border-b dark:border-gray-600">
+              <th className="p-8 text-xs  border dark:border-gray-600">Keterangan</th>
+              <th className="p-8 text-xs  border dark:border-gray-600">Jumlah</th>
+              <th className="p-8 text-xs  border dark:border-gray-600">Tahun</th>
+            </tr>
+          </thead>
+          <tbody className="dark:text-jacarta-300 dark:bg-dark-50">
+            <tr className="whitespace-nowrap text-start border-b dark:border-gray-600">
+              <td className="px-6 py-4 border dark:border-gray-600 text-sm dark:text-light">Jumlah Penduduk</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">{total}</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">{yearPenduduk}</td>
+            </tr>
+            <tr className="whitespace-nowrap text-start border-b dark:border-gray-600">
+              <td className="px-6 py-4 border dark:border-gray-600 text-sm dark:text-light">Jumlah Penduduk Laki -Laki</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">{totalMale}</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">{yearPenduduk}</td>
+            </tr>
+            <tr className="whitespace-nowrap text-start border-b dark:border-gray-600">
+              <td className="px-6 py-4 border dark:border-gray-600 text-sm dark:text-light">Jumlah Penduduk Perempuan</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">{totalFemale}</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">{yearPenduduk}</td>
+            </tr>
+            <tr className="whitespace-nowrap text-start border-b dark:border-gray-600">
+              <td className="px-6 py-4 border dark:border-gray-600 text-sm dark:text-light">Penduduk Berakte</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">{has}</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">2022</td>
+            </tr>
+            <tr className="whitespace-nowrap text-start border-b dark:border-gray-600">
+              <td className="px-6 py-4 border dark:border-gray-600 text-sm dark:text-light">Penduduk Tanpa Akte</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">{hasnt}</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">2022
+              </td>
+            </tr>
+            <tr className="whitespace-nowrap text-start border-b dark:border-gray-600">
+              <td className="px-6 py-4 border dark:border-gray-600 text-sm dark:text-light">Penduduk Tingkat Pendidikan Sd</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">{dataSd}</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">2023</td>
+            </tr>
+            <tr className="whitespace-nowrap text-start border-b dark:border-gray-600">
+              <td className="px-6 py-4 border dark:border-gray-600 text-sm dark:text-light">Penduduk Tingkat Pendidikan Smp</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">{dataSmp}</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">2023</td>
+            </tr>
+            <tr className="whitespace-nowrap text-start border-b dark:border-gray-600">
+              <td className="px-6 py-4 border dark:border-gray-600 text-sm dark:text-light">Penduduk Tingkat Pendidikan Sma</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">{dataSma}</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">2023</td>
+            </tr>
+            <tr className="whitespace-nowrap text-start border-b dark:border-gray-600">
+              <td className="px-6 py-4 border dark:border-gray-600 text-sm dark:text-light">Penyakit Terbanyak</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">{sorten}</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">Latest</td>
+            </tr>
+            <tr className="whitespace-nowrap text-start border-b dark:border-gray-600">
+              <td className="px-6 py-4 border dark:border-gray-600 text-sm dark:text-light">Jumlah Penyakit Terbanyak</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">{formatterNumber(sumPenyakit)}</td>
+              <td className="px-6 py-4 border dark:border-gray-600 text-start">Latest</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   )
