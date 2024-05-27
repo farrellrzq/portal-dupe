@@ -44,7 +44,7 @@ export default function Content({ sertaMerta }: { sertaMerta: InformasiSertaMert
     {filteredsertaMerta && filteredsertaMerta.map((item: any, index: number) => {
         const apiUrl = item.uploaddokumen
         ? `https://cms.depok.go.id/upload/file/${item.uploaddokumen}`
-        : item.urlcontent;
+          : item.urlcontent || `https://cms.depok.go.id/upload/${item.lampiran}`;
         return (
         <div
             className="relative flex items-center my-2 rounded-2xl border border-jacarta-100 bg-white p-4 transition-shadow hover:shadow-lg dark:border-jacarta-700 dark:bg-jacarta-700" key={index}>
@@ -60,7 +60,7 @@ export default function Content({ sertaMerta }: { sertaMerta: InformasiSertaMert
             <span className="mb-3 block text-sm text-jacarta-500">{item.content.replace(/<[^>]+>|&nbsp;|&#8203;|[\u200B-\u200D\uFEFF]|-->/g, '')}</span>
             <div className="mt-8 flex items-center justify-between">
                 <span className="block text-xs text-jacarta-300">{formatDate(item.tgl_publish)}</span>
-                <a href={`https://cms.depok.go.id/upload/file/${item.uploaddokumen}`} download>
+                <a target='_blank' href={apiUrl} download>
                     <span className="text-sm dark:text-jacarta-200">Detail</span>
                 </a>
             </div>
