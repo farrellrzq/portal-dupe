@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import React from 'react'
 import HeaderMenu from './header-menu'
 import { getMenu } from '@/controllers/PublikasiController';
@@ -24,46 +23,46 @@ export default async function HeaderNav() {
             className="dropdown-menu group-hover:visible lg:invisible left-0 top-[85%] z-10 hidden min-w-[200px] gap-x-4 whitespace-nowrap rounded-xl bg-white transition-all will-change-transform group-hover:opacity-100 dark:bg-jacarta-800 lg:absolute lg:grid lg:translate-y-4 lg:py-4 lg:px-2 lg:opacity-0 lg:shadow-2xl lg:group-hover:translate-y-2"
             aria-labelledby="navDropdown-4">
             <li>
-              <Link href="/profil/#tentang-kami"
+              <a href="/profil/#tentang-kami"
                 className="flex items-center rounded-xl px-5 py-2 transition-colors hover:bg-jacarta-50 hover:text-green-600 focus:text-green-600 dark:hover:bg-jacarta-600" data-href="#tentang-kami-tab">
                 <span className="font-display text-sm text-jacarta-700 dark:text-white">Tentang Kami</span>
-              </Link>
+              </a>
             </li>
             <li>
-              <Link href="/profil/#visi"
+              <a href="/profil/#visi"
                 className="flex items-center rounded-xl px-5 py-2 transition-colors hover:bg-jacarta-50 hover:text-green-600 focus:text-green-600 dark:hover:bg-jacarta-600" data-href="#visi-tab">
                 <span className="font-display text-sm text-jacarta-700 dark:text-white">Visi & Misi</span>
-              </Link>
+              </a>
             </li>
             <li>
-              <Link href="/profil/#landasan"
+              <a href="/profil/#landasan"
                 className="flex items-center rounded-xl px-5 py-2 transition-colors hover:bg-jacarta-50 hover:text-green-600 focus:text-green-600 dark:hover:bg-jacarta-600" data-href="#landasan-tab">
                 <span className="font-display text-sm text-jacarta-700 dark:text-white">Landasan Hukum</span>
-              </Link>
+              </a>
             </li>
             <li>
-              <Link href="/profil/#struktur"
+              <a href="/profil/#struktur"
                 className="flex items-center rounded-xl px-5 py-2 transition-colors hover:bg-jacarta-50 hover:text-green-600 focus:text-green-600 dark:hover:bg-jacarta-600" data-href="#struktur-tab">
                 <span className="font-display text-sm text-jacarta-700 dark:text-white">Struktur Organisasi</span>
-              </Link>
+              </a>
             </li>
             <li>
-              <Link href="/profil/#tupoksi"
+              <a href="/profil/#tupoksi"
                 className="flex items-center rounded-xl px-5 py-2 transition-colors hover:bg-jacarta-50 hover:text-green-600 focus:text-green-600 dark:hover:bg-jacarta-600" data-href="#tupoksi-tab">
                 <span className="font-display text-sm text-jacarta-700 dark:text-white">Tugas Pokok & Fungsi</span>
-              </Link>
+              </a>
             </li>
             <li>
-              <Link href="/profil/#maklumat"
+              <a href="/profil/#maklumat"
                 className="flex items-center rounded-xl px-5 py-2 transition-colors hover:bg-jacarta-50 hover:text-green-600 focus:text-green-600 dark:hover:bg-jacarta-600" >
                 <span className="font-display text-sm text-jacarta-700 dark:text-white">Maklumat Pelayanan</span>
-              </Link>
+              </a>
             </li>
             <li>
-              <Link href="/profil/#motto"
+              <a href="/profil/#motto"
                 className="flex items-center rounded-xl px-5 py-2 transition-colors hover:bg-jacarta-50 hover:text-green-600 focus:text-green-600 dark:hover:bg-jacarta-600" >
                 <span className="font-display text-sm text-jacarta-700 dark:text-white">Motto Pelayanan</span>
-              </Link>
+              </a>
             </li>
           </ul>
         </li>
@@ -83,22 +82,22 @@ export default async function HeaderNav() {
             className="dropdown-menu group-hover:visible lg:invisible left-0 top-[85%] z-10 hidden min-w-[200px] gap-x-4 whitespace-nowrap rounded-xl bg-white transition-all will-change-transform group-hover:opacity-100 dark:bg-jacarta-800 lg:absolute lg:grid lg:translate-y-4 lg:py-4 lg:px-2 lg:opacity-0 lg:shadow-2xl lg:group-hover:translate-y-2"
             aria-labelledby="navDropdown-4">
             <li>
-              <Link href="/informasi-publik/informasi-berkala"
+              <a href="/informasi-publik/informasi-berkala"
                 className="flex items-center rounded-xl px-5 py-2 transition-colors hover:bg-jacarta-50 hover:text-green-600 focus:text-green-600 dark:hover:bg-jacarta-600">
                 <span className="font-display text-sm text-jacarta-700 dark:text-white">Informasi Secara Berkala</span>
-              </Link>
+              </a>
             </li>
             <li>
-              <Link href="/informasi-publik/informasi-serta-merta"
+              <a href="/informasi-publik/informasi-serta-merta"
                 className="flex items-center rounded-xl px-5 py-2 transition-colors hover:bg-jacarta-50 hover:text-green-600 focus:text-green-600 dark:hover:bg-jacarta-600">
                 <span className="font-display text-sm text-jacarta-700 dark:text-white">Informasi Serta Merta</span>
-              </Link>
+              </a>
             </li>
             <li>
-              <Link href="/informasi-publik/informasi-setiap-saat"
+              <a href="/informasi-publik/informasi-setiap-saat"
                 className="flex items-center rounded-xl px-5 py-2 transition-colors hover:bg-jacarta-50 hover:text-green-600 focus:text-green-600 dark:hover:bg-jacarta-600">
                 <span className="font-display text-sm text-jacarta-700 dark:text-white">Informasi Setiap Saat</span>
-              </Link>
+              </a>
             </li>
           </ul>
         </li>
@@ -119,28 +118,28 @@ export default async function HeaderNav() {
             className="dropdown-menu group-hover:visible lg:invisible left-0 top-[85%] z-10 hidden min-w-[200px] gap-x-4 whitespace-nowrap rounded-xl bg-white transition-all will-change-transform group-hover:opacity-100 dark:bg-jacarta-800 lg:absolute lg:grid lg:translate-y-4 lg:py-4 lg:px-2 lg:opacity-0 lg:shadow-2xl lg:group-hover:translate-y-2"
             aria-labelledby="navDropdown-4">
             <li>
-              <Link href="/layanan/standar-layanan"
+              <a href="/layanan/list-standar-layanan"
                 className="flex items-center rounded-xl px-5 py-2 transition-colors hover:bg-jacarta-50 hover:text-green-600 focus:text-green-600 dark:hover:bg-jacarta-600">
                 <span className="font-display text-sm text-jacarta-700 dark:text-white">Standar Pelayanan</span>
-              </Link>
+              </a>
             </li>
             <li>
-              <Link href="/layanan/layanan-opd"
+              <a href="/layanan/layanan-opd"
                 className="flex items-center rounded-xl px-5 py-2 transition-colors hover:bg-jacarta-50 hover:text-green-600 focus:text-green-600 dark:hover:bg-jacarta-600">
                 <span className="font-display text-sm text-jacarta-700 dark:text-white">Layanan Perangkat Daerah</span>
-              </Link>
+              </a>
             </li>
             <li>
-              <Link href="/layanan/layanan-kota"
+              <a href="/layanan/layanan-kota"
                 className="flex items-center rounded-xl px-5 py-2 transition-colors hover:bg-jacarta-50 hover:text-green-600 focus:text-green-600 dark:hover:bg-jacarta-600">
                 <span className="font-display text-sm text-jacarta-700 dark:text-white">Layanan Kota</span>
-              </Link>
+              </a>
             </li>
             <li>
-              <Link href="/layanan/faq"
+              <a href="/layanan/faq"
                 className="flex items-center rounded-xl px-5 py-2 transition-colors hover:bg-jacarta-50 hover:text-green-600 focus:text-green-600 dark:hover:bg-jacarta-600">
                 <span className="font-display text-sm text-jacarta-700 dark:text-white">FAQ</span>
-              </Link>
+              </a>
             </li>
           </ul>
         </li>
@@ -160,46 +159,46 @@ export default async function HeaderNav() {
             className="dropdown-menu group-hover:visible lg:invisible left-0 top-[85%] z-10 hidden min-w-[200px] gap-x-4 whitespace-nowrap rounded-xl bg-white transition-all will-change-transform group-hover:opacity-100 dark:bg-jacarta-800 lg:absolute lg:grid lg:translate-y-4 lg:py-4 lg:px-2 lg:opacity-0 lg:shadow-2xl lg:group-hover:translate-y-2"
             aria-labelledby="navDropdown-4">
             <li>
-              <Link href="/publikasi/dashboard-statistik"
+              <a href="/publikasi/dashboard-statistik"
                 className="flex items-center rounded-xl px-5 py-2 transition-colors hover:bg-jacarta-50 hover:text-green-600 focus:text-green-600 dark:hover:bg-jacarta-600">
                 <span className="font-display text-sm text-jacarta-700 dark:text-white">Dashboard Statistik</span>
-              </Link>
+              </a>
             </li>
             <HeaderMenu menu={menu} />
             <li>
-              <Link href="/publikasi/agenda-kegiatan"
+              <a href="/publikasi/agenda-kegiatan"
                 className="flex items-center rounded-xl px-5 py-2 transition-colors hover:bg-jacarta-50 hover:text-green-600 focus:text-green-600 dark:hover:bg-jacarta-600">
                 <span className="font-display text-sm text-jacarta-700 dark:text-white">Agenda Kegiatan</span>
-              </Link>
+              </a>
             </li>
             <li>
-              <Link href="/publikasi/infografis"
+              <a href="/publikasi/infografis"
                 className="flex items-center rounded-xl px-5 py-2 transition-colors hover:bg-jacarta-50 hover:text-green-600 focus:text-green-600 dark:hover:bg-jacarta-600">
                 <span className="font-display text-sm text-jacarta-700 dark:text-white">Galeri Kegiatan</span>
-              </Link>
+              </a>
             </li>
             <li>
-              <Link href="/publikasi/dokumen"
+              <a href="/publikasi/dokumen"
                 className="flex items-center rounded-xl px-5 py-2 transition-colors hover:bg-jacarta-50 hover:text-green-600 focus:text-green-600 dark:hover:bg-jacarta-600">
                 <span className="font-display text-sm text-jacarta-700 dark:text-white">Dokumen Produk</span>
-              </Link>
+              </a>
             </li>
             <li>
-              <Link href="/publikasi/pengumuman"
+              <a href="/publikasi/pengumuman"
                 className="flex items-center rounded-xl px-5 py-2 transition-colors hover:bg-jacarta-50 hover:text-green-600 focus:text-green-600 dark:hover:bg-jacarta-600">
                 <span className="font-display text-sm text-jacarta-700 dark:text-white">Pengumuman</span>
-              </Link>
+              </a>
             </li>
             <li>
-              <Link href="/publikasi/berita"
+              <a href="/publikasi/berita"
                 className="flex items-center rounded-xl px-5 py-2 transition-colors hover:bg-jacarta-50 hover:text-green-600 focus:text-green-600 dark:hover:bg-jacarta-600">
                 <span className="font-display text-sm text-jacarta-700 dark:text-white">Berita & Artikel</span>
-              </Link>
+              </a>
             </li>
           </ul>
         </li>
         <li className="group">
-          <Link href="https://esop.depok.go.id/home/survey" target="_blank"
+          <a href="https://esop.depok.go.id/home/survey" target="_blank"
             className="flex items-center py-3.5 font-display text-sm text-jacarta-700 hover:text-green-600 dark:text-white dark:hover:text-white dark:focus:text-white lg:px-2">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4"
               style={{ marginTop: "-2px" }}>
@@ -210,7 +209,7 @@ export default async function HeaderNav() {
             </svg>
             &nbsp;
             Survey Kepuasan Masyarakat
-          </Link>
+          </a>
         </li>
         <li className="js-nav-dropdown group relative">
           <a href="#"
@@ -228,28 +227,28 @@ export default async function HeaderNav() {
             className="dropdown-menu group-hover:visible lg:invisible left-0 top-[85%] z-10 hidden min-w-[200px] gap-x-4 whitespace-nowrap rounded-xl bg-white transition-all will-change-transform group-hover:opacity-100 dark:bg-jacarta-800 lg:absolute lg:grid lg:translate-y-4 lg:py-4 lg:px-2 lg:opacity-0 lg:shadow-2xl lg:group-hover:translate-y-2"
             aria-labelledby="navDropdown-4">
             <li>
-              <Link href="/hubungi/"
+              <a href="/hubungi/"
                 className="flex items-center rounded-xl px-5 py-2 transition-colors hover:bg-jacarta-50 hover:text-green-600 focus:text-green-600 dark:hover:bg-jacarta-600">
                 <span className="font-display text-sm text-jacarta-700 dark:text-white">Kontak Kami</span>
-              </Link>
+              </a>
             </li>
             <li>
-              <Link href="https://sigap.depok.go.id/report" target="_blank"
+              <a href="https://sigap.depok.go.id/report" target="_blank"
                 className="flex items-center rounded-xl px-5 py-2 transition-colors hover:bg-jacarta-50 hover:text-green-600 focus:text-green-600 dark:hover:bg-jacarta-600">
                 <span className="font-display text-sm text-jacarta-700 dark:text-white">SIGAP</span>
-              </Link>
+              </a>
             </li>
             <li>
-              <Link href="https://www.lapor.go.id/" target="_blank"
+              <a href="https://www.lapor.go.id/" target="_blank"
                 className="flex items-center rounded-xl px-5 py-2 transition-colors hover:bg-jacarta-50 hover:text-green-600 focus:text-green-600 dark:hover:bg-jacarta-600">
                 <span className="font-display text-sm text-jacarta-700 dark:text-white">LAPOR</span>
-              </Link>
+              </a>
             </li>
             <li>
-              <Link href="https://ppid.depok.go.id/" target="_blank"
+              <a href="https://ppid.depok.go.id/" target="_blank"
                 className="flex items-center rounded-xl px-5 py-2 transition-colors hover:bg-jacarta-50 hover:text-green-600 focus:text-green-600 dark:hover:bg-jacarta-600">
                 <span className="font-display text-sm text-jacarta-700 dark:text-white">PPID</span>
-              </Link>
+              </a>
             </li>
           </ul>
         </li>

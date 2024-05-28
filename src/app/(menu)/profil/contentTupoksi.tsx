@@ -143,11 +143,9 @@ export default function ContentTupoksi({ tupoksi }: { tupoksi: TupoksiProps[] | 
                                                     </svg>
                                                 </button>
                                                 <div className="rounded-2xl bg-white p-12 dark:bg-jacarta-700">
-                                                    <h2 className="mb-5 font-display text-3xl text-jacarta-700 dark:text-white">
-                                                        {item.Jabatan ? item.Jabatan.replace(/<[^>]+>|&nbsp;|&#8203;|[\u200B-\u200D\uFEFF]|-->/g, '') : ''}
+                                                    <h2 className="mb-5 font-display text-3xl text-jacarta-700 dark:text-white" style={{ textTransform: 'capitalize' }} dangerouslySetInnerHTML={{ __html: item?.Jabatan || '|' }}>
                                                     </h2>
-                                                    <p className="mb-8 text-lg leading-normal dark:text-jacarta-300">
-                                                        {item.TugasPokok ? item.TugasPokok.replace(/<[^>]+>|&nbsp;|&#8203;|[\u200B-\u200D\uFEFF]|-->/g, '') : ''}
+                                                    <p className="mb-8 text-lg leading-normal dark:text-jacarta-300" style={{ textTransform: 'capitalize' }} dangerouslySetInnerHTML={{ __html: item?.TugasPokok || '|' }}>
                                                     </p>
                                                 </div>
                                             </div>

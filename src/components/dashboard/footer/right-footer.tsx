@@ -24,28 +24,24 @@ export default async function RightFooter() {
       <ul className="flex flex-col space-y-1 dark:text-jacarta-300 mt-5">
         <li className="flex">
           <div className="flex flex-wrap items-center space-x-2 text-base text-jacarta-400">
-            <span>Hari Ini</span>
-            <span>•</span>
+            <strong>Hari Ini</strong><br />
             <span>{visit?.w_hari[0]?.Jumlah ?? "0"} Kunjungan</span>
           </div>
 
           <div className="ml-5 flex flex-wrap items-center space-x-2 text-base text-jacarta-400">
-            <span>Minggu Ini</span>
-            <span>•</span>
+            <strong>Minggu Ini</strong><br />
             <span>{visit?.w_minggu[0]?.Jumlah ?? "0"} Kunjungan</span>
           </div>
         </li>
 
         <li className="flex pt-3">
           <div className="flex flex-wrap items-center space-x-2 text-base text-jacarta-400">
-            <span>Bulan Ini</span>
-            <span>•</span>
+            <strong>Bulan Ini</strong><br />
             <span>{visit?.w_bulan[0]?.Jumlah ?? "0"} Kunjungan</span>
           </div>
 
           <div className="ml-5 flex flex-wrap items-center space-x-2 text-base text-jacarta-400">
-            <span>Tahun Ini</span>
-            <span>•</span>
+            <strong>Tahun Ini</strong><br />
             <span>{visit?.w_tahun[0]?.Jumlah ?? "0"} Kunjungan</span>
           </div>
         </li>

@@ -18,7 +18,7 @@ export default async function contentProfil() {
             <h1 className="mb-3 font-display text-4xl font-semibold text-jacarta-700 dark:text-white">Tentang Kami
             </h1>
 
-            <p className="mb-10 text-sm dark:text-jacarta-300" style={{ textTransform: 'lowercase' }} dangerouslySetInnerHTML={{ __html: profilSite?.Description || '|' }}>
+            <p className="mb-10 text-sm dark:text-jacarta-300" style={{ textTransform: 'capitalize' }} dangerouslySetInnerHTML={{ __html: profilSite?.Description || '|' }}>
             </p>
 
             <hr />

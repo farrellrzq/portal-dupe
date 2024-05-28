@@ -18,7 +18,7 @@ export async function getSlider() {
 export async function getLayanan() {
   const { Id } = await getDomainSite();
   let Layanan: LayananProps[] | null = null;
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&kanalType=K010&limit=&offset=&category=&slug=&key=` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&kanalType=K010&limit=&offset=&category=&slug=&key=&groupId=Aplikasi` });
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {

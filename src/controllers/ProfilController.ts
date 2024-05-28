@@ -8,7 +8,7 @@ const API_CMS = process.env.API_CMS;
 export async function getLandasan() {
   const { Id } = await getDomainSite();
   let Landasan: LandasanProps[] | null = null;
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K003&groupId=Hukum` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K003&groupId=landasanhukum` });
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
@@ -44,7 +44,7 @@ export async function getTupoksi() {
 export async function getMaklumat() {
   const { Id } = await getDomainSite();
   let Maklumat: MaklumatProps[] | null = null;
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K006&limit=&offset=&groupId=Maklumat%20Pelayanan` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K003&limit=&offset=&groupId=maklumat%20pelayanan` });
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
@@ -56,7 +56,7 @@ export async function getMaklumat() {
 export async function getMotto() {
   const { Id } = await getDomainSite();
   let Motto: MottoProps[] | null = null;
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K006&limit=&offset=&groupId=Motto%20Pelayanan` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K003&limit=&offset=&groupId=motto%20pelayanan` });
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {

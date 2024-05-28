@@ -30,7 +30,6 @@ export default async function BottomFooter() {
         <ul className="dark:text-jacarta-300 mt-5">
           <li className="inline-block">
             <div className="text-sm text-jacarta-400 float-right webkit-center">
-              <img src="/img/infografis/badge_789.png" className="w-48 mt-4 lg:ml-[325px]" alt="" srcSet="/img/infografis/badge_789.png" />
               <div className="mr-5 flex flex-wrap items-center space-x-2 text-base text-jacarta-400">
                 <span className="text-sm dark:text-jacarta-400">
                   &copy; {new Date().getFullYear()} Copyright{" "}

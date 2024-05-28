@@ -6,8 +6,8 @@ export default async function LeftFooter() {
   return (
     <div className="col-span-full sm:col-span-3 md:col-span-4">
       {/* <!-- Logo --> */}
-      <a href="index.html" className="mb-6 inline-block">
-        <img
+      <a href="#" className="mb-6 inline-block">
+        {/* <img
           src={
             profileSite?.imageSite
               ? `https://cms.depok.go.id/upload/profilesite/${profileSite?.imageSite}`
@@ -24,7 +24,8 @@ export default async function LeftFooter() {
           }
           className="hidden max-h-12 dark:block"
           alt="Kecamatan I Kota Depok"
-        />
+        /> */}
+        <img src="/img/diskomin-foot.png" alt="Diskominfo Depok" srcSet="/img/diskomin-foot.png" />
       </a>
       <div>
         <p className="mb-2 dark:text-jacarta-300">

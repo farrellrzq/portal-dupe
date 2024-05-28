@@ -3,7 +3,7 @@ import { InformasiPublikProps } from '@/controllers/types/informasi-publik.type'
 import React, { useState } from 'react'
 
 export default function Content({ informasiBerkala }: { informasiBerkala: InformasiPublikProps[] | null }) {
-    
+
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
@@ -18,7 +18,7 @@ export default function Content({ informasiBerkala }: { informasiBerkala: Inform
   }) : [];
 
   return (
-    <>       
+    <>
       <div className="flex mb-4">
         <div className="ml-auto w-1/4">
           <form action="search" className="relative ml-12 mr-8 basis-3/12">
@@ -43,7 +43,7 @@ export default function Content({ informasiBerkala }: { informasiBerkala: Inform
         const apiUrl = item.uploaddokumen
           ? `https://cms.depok.go.id/upload/file/${item.uploaddokumen}`
           : item.urlcontent || `https://cms.depok.go.id/upload/${item.lampiran}`;
-        
+
         return (
           <div
             role="table"
@@ -59,10 +59,10 @@ export default function Content({ informasiBerkala }: { informasiBerkala: Inform
               </div>
             </div>
             {filteredBerkala && filteredBerkala.filter((sort: any) => sort.ParentId === item.content_id).reverse().map((parent: any, count: number) => {
-              const parentUrl = parent.uploaddokumen
+              const parentUrl = parent.urlcontent || parent.uploaddokumen
                 ? `https://cms.depok.go.id/upload/file/${parent.uploaddokumen}`
-                : parent.urlcontent || `https://cms.depok.go.id/upload/${parent.lampiran}`;
-              
+                : `https://cms.depok.go.id/upload/${parent.lampiran}`;
+
               return (
                 <React.Fragment key={count}>
                   <div className="flex" role="row">
