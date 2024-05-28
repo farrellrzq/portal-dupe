@@ -39,14 +39,14 @@ export default function Content({ faq }: { faq: FaqProps[] | null }) {
                 </h2>
                 <div
                     id="faq-1"
-                    className="accordion-collapse collapse show"
+                    className="accordion-collapse visible-important"
                     aria-labelledby="faq-heading-1"
                     data-bs-parent="#accordionFAQ"
                 >
                     <div
                     className="accordion-body border-t border-jacarta-100 bg-white p-4 dark:border-jacarta-600 dark:bg-jacarta-700"
                     >
-                    <p className="dark:text-jacarta-200">
+                    <p className="text-black dark:text-jacarta-200">
                         {item.content.replace(/<[^>]+>|&nbsp;|&#8203;|[\u200B-\u200D\uFEFF]|-->/g, '')}
                     </p>
                     </div>
