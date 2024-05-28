@@ -24,7 +24,7 @@ export default async function MainSection() {
                   data-bs-target={`.video-lightbox-${mainAgenda.Id}`}
                   target="_blank"
                   className="group block after:absolute after:inset-0 after:block after:bg-jacarta-900/20 cursor-pointer">
-                  <img src={mainAgenda.Media ? `https://cms.depok.go.id/upload/gallery/${mainAgenda.Media}` : '/img/kecamatan/dsw/kesehatan.png'}
+                  <img src={mainAgenda.Media ? `https://cms.depok.go.id/upload/event/${mainAgenda.Media}` : '/img/kecamatan/dsw/kesehatan.png'}
                     alt="mainAgenda 20"
                     className="w-full lg:h-72 object-cover transition-transform duration-[1600ms] will-change-transform group-hover:scale-105"
                     height="290" width="959" />
