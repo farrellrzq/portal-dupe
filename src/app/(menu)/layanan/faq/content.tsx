@@ -54,11 +54,11 @@ export default function Content({ faq }: { faq: FaqProps[] | null }) {
                             )
                         })
                         }
-                        <div className="lg:w-[45%] lg:block">
-                            <div className="relative">
-                                <img src="/img/about/faq.png" alt="" className="absolute w-[22rem] top-0 animate-fly" />
-                            </div>
-                        </div>
+                    </div>
+                </div>
+                <div className="lg:w-[45%] lg:block">
+                    <div className="relative">
+                        <img src="/img/about/faq.png" alt="" className="absolute w-[22rem] top-0 animate-fly" />
                     </div>
                 </div>
             </div>
