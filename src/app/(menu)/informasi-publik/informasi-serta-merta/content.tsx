@@ -42,9 +42,9 @@ export default function Content({ sertaMerta }: { sertaMerta: InformasiSertaMert
         </div>
     </div>
     {filteredsertaMerta && filteredsertaMerta.map((item: any, index: number) => {
-        const apiUrl = item.uploaddokumen
-        ? `https://cms.depok.go.id/upload/file/${item.uploaddokumen}`
-          : item.urlcontent || `https://cms.depok.go.id/upload/${item.lampiran}`;
+        const apiUrl = item.urlcontent
+        ? item.urlcontent
+        : `https://cms.depok.go.id/upload/file/${item.uploaddokumen}` || `https://cms.depok.go.id/upload/${item.lampiran}`;
         return (
         <div
             className="relative flex items-center my-2 rounded-2xl border border-jacarta-100 bg-white p-4 transition-shadow hover:shadow-lg dark:border-jacarta-700 dark:bg-jacarta-700" key={index}>

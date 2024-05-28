@@ -41,9 +41,9 @@ export default function Content({ SetiapSaat }: { SetiapSaat: InformasiSetiapSaa
       </div>
       {filteredSetiapSaat && filteredSetiapSaat.filter((sort: any) => sort.ParentId === null).reverse().map((item: any, index: number) => {
         const alphabet = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
-        const apiUrl = item.uploaddokumen
-          ? `https://cms.depok.go.id/upload/file/${item.uploaddokumen}`
-          : item.urlcontent || `https://cms.depok.go.id/upload/${item.lampiran}`;
+        const apiUrl = item.urlcontent
+        ? item.urlcontent
+          : `https://cms.depok.go.id/upload/file/${item.uploaddokumen}` || `https://cms.depok.go.id/upload/${item.lampiran}`;
         
         return (
           <div
@@ -60,10 +60,9 @@ export default function Content({ SetiapSaat }: { SetiapSaat: InformasiSetiapSaa
               </div>
             </div>
             {filteredSetiapSaat && filteredSetiapSaat.filter((sort: any) => sort.ParentId === item.content_id).reverse().map((parent: any, count: number) => {
-              const parentUrl = parent.uploaddokumen
-                ? `https://cms.depok.go.id/upload/file/${parent.uploaddokumen}`
-                : parent.urlcontent || `https://cms.depok.go.id/upload/${parent.lampiran}`;
-              
+              const parentUrl = parent.urlcontent
+              ? parent.urlcontent
+              : `https://cms.depok.go.id/upload/file/${parent.uploaddokumen}` || `https://cms.depok.go.id/upload/${parent.lampiran}`;
               return (
                 <React.Fragment key={count}>
                   <div className="flex" role="row">
@@ -94,9 +93,9 @@ export default function Content({ SetiapSaat }: { SetiapSaat: InformasiSetiapSaa
                     </div>
                   </div>
                   {SetiapSaat && SetiapSaat.filter((indx: any) => indx.ParentId === parent.content_id).map((child: any, bet: number) => {
-                    const childUrl = child.uploaddokumen
-                      ? `https://cms.depok.go.id/upload/file/${child.uploaddokumen}`
-                      : child.urlcontent || `https://cms.depok.go.id/upload/${child.lampiran}`;
+                    const childUrl = child.urlcontent
+                    ? child.urlcontent
+          : `https://cms.depok.go.id/upload/file/${child.uploaddokumen}` || `https://cms.depok.go.id/upload/${child.lampiran}`;
                     const alpha = 'abcdefghijklmnopqrstuvwxyz'.split('');
                     return (
                       <div className="ml-12!" style={{ marginLeft: "50px" }} key={bet}>

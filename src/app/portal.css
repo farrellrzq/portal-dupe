@@ -18,6 +18,10 @@
   text-align: -webkit-center;
 }
 
+.visible-important {
+  visibility: visible !important;
+}
+
 .running-text {
     white-space: nowrap;
     overflow: hidden;
