@@ -3,7 +3,11 @@ import { InformasiPublikProps } from '@/controllers/types/informasi-publik.type'
 import React, { useState } from 'react'
 
 export default function Content({ informasiBerkala }: { informasiBerkala: InformasiPublikProps[] | null }) {
+<<<<<<< HEAD
 
+=======
+  // content
+>>>>>>> origin/hotfix/agenda-page
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
