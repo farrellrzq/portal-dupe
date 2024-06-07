@@ -113,7 +113,7 @@ export default function Content({ informasiBerkala }: { informasiBerkala: Inform
                             className="flex w-1/4 justify-center items-center whitespace-nowrap border-t border-jacarta-100 px-4 dark:border-jacarta-600"
                             role="cell"
                           >
-                            <a href={childUrl} target="_blank">
+                            <a href={childUrl} target="_blank"> 
                               <button
                                 className="group mr-2.5 my-2.5 inline-flex items-center rounded-xl bg-white px-4 py-3 hover:border-transparent hover:bg-blue hover:text-white dark:border-jacarta-600 dark:bg-jacarta-700 dark:text-white dark:hover:border-transparent dark:hover:bg-blue"
                               >
