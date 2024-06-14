@@ -32,7 +32,7 @@ export default async function MainSection() {
                   <a href="#" className="font-display text-jacarta-700 hover:text-accent dark:text-jacarta-200">Sumber</a>
                   <span className="dark:text-jacarta-400">in</span>
                   <span className="inline-flex flex-wrap items-center space-x-1 text-accent">
-                    <a href="#">{mainBerita.Author}</a>
+                    <a href="#">{mainBerita.SiteName}</a>
                   </span>
                 </div>
 

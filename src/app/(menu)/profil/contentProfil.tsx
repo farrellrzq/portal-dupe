@@ -6,6 +6,9 @@ import Image from 'next/image'
 export default async function contentProfil() {
   const profilSite = await getProfileSite();
 
+  const deskripsi = profilSite?.Description || '|';
+  const formattedDeskripsi = deskripsi.replace(/\r?\n/g, '<br />');
+
   return (
     <div
       className="rounded-t-[15rem] bg-white dark:bg-jacarta-700 md:flex-nowrap md:space-x-8 md:p-[4.25rem] lg:space-x-16">
@@ -18,7 +21,7 @@ export default async function contentProfil() {
             <h1 className="mb-3 font-display text-4xl font-semibold text-jacarta-700 dark:text-white">Tentang Kami
             </h1>
 
-            <p className="mb-10 text-sm dark:text-jacarta-300" style={{ textTransform: 'capitalize' }} dangerouslySetInnerHTML={{ __html: profilSite?.Description || '|' }}>
+            <p className="mb-10 text-sm dark:text-jacarta-300" style={{ textTransform: 'inherit' }} dangerouslySetInnerHTML={{ __html: formattedDeskripsi }}>
             </p>
 
             <hr />

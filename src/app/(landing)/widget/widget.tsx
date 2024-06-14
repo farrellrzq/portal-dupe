@@ -11,7 +11,7 @@ export default async function widget() {
                 <div className="flex">
                     <div className="w-3/4">
                         <span className="text-sm dark:text-jacarta-300">
-                            Sumber : Data Kependudukan Bersih Kemendagri Total Semester Tahun 2022
+                            Sumber : Data Kependudukan Bersih Kemendagri Total Semester 1 Tahun 2023
                         </span>
                     </div>
                 </div>

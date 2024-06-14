@@ -128,7 +128,7 @@ export default function Content({ beritaKota, berita, }: { beritaKota: BeritaKot
                                                 </span>
                                                 <span className="inline-flex flex-wrap items-center space-x-1 text-green-600">
                                                     <a href={item.link ? item.link : ""} target="_blank">
-                                                        {item.Author ? item.Author : ""}
+                                                        {item.SiteName ? item.SiteName : ""}
                                                     </a>
                                                 </span>
                                             </div>
