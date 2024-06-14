@@ -34,7 +34,7 @@ export default function content({ agenda }: { agenda: AgendaProps[] | null }) {
                                         {item.Title ? item.Title : ""}
                                     </h2>
                                     <span className="text-2xs text-white">
-                                        Upacara Kemerdekaan
+                                        {formatTanggal(item.TanggalAwal) ? formatTanggal(item.TanggalAwal) : ""}
                                     </span>
                                 </div>
                             </div>

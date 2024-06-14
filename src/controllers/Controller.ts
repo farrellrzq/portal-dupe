@@ -92,7 +92,7 @@ export async function getBerita() {
   if ('error' in result) {
     consoleError('getBerita()', result.error);
   } else {
-    berita = result.slice(0, 10);
+    berita = result;
   }
   return berita;
 }
