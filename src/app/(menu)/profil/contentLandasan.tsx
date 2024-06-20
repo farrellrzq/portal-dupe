@@ -104,7 +104,7 @@ export default function ContentLandasan({ landasan }: { landasan: LandasanProps[
                                                 </td>
                                                 <td className="px-6 py-4 text-start">
                                                     <div className="text-base dark:text-light">
-                                                        {item?.title}
+                                                        {item?.title.slice(0, 100)+ ('...')}
                                                     </div>
                                                 </td>
                                                 <td className="px-6 py-4 text-start">

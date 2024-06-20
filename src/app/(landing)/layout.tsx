@@ -20,6 +20,8 @@ export default async function RootLayout({
         <link rel="icon" href="/img/depok-fav.ico" sizes="any" />
         <link rel="stylesheet" href="/css/style.css" />
         <script src="/js/darkMode.bundle.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+        <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
         <Script src="/js/app.bundle.js" strategy="afterInteractive" />
       </head>
