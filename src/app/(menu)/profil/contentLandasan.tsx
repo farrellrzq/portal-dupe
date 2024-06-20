@@ -103,8 +103,8 @@ export default function ContentLandasan({ landasan }: { landasan: LandasanProps[
                                                     {index + 1}
                                                 </td>
                                                 <td className="px-6 py-4 text-start">
-                                                    <div className="text-base dark:text-light" style={{ whiteSpace: 'break-spaces' }}>
-                                                        {item?.title}
+                                                    <div className="text-base dark:text-light">
+                                                        {item?.title.slice(0, 100)+ ('...')}
                                                     </div>
                                                 </td>
                                                 <td className="px-6 py-4 text-start">
