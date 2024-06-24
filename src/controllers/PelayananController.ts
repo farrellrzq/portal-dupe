@@ -53,6 +53,18 @@ export async function getLayananKota() {
   return LayananKota;
 }
 
+export async function getDetailLayananKota(Id: string) {
+  // const { Id } = await getDomainSite();
+  let DetailLayananKota: LayananKotaProps[] | null = null;
+  const result = await api({ url: `${API_CMS}/ViewPortal/getExLink?siteId=2&code=&groupId=&typeId=LM&limit=&offset=&parent=${Id}` });
+  if ('error' in result) {
+    consoleError('get_content()', result.error);
+  } else {
+    DetailLayananKota = result;
+  }
+  return DetailLayananKota;
+}
+
 export async function getFaq() {
   const { Id } = await getDomainSite();
   let Faq: FaqProps[] | null = null;
