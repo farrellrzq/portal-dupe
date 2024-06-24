@@ -28,6 +28,7 @@ export default async function Content({ layanan, layananKota, params }: { layana
         <div
             onClick={() => displayIframe(item.URLMenu)}
             style={{ cursor: 'pointer' }}
+            key={index}
         >
             <img
             src={item.ImageMenu ? `https://cms.depok.go.id/upload/externalLogo/${item.ImageMenu}` : '/img/kecamatan/dsw/kesehatan.png'}
