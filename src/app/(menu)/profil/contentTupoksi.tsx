@@ -147,6 +147,8 @@ export default function ContentTupoksi({ tupoksi }: { tupoksi: TupoksiProps[] | 
                                                     </h2>
                                                     <p className="mb-8 text-lg leading-normal dark:text-jacarta-300" style={{ textTransform: 'capitalize' }} dangerouslySetInnerHTML={{ __html: item?.TugasPokok || '|' }}>
                                                     </p>
+
+                                                    <p className="mb-8 text-lg leading-normal dark:text-jacarta-300" style={{ textTransform: 'capitalize' }} dangerouslySetInnerHTML={{ __html: item?.UraianTugas || '|' }}></p>
                                                 </div>
                                             </div>
                                         </div>

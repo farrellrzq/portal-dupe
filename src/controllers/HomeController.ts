@@ -179,7 +179,7 @@ export async function getWidgetData() {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       },
-      body: JSON.stringify({ tahun: '2022' })
+      body: JSON.stringify({ tahun: '2023' })
     };
 
     const [response, disease] = await Promise.all([

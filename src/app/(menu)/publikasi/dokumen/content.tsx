@@ -95,6 +95,55 @@ export default function Content({ dokumenProduk }: { dokumenProduk: CmsContentPr
           </div>
         ))}
       </div>
+
+      <div className="flex items-center justify-between border-t border-gray-200 my-5 bg-white px-4 py-3 sm:px-6 dark:border-jacarta-700 dark:bg-jacarta-700">
+        <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+          <div>
+            <p className="text-sm text-gray-700 dark:text-white">
+              Showing
+              <span className="font-medium mx-1">{indexOfFirstItem + 1}</span>
+              to
+              <span className="font-medium mx-1">
+                {indexOfLastItem > (filteredDokumen?.length ?? 0) ? (filteredDokumen?.length ?? 0) : indexOfLastItem}
+              </span>
+              of
+              <span className="font-medium mx-1">{filteredDokumen?.length ?? 0}</span>
+              results
+            </p>
+          </div>
+          <nav className="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+            <button
+              onClick={() => paginate(Math.max(1, currentPage - 1))} // Fungsi untuk halaman sebelumnya
+              className={`relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 ${currentPage === 1 ? 'hidden' : ''
+                }`}
+            >
+              <span className="sr-only">Previous</span>
+              Prev
+            </button>
+            {Array.from({ length: endPage - startPage + 1 }, (_, index) => {
+              const pageNumber = startPage + index;
+              return (
+                <button
+                  key={pageNumber}
+                  onClick={() => paginate(pageNumber)}
+                  className={`relative dark:text-white inline-flex items-center px-4 py-2 text-sm font-semibold ${currentPage === pageNumber ? 'bg-indigo-600 text-white' : 'text-gray-900'
+                    } ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0`}
+                >
+                  {pageNumber}
+                </button>
+              );
+            })}
+            <button
+              onClick={() => paginate(Math.min(endPage + 1, Math.ceil((filteredDokumen?.length ?? 0) / itemsPerPage)))} // Fungsi untuk halaman selanjutnya
+              className={`relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 ${indexOfLastItem >= (filteredDokumen?.length ?? 0) ? 'hidden' : ''
+                }`}
+            >
+              <span className="sr-only">Next</span>
+              Next
+            </button>
+          </nav>
+        </div>
+      </div>
     </>
   )
 }

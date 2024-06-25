@@ -7,15 +7,15 @@ import Skeleton from 'react-loading-skeleton';
 export default function Content({ layanan, layananKota }: { layanan: LayananProps[] | null, layananKota: LayananKotaProps[] | null }) {
     const [videoUrl, setVideoUrl] = useState('');
     const [showModal, setShowModal] = useState(false);
-  
+
     const displayIframe = (url: string) => {
-      setVideoUrl(url);
-      setShowModal(true);
+        setVideoUrl(url);
+        setShowModal(true);
     };
-  
+
     const closeModal = () => {
-      setVideoUrl('');
-      setShowModal(false);
+        setVideoUrl('');
+        setShowModal(false);
     };
     // return JSON.stringify ( layananKota )
     return (
@@ -33,38 +33,47 @@ export default function Content({ layanan, layananKota }: { layanan: LayananProp
                             layanan.slice(0, 4).map((item: any, index: number) => {
                                 return (
                                     <div
-                                        className="rounded-2lg border border-jacarta-100 bg-white p-2 lg:p-8 text-center transition-shadow hover:shadow-lg dark:border-jacarta-600 dark:bg-jacarta-700"
                                         key={index}
+                                        className="rounded-2lg border border-jacarta-100 bg-white p-2 lg:p-8 text-center transition-shadow hover:shadow-lg dark:border-jacarta-600 dark:bg-jacarta-700"
                                     >
-                                        <a
-                                            href=""
-                                            // onClick={() => displayIframe(item.URL)}
-                                            data-bs-toggle="modal"
-                                            data-bs-target={`.video-lightbox-${item.content_id}`}
-                                            target="_blank"
-                                        >
-                                            <img
-                                                src={
-                                                    item.lampiran
-                                                        ? `https://cms.depok.go.id/upload/${item.lampiran}`
-                                                        : "/img/kecamatan/dsw/kesehatan.png"
-                                                }
-                                                className="mx-auto mb-6 h-[5.125rem] w-[5.125rem]"
-                                                alt="team"
-                                            />
-                                            <h3 className="font-display text-md text-jacarta-700 dark:text-white">
-                                                {item.title.replace(
-                                                    /<[^>]+>|&nbsp;|&#8203;|[\u200B-\u200D\uFEFF]|-->/g,
-                                                    ""
-                                                )}
-                                            </h3>
-                                        </a>
-                                        <span className="text-sm font-medium tracking-tight text-jacarta-400">
-                                            {item?.content.replace(
-                                                /<[^>]+>|&nbsp;|&#8203;|[\u200B-\u200D\uFEFF]|-->/g,
-                                                ""
-                                            )}
-                                        </span>
+                                        {item.urlcontent === "" ? (
+                                            <a
+                                                href=""
+                                                data-bs-toggle="modal"
+                                                data-bs-target={`.video-lightbox-${item.content_id}`}
+                                            >
+                                                <img
+                                                    src={
+                                                        item.lampiran
+                                                            ? `https://cms.depok.go.id/upload/${item.lampiran}`
+                                                            : "/img/kecamatan/dsw/kesehatan.png"
+                                                    }
+                                                    className="mx-auto mb-6 h-24 object-contain"
+                                                    alt="team"
+                                                />
+                                                <h3 className="font-display text-md text-jacarta-700 dark:text-white">
+                                                    {item.title ? item.title : ""}
+                                                </h3>
+                                            </a>
+                                        ) : (
+                                            <a
+                                                href={item.urlcontent}
+                                                target="_blank"
+                                            >
+                                                <img
+                                                    src={
+                                                        item.lampiran
+                                                            ? `https://cms.depok.go.id/upload/${item.lampiran}`
+                                                            : "/img/kecamatan/dsw/kesehatan.png"
+                                                    }
+                                                    className="mx-auto mb-6 h-24 object-contain"
+                                                    alt="team"
+                                                />
+                                                <h3 className="font-display text-md text-jacarta-700 dark:text-white">
+                                                    {item.title ? item.title : ""}
+                                                </h3>
+                                            </a>
+                                        )}
                                     </div>
                                 );
                             })}
@@ -80,36 +89,36 @@ export default function Content({ layanan, layananKota }: { layanan: LayananProp
                 aria-labelledby="properties-tab"
             >
                 <div
-                className="rounded-t-2lg rounded-b-2lg rounded-tl-none border border-jacarta-100 bg-white p-6 dark:border-jacarta-600 dark:bg-jacarta-700 md:p-10"
+                    className="rounded-t-2lg rounded-b-2lg rounded-tl-none border border-jacarta-100 bg-white p-6 dark:border-jacarta-600 dark:bg-jacarta-700 md:p-10"
                 >
                     <div className="grid lg:gap-5 gap-2 grid-cols-2 md:grid-cols-4 mt-6">
                         {layananKota && layananKota.slice(0, 8).map((item: any, index: number) => (
-                        <div key={index} className="rounded-2lg border border-jacarta-100 bg-white p-2 lg:p-8 text-center transition-shadow hover:shadow-lg dark:border-jacarta-600 dark:bg-jacarta-700">
-                            {item.URLMenu === "" ? (
-                            // <a href={`/Layanan/layanan-detail-kota/${item.Id}`}>
-                            <a href={`layanan/layanan-kota/${item?.Id}`}>
-                                <img
-                                src={item.ImageMenu ? `https://cms.depok.go.id/upload/externalLogo/${item.ImageMenu || <Skeleton />}` : '/img/kecamatan/dsw/kesehatan.png'}
-                                className="mx-auto mb-6 h-[5.125rem] w-[5.125rem]"
-                                alt="team"
-                                />
-                                <h3 className="font-display text-md text-jacarta-700 dark:text-white">{item.TitleMenu || <Skeleton />}</h3>
-                            </a>
-                            ) : (
-                            <a
-                                data-bs-toggle="modal"
-                                data-bs-target={`.video-lightbox-${item.Id}`}
-                                style={{ cursor: 'pointer' }}
-                            >
-                                <img
-                                src={item.ImageMenu ? `https://cms.depok.go.id/upload/externalLogo/${item.ImageMenu || <Skeleton />}` : '/img/kecamatan/dsw/kesehatan.png'}
-                                className="mx-auto mb-6 h-[5.125rem] w-[5.125rem]"
-                                alt="team"
-                                />
-                                <h3 className="font-display text-md text-jacarta-700 dark:text-white">{item.TitleMenu || <Skeleton />}</h3>
-                            </a>
-                            )}
-                        </div>
+                            <div key={index} className="rounded-2lg border border-jacarta-100 bg-white p-2 lg:p-8 text-center transition-shadow hover:shadow-lg dark:border-jacarta-600 dark:bg-jacarta-700">
+                                {item.URLMenu === "" ? (
+                                    // <a href={`/Layanan/layanan-detail-kota/${item.Id}`}>
+                                    <a href={`layanan/layanan-kota/${item?.Id}`}>
+                                        <img
+                                            src={item.ImageMenu ? `https://cms.depok.go.id/upload/externalLogo/${item.ImageMenu || <Skeleton />}` : '/img/kecamatan/dsw/kesehatan.png'}
+                                            className="mx-auto mb-6 h-[5.125rem] w-[5.125rem]"
+                                            alt="team"
+                                        />
+                                        <h3 className="font-display text-md text-jacarta-700 dark:text-white">{item.TitleMenu || <Skeleton />}</h3>
+                                    </a>
+                                ) : (
+                                    <a
+                                        data-bs-toggle="modal"
+                                        data-bs-target={`.video-lightbox-${item.Id}`}
+                                        style={{ cursor: 'pointer' }}
+                                    >
+                                        <img
+                                            src={item.ImageMenu ? `https://cms.depok.go.id/upload/externalLogo/${item.ImageMenu || <Skeleton />}` : '/img/kecamatan/dsw/kesehatan.png'}
+                                            className="mx-auto mb-6 h-[5.125rem] w-[5.125rem]"
+                                            alt="team"
+                                        />
+                                        <h3 className="font-display text-md text-jacarta-700 dark:text-white">{item.TitleMenu || <Skeleton />}</h3>
+                                    </a>
+                                )}
+                            </div>
                         ))
                         }
                     </div>

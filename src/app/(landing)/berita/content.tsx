@@ -133,9 +133,7 @@ export default function Content({ beritaKota, berita, }: { beritaKota: BeritaKot
                                                 </span>
                                             </div>
                                             <div className="flex flex-wrap items-center space-x-2 text-sm text-jacarta-400 mb-2">
-                                                <span>
-                                                    {formatDate(item.created_at) ? formatDate(item.created_at) : ""}
-                                                </span>
+                                                <span>{formatDate(item.tgl_publish)}</span>
                                             </div>
                                             <h2 className="mb-4 mt-2 font-display text-xl text-jacarta-700 hover:text-green-600 dark:text-white dark:hover:text-green-600">
                                                 <a
