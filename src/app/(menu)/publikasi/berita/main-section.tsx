@@ -19,7 +19,7 @@ export default async function MainSection() {
           <article className="mb-[1.875rem] md:mb-16">
             <div className="flex flex-col overflow-hidden rounded-2.5xl transition-shadow hover:shadow-lg md:flex-row">
               <figure className="group overflow-hidden md:w-1/2">
-                <a href={`/publikasi/berita/${mainBerita.slug_title}/${mainBerita.content_id}`}>
+                <a href={`/publikasi/berita/${mainBerita.slug_title}`}>
                   <img src={`https://cms.depok.go.id/upload/${mainBerita.lampiran}`}
                     alt="post 1"
                     className="h-full w-full object-cover transition-transform duration-[1600ms] will-change-transform group-hover:scale-105" />
@@ -41,13 +41,13 @@ export default async function MainSection() {
                 </div>
                 <h2
                   className="mb-4 font-display text-xl text-jacarta-700 hover:text-accent dark:text-white dark:hover:text-accent sm:text-3xl">
-                  <a href={`/publikasi/berita/${mainBerita.slug_title}/${mainBerita.content_id}`}> {mainBerita.title.slice(0, 38)} </a>
+                  <a href={`/publikasi/berita/${mainBerita.slug_title}`}> {mainBerita.title.slice(0, 38)} </a>
                 </h2>
                 <p className="mb-8 dark:text-jacarta-200">
                   {mainBerita.content.replace(/<[^>]+>|&nbsp;|&#8203;|[\u200B-\u200D\uFEFF]|-->/g, '').slice(0, 100) + '...'}
                 </p>
                 <div className="mt-4 flex items-center justify-between">
-                  <a href={`/publikasi/berita/${mainBerita.slug_title}/${mainBerita.content_id}`}>
+                  <a href={`/publikasi/berita/${mainBerita.slug_title}`}>
                     <button className="rounded-full bg-green-600 my-6 lg:my-0 px-6 py-4 lg:py-2 font-display text-sm text-white hover:bg-green-600-dark">
                       Lihat Selengkapnya
                     </button>

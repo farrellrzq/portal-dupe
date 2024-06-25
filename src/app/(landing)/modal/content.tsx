@@ -74,7 +74,7 @@ export default function Content({ pengumuman }: { pengumuman: PengumumanProps[] 
                     <div className="block rounded-2.5xl border min-h-[22rem] border-jacarta-100 bg-white p-[1.1875rem] transition-shadow hover:shadow-lg dark:border-jacarta-700 dark:bg-jacarta-700">
                       <figure className="relative">
                         <a
-                          href={`/publikasi/pengumuman/${item.slug_title}/${item.content_id}`}
+                          href={`/publikasi/pengumuman/${item.slug_title}`}
                         >
                           <img
                             src={
@@ -95,7 +95,7 @@ export default function Content({ pengumuman }: { pengumuman: PengumumanProps[] 
                       </div>
                       <div className="mt-2 flex items-center justify-between">
                         <a
-                          href={`/publikasi/pengumuman/${item.slug_title}/${item.content_id}`}
+                          href={`/publikasi/pengumuman/${item.slug_title}`}
                         >
                           <span className="font-display text-base lg:text-xl text-jacarta-700 hover:text-accent dark:text-white">
                             {item.title ? item.title : ""}
@@ -115,7 +115,7 @@ export default function Content({ pengumuman }: { pengumuman: PengumumanProps[] 
 
                       <div className="flex mt-4">
                         <a
-                          href={`/publikasi/pengumuman/${item.slug_title}/${item.content_id}`}
+                          href={`/publikasi/pengumuman/${item.slug_title}`}
                           className="flex rounded-md bg-green-600 p-1.5 px-4 m-1 text-center items-center text-[0.55rem] lg:text-xs font-semibold text-white shadow-green-600-volume transition-all hover:bg-green-600-dark"
                         >
                           <svg
