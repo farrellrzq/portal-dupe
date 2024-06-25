@@ -189,7 +189,7 @@ export async function getPendudukBerakteData() {
         'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify({
-        tahun: '2022',
+        tahun: '2023',
         kecamatan: Kecamatan,
         title: 'KEPEMILIKAN AKTA KELAHIRAN',
         dimensi: 'Kepemilikan Akta',

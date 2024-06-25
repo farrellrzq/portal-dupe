@@ -69,7 +69,7 @@ export default async function Content({ berita, beritaPopuler, params }: { berit
                                     {beritaPopuler && beritaPopuler.slice(1, 4).map((item: any, index: number) => {
                                         return (
                                             <div className="mb-4" key={item.id}>
-                                                <a href={`/publikasi/berita/${item?.slug_title}/${item?.content_id}`}>
+                                                <a href={`/publikasi/berita/${item?.slug_title}`}>
                                                     <div className="mb-4 flex rounded-2.5xl border border-jacarta-100 bg-white p-4 dark:border-jacarta-600 dark:bg-jacarta-700">
                                                         <img
                                                             src={`https://cms.depok.go.id/upload/${item.lampiran}`}

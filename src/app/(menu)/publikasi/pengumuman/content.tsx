@@ -39,8 +39,8 @@ export default function Content({ pengumuman, categories }: { pengumuman: CmsCon
             <div
               className="block rounded-2.5xl border border-jacarta-100 bg-white p-[1.1875rem] transition-shadow hover:shadow-lg dark:border-jacarta-700 dark:bg-jacarta-700">
               <figure className="relative">
-                {/* <Link href={`/Publikasi/detail-pengumuman/${item.slug_title}/${item.content_id}`}> */}
-                <Link href={`/publikasi/pengumuman/${item?.slug_title}/${item?.content_id}`}>
+                {/* <Link href={`/Publikasi/detail-pengumuman/${item.slug_title}`}> */}
+                <Link href={`/publikasi/pengumuman/${item?.slug_title}`}>
                   <img src={item.lampiran ? `https://cms.depok.go.id/upload/${item.lampiran}` : '/img/kecamatan/dsw/kesehatan.png'} alt="item 5" className="w-full rounded-[0.625rem] max-h-48 object-cover"
                     loading="lazy" />
                 </Link>
@@ -52,7 +52,7 @@ export default function Content({ pengumuman, categories }: { pengumuman: CmsCon
                 </button>
               </div>
               <div className="mt-2 flex items-center justify-between">
-                <Link href={`/publikasi/pengumuman/${item?.slug_title}/${item?.content_id}`}>
+                <Link href={`/publikasi/pengumuman/${item?.slug_title}`}>
                   <span className="font-display text-base text-jacarta-700 hover:text-accent dark:text-white">{item.title}</span>
                 </Link>
               </div>

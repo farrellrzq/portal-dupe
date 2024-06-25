@@ -5,8 +5,8 @@ import ModalSearchBerita from '../../modal/page'
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'Dokumen Produk Kecamatan',
-  description: 'Dokumen Produk I Portal Kecamatan Kota Depok',
+  title: 'Dokumen Produk Perangkat Daerah',
+  description: 'Dokumen Produk I Portal Perangkat Daerah Kota Depok',
 };
 
 export default function Pengumuman() {

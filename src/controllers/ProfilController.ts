@@ -44,7 +44,7 @@ export async function getTupoksi() {
 export async function getMaklumat() {
   const { Id } = await getDomainSite();
   let Maklumat: MaklumatProps[] | null = null;
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K003&limit=&offset=&groupId=maklumat%20pelayanan` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K006&limit=&offset=&groupId=Maklumat` });
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {

@@ -88,7 +88,7 @@ export default async function layanan() {
                       </ul>
                     </div>
                     <div className="lg:w-3/4 hidden lg:block w-full lg:text-right sm:text-center">
-                      <a href="/layanan/jenis-layanan">
+                      <a href="/layanan/layanan-opd">
                         <button className="rounded-full bg-green-600 my-6 lg:my-0 px-6 py-4 lg:py-2 font-display text-sm text-white hover:bg-green-600-dark">
                           Lihat Selengkapnya
                         </button>

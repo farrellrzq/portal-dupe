@@ -88,7 +88,7 @@ export default function Content({ layananKota }: { layananKota: LayananKotaProps
               <div key={index} className="rounded-2lg border border-jacarta-100 bg-white p-2 lg:p-8 text-center transition-shadow hover:shadow-lg dark:border-jacarta-600 dark:bg-jacarta-700">
                 {item.URLMenu === "" ? (
                   // <a href={`/Layanan/layanan-detail-kota/${item.Id}`}>
-                  <a href="#">
+                  <a href={`layanan-kota/${item?.Id}`}>
                     <img
                       src={item.ImageMenu ? `https://cms.depok.go.id/upload/externalLogo/${item.ImageMenu || <Skeleton />}` : '/img/kecamatan/dsw/kesehatan.png'}
                       className="mx-auto mb-6 h-[5.125rem] w-[5.125rem]"
