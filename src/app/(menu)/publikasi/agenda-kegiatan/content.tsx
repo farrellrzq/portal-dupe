@@ -240,7 +240,7 @@ export default function Content({ agenda }: { agenda: AgendaProps[] | null }) {
                                     </div>
                                     <h2 className="mb-4 mt-2 font-display text-xl text-white hover:text-green-600 dark:text-white dark:hover:text-green-600">
                                       <a
-                                        href={`/publikasi/berita/${item.slug_title}/${item.content_id}`}
+                                        href={`/publikasi/berita/${item.slug_title}`}
                                       >
                                         {item.Title.slice(0, 38)}{" ..."}
                                       </a>
@@ -353,7 +353,7 @@ export default function Content({ agenda }: { agenda: AgendaProps[] | null }) {
                               </div>
                               <h2 className="mb-4 mt-2 font-display text-xl text-white hover:text-green-600 dark:text-white dark:hover:text-green-600">
                                 <a
-                                  href={`/publikasi/berita/${item.slug_title}/${item.content_id}`}
+                                  href={`/publikasi/berita/${item.slug_title}`}
                                 >
                                   {item.Title.slice(0, 38)}{" ..."}
                                 </a>
@@ -431,7 +431,7 @@ export default function Content({ agenda }: { agenda: AgendaProps[] | null }) {
                               </div>
                               <h2 className="mb-4 mt-2 font-display text-xl text-white hover:text-green-600 dark:text-white dark:hover:text-green-600">
                                 <a
-                                  href={`/publikasi/berita/${item.slug_title}/${item.content_id}`}
+                                  href={`/publikasi/berita/${item.slug_title}`}
                                 >
                                   {item.Title.slice(0, 38)}{" ..."}
                                 </a>

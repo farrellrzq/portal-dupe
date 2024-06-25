@@ -99,7 +99,7 @@ export default function Content({ berita }: { berita: BeritaProps[] | null }) {
                     <div className="overflow-hidden rounded-2.5xl transition-shadow hover:shadow-lg">
                       <figure className="group overflow-hidden">
                         <a
-                          href={`/Publikasi/detail-berita/${item.slug_title}/${item.content_id}`}
+                          href={`/Publikasi/detail-berita/${item.slug_title}`}
                         >
                           <img
                             src={
@@ -122,7 +122,7 @@ export default function Content({ berita }: { berita: BeritaProps[] | null }) {
 
                         <h2 className="mb-4 font-display text-base text-jacarta-700 hover:text-accent dark:text-white dark:hover:text-accent">
                           <a
-                            href={`/Publikasi/detail-berita/${item.slug_title}/${item.content_id}`}
+                            href={`/Publikasi/detail-berita/${item.slug_title}`}
                           >
                             {" "}
                             {item.title.slice(0, 48)}{" "}

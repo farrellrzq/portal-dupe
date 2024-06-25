@@ -41,7 +41,7 @@ export default function Content({ berita }: { berita: CmsContentProps[] | null }
       <div>
         <div className="my-4">
           <h3 className="font-display px-4 text-3xl text-jacarta-700 dark:text-white">List Berita</h3>
-          <span className="text-md px-4 pb-2">Berita Kecamatan</span>
+          <span className="text-md px-4 pb-2">Berita Diskominfo</span>
         </div>
         <div className="flex mb-4">
           <div className="w-1/2 lg:w-1/4">
@@ -72,7 +72,7 @@ export default function Content({ berita }: { berita: CmsContentProps[] | null }
           <article key={index}>
             <div className="overflow-hidden rounded-2.5xl transition-shadow hover:shadow-lg">
               <figure className="group overflow-hidden">
-                {/* <a href={`/Publikasi/detail-berita/${item.slug_title}/${item.content_id}`}> */}
+                {/* <a href={`/Publikasi/detail-berita/${item.slug_title}`}> */}
                 <a href="#">
                   <img src={`https://cms.depok.go.id/upload/${item.lampiran}`} alt="post 2"
                     className="w-full object-cover transition-transform duration-[1600ms] h-60 will-change-transform group-hover:scale-105" />
@@ -94,7 +94,7 @@ export default function Content({ berita }: { berita: CmsContentProps[] | null }
                 </div>
                 <h2
                   className="mb-4 mt-2 font-display text-xl text-jacarta-700 hover:text-green-600 dark:text-white dark:hover:text-green-600">
-                  <a href={`/publikasi/berita/${item?.slug_title}/${item?.content_id}`}> {item.title.slice(0, 38)} </a>
+                  <a href={`/publikasi/berita/${item?.slug_title}`}> {item.title.slice(0, 38)} </a>
                 </h2>
                 <p className="mb-8 text-sm dark:text-jacarta-200 line-clamp-2">
                   {item.content.replace(/<[^>]+>|&nbsp;|&#8203;|[\u200B-\u200D\uFEFF]|-->/g, '').slice(0, 100) + '...'}
