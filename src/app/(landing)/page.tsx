@@ -34,12 +34,12 @@ export default async function Home() {
             <Dokumen />
           </div>
         </section>
-        <section className="lg:py-24 lg:px-20 pb-5 py-5 px-4">
+        {/* <section className="lg:py-24 lg:px-20 pb-5 py-5 px-4">
           <iframe
             src="https://dsw.depok.go.id/user/show_titikwifi"
             className="w-full h-[55rem] overflow-x-hidden"
           ></iframe>
-        </section>
+        </section> */}
         <section className="py-5 px-4 lg:py-8 lg:px-20 bg-teal-50 dark:bg-jacarta-800">
           <div className="lg:flex">
             <Sosmed />
