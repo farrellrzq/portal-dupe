@@ -4,8 +4,8 @@ import { getDashboardStatistik } from '@/controllers/PublikasiController'
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'Dashboard Statistik DKUM',
-  description: 'Dashboard Statistik I Portal DKUM Kota Depok',
+  title: 'Dashboard Statistik Diskarpus',
+  description: 'Dashboard Statistik I Portal Diskarpus Kota Depok',
 };
 
 export default async function page() {

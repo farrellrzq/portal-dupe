@@ -5,8 +5,8 @@ import ModalSearchBerita from '../../modal/page'
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'Pengumuman DKUM',
-  description: 'Pengumuman I Portal DKUM Kota Depok',
+  title: 'Pengumuman Diskarpus',
+  description: 'Pengumuman I Portal Diskarpus Kota Depok',
 };
 
 export default function Pengumuman() {

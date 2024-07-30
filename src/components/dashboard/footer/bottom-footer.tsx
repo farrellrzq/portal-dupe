@@ -33,7 +33,7 @@ export default async function BottomFooter() {
               <div className="mr-5 flex flex-wrap items-center space-x-2 text-base text-jacarta-400">
                 <span className="text-sm dark:text-jacarta-400">
                   &copy; {new Date().getFullYear()} Copyright{" "}
-                  {profileSite?.Name ?? "DKUM"} I Portal Resmi Kota Depok. All
+                  {profileSite?.Name ?? "Diskarpus"} I Portal Resmi Kota Depok. All
                   Rights Reserved
                 </span>
               </div>
