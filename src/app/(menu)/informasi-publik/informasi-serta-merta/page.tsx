@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
     title: 'Informasi Serta Merta',
-    description: 'Informasi Serta Merta I Portal Kecamatan Kota Depok',
+    description: 'Informasi Serta Merta I Portal DKUM Kota Depok',
 };
 
 export default async function page() {

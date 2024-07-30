@@ -25,7 +25,15 @@ export default async function LeftFooter() {
           className="hidden max-h-12 dark:block"
           alt="Kecamatan I Kota Depok"
         /> */}
-        <img src="/img/diskomin-foot.png" alt="Diskominfo Depok" srcSet="/img/diskomin-foot.png" />
+        <img src={
+          profileSite?.imageSite
+            ? `https://cms.depok.go.id/upload/profilesite/${profileSite?.imageSite}`
+            : "/img/kecamatan/kec-depok.png"
+        } alt="DKUM" srcSet={
+          profileSite?.imageSite
+            ? `https://cms.depok.go.id/upload/profilesite/${profileSite?.imageSite}`
+            : "/img/kecamatan/kec-depok.png"
+        } />
       </a>
       <div>
         <p className="mb-2 dark:text-jacarta-300">
@@ -33,7 +41,7 @@ export default async function LeftFooter() {
             ? profileSite.Description.length > 165
               ? `${profileSite.Description.substring(0, 165)}...`
               : profileSite.Description
-            : "Dinas Komunikasi dan Informatika | Pemerintah Kota Depok Portal Resmi Kecamatan Kota Depok"}
+            : "Dinas Komunikasi dan Informatika | Pemerintah Kota Depok Portal Resmi DKUM Kota Depok"}
         </p>
         {profileSite?.Description &&
           profileSite.Description.length > 165 && (

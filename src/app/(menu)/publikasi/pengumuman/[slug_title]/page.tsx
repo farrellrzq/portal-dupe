@@ -4,8 +4,8 @@ import { getDetailPengumuman, getDetailPengumumanPopuler } from '@/controllers/P
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'Detail Pengumuman Kecamatan',
-  description: 'Portal Kecamatan Kota Depok',
+  title: 'Detail Pengumuman DKUM',
+  description: 'Portal DKUM Kota Depok',
 };
 
 export default async function page({ params }: { params: { slug_title: string } }) {
