@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: 'Hubungi Kami',
-  description: 'Hubungi Kami I Portal Diskarpus Kota Depok',
+  description: 'Hubungi Kami I Portal Satpol PP Kota Depok',
 };
 
 export default async function page() {
@@ -33,7 +33,7 @@ export default async function page() {
         <div className="container">
           <div className="lg:flex">
             <div className="mb-12 lg:mb-0 lg:w-2/3 lg:pr-12">
-              <h2 className="mb-4 font-display text-xl text-jacarta-700 dark:text-white">Kontak Kami - {profilSite?.Name ? profilSite.Name : "Diskarpus Depok"}</h2>
+              <h2 className="mb-4 font-display text-xl text-jacarta-700 dark:text-white">Kontak Kami - {profilSite?.Name ? profilSite.Name : "Satpol PP Depok"}</h2>
               <p className="mb-16 text-lg leading-normal dark:text-jacarta-300">
                 Punya pertanyaan? Jangan ragu untuk bertanya, hubungi kami dibawah ini
               </p>
@@ -78,7 +78,7 @@ export default async function page() {
 
                   <div>
                     <span className="block font-display text-base text-jacarta-700 dark:text-white">Address</span>
-                    <address className="text-sm not-italic dark:text-jacarta-300">{profilSite?.Alamat ?? "Diskarpus Depok"}</address>
+                    <address className="text-sm not-italic dark:text-jacarta-300">{profilSite?.Alamat ?? "Satpol PP Depok"}</address>
                   </div>
                 </div>
                 <div className="flex items-center space-x-5">

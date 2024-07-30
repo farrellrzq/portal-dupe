@@ -29,7 +29,7 @@ export default async function LeftFooter() {
           profileSite?.imageSite
             ? `https://cms.depok.go.id/upload/profilesite/${profileSite?.imageSite}`
             : "/img/kecamatan/kec-depok.png"
-        } alt="Diskarpus" srcSet={
+        } alt="Satpol PP" srcSet={
           profileSite?.imageSite
             ? `https://cms.depok.go.id/upload/profilesite/${profileSite?.imageSite}`
             : "/img/kecamatan/kec-depok.png"
@@ -41,7 +41,7 @@ export default async function LeftFooter() {
             ? profileSite.Description.length > 165
               ? `${profileSite.Description.substring(0, 165)}...`
               : profileSite.Description
-            : "Dinas Komunikasi dan Informatika | Pemerintah Kota Depok Portal Resmi Diskarpus Kota Depok"}
+            : "Dinas Komunikasi dan Informatika | Pemerintah Kota Depok Portal Resmi Satpol PP Kota Depok"}
         </p>
         {profileSite?.Description &&
           profileSite.Description.length > 165 && (
