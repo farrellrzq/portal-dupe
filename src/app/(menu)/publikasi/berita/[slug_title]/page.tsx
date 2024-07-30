@@ -4,8 +4,8 @@ import Content from './content';
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'Berita Satpol PP',
-  description: 'Portal Satpol PP Kota Depok',
+  title: 'Berita Setda',
+  description: 'Portal Setda Kota Depok',
 };
 
 export default async function page({ params }: { params: { slug_title: string } }) {

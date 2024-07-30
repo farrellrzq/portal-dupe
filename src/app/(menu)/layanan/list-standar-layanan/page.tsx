@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: 'List Standar Pelayanan',
-  description: 'List Standar Pelayanan I Portal Satpol PP Kota Depok',
+  description: 'List Standar Pelayanan I Portal Setda Kota Depok',
 };
 
 export default async function page() {

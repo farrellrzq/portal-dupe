@@ -6,8 +6,8 @@ import ModalSearchBerita from '../../modal/page'
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'Agenda Satpol PP',
-  description: 'Agenda Satpol PP I Portal Satpol PP Kota Depok',
+  title: 'Agenda Setda',
+  description: 'Agenda Setda I Portal Setda Kota Depok',
 };
 
 export default function Pengumuman() {
