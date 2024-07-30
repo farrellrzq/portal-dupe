@@ -5,8 +5,8 @@ import ModalSearchBerita from '../../modal/page';
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'Layanan Dinsos',
-  description: 'Layanan Dinsos I Portal Dinsos Kota Depok',
+  title: 'Layanan Disdukcapil',
+  description: 'Layanan Disdukcapil I Portal Disdukcapil Kota Depok',
 };
 
 export default async function page() {

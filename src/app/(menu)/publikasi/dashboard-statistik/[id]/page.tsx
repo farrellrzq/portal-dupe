@@ -4,8 +4,8 @@ import FetchContent from './fetch-content';
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'Detail Dashboard Statistik Dinsos',
-  description: 'Portal Dinsos Kota Depok',
+  title: 'Detail Dashboard Statistik Disdukcapil',
+  description: 'Portal Disdukcapil Kota Depok',
 };
 
 export default async function page({ params }: { params: { id: string } }) {

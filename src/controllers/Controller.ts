@@ -35,7 +35,7 @@ export async function api({ url, method = "GET", revalidate = 10 }: ApiProps): P
 export async function getDomain() {
   const headersList = headers();
   const domain = headersList.get('x-forwarded-host');
-  return 'dinsos.depok.go.id';
+  return 'disdukcapil.depok.go.id';
 }
 
 export async function getDomainSite() {

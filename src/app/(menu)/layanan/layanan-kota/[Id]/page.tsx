@@ -4,8 +4,8 @@ import type { Metadata } from "next";
 import { getDetailLayananKota } from '@/controllers/PelayananController';
 
 export const metadata: Metadata = {
-  title: 'Detail Layanan Dinsos',
-  description: 'Portal Dinsos Kota Depok',
+  title: 'Detail Layanan Disdukcapil',
+  description: 'Portal Disdukcapil Kota Depok',
 };
 
 export default async function page({ params }: { params: { Id: string } }) {
