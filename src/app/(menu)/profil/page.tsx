@@ -13,8 +13,8 @@ import type { Metadata } from "next";
 import { getLandasan, getTupoksi, dataPegawai } from '@/controllers/ProfilController';
 
 export const metadata: Metadata = {
-  title: 'Profil Setda',
-  description: 'Profil I Portal Setda Kota Depok',
+  title: 'Profil Dinsos',
+  description: 'Profil I Portal Dinsos Kota Depok',
 };
 
 export default async function page() {

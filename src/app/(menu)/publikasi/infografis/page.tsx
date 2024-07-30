@@ -6,8 +6,8 @@ import ModalSearchBerita from '../../modal/page';
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'Infografis Setda',
-  description: 'Infografis I Portal Setda Kota Depok',
+  title: 'Infografis Dinsos',
+  description: 'Infografis I Portal Dinsos Kota Depok',
 };
 
 export default async function page() {

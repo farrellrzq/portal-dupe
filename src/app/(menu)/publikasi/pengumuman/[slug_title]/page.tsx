@@ -4,8 +4,8 @@ import { getDetailPengumuman, getDetailPengumumanPopuler } from '@/controllers/P
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'Detail Pengumuman Setda',
-  description: 'Portal Setda Kota Depok',
+  title: 'Detail Pengumuman Dinsos',
+  description: 'Portal Dinsos Kota Depok',
 };
 
 export default async function page({ params }: { params: { slug_title: string } }) {
