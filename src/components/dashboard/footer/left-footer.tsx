@@ -11,7 +11,7 @@ export default async function LeftFooter() {
           src={
             profileSite?.imageSite
               ? `https://cms.depok.go.id/upload/profilesite/${profileSite?.imageSite}`
-              : "/img/kecamatan/kec-depok.png"
+              : "/img/kecamatan/opd.png"
           }
           className="max-h-12 dark:hidden"
           alt="Kecamatan I Kota Depok"
@@ -20,7 +20,7 @@ export default async function LeftFooter() {
           src={
             profileSite?.imageSite
               ? `https://cms.depok.go.id/upload/profilesite/${profileSite?.imageSite}`
-              : "/img/kecamatan/kec-depok.png"
+              : "/img/kecamatan/opd.png"
           }
           className="hidden max-h-12 dark:block"
           alt="Kecamatan I Kota Depok"
@@ -28,11 +28,11 @@ export default async function LeftFooter() {
         <img src={
           profileSite?.imageSite
             ? `https://cms.depok.go.id/upload/profilesite/${profileSite?.imageSite}`
-            : "/img/kecamatan/kec-depok.png"
-        } alt="Disdukcapil" srcSet={
+            : "/img/kecamatan/opd.png"
+        } alt="Disnaker" srcSet={
           profileSite?.imageSite
             ? `https://cms.depok.go.id/upload/profilesite/${profileSite?.imageSite}`
-            : "/img/kecamatan/kec-depok.png"
+            : "/img/kecamatan/opd.png"
         } />
       </a>
       <div>
@@ -41,7 +41,7 @@ export default async function LeftFooter() {
             ? profileSite.Description.length > 165
               ? `${profileSite.Description.substring(0, 165)}...`
               : profileSite.Description
-            : "Dinas Komunikasi dan Informatika | Pemerintah Kota Depok Portal Resmi Disdukcapil Kota Depok"}
+            : "Dinas Komunikasi dan Informatika | Pemerintah Kota Depok Portal Resmi Disnaker Kota Depok"}
         </p>
         {profileSite?.Description &&
           profileSite.Description.length > 165 && (

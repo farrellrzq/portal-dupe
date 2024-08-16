@@ -6,8 +6,8 @@ import ModalSearchBerita from '../../modal/page'
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'Agenda Disdukcapil',
-  description: 'Agenda Disdukcapil I Portal Disdukcapil Kota Depok',
+  title: 'Agenda Disnaker',
+  description: 'Agenda Disnaker I Portal Disnaker Kota Depok',
 };
 
 export default function Pengumuman() {

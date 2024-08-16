@@ -11,12 +11,12 @@ export default async function HeaderLeft() {
         <img src={
           profileSite?.imageSite
             ? `https://cms.depok.go.id/upload/profilesite/${profileSite?.imageSite}`
-            : "/img/kecamatan/kec-depok.png"
+            : "/img/kecamatan/opd.png"
         } className="max-h-[40px] block dark:hidden" alt="Kecamatan I Kota Depok" />
         <img src={
           profileSite?.imageSite
             ? `https://cms.depok.go.id/upload/profilesite/${profileSite?.imageSite}`
-            : "/img/kecamatan/kec-depok.png"
+            : "/img/kecamatan/opd.png"
         } className="hidden max-h-[40px] dark:block" alt="Kecamatan I Kota Depok" />
       </Link>
 
@@ -26,12 +26,12 @@ export default async function HeaderLeft() {
             <img src={
               profileSite?.imageSite
                 ? `https://cms.depok.go.id/upload/profilesite/${profileSite?.imageSite}`
-                : "/img/kecamatan/kec-depok.png"
+                : "/img/kecamatan/opd.png"
             } className="max-h-10 dark:hidden" alt="Kecamatan I Kota Depok" />
             <img src={
               profileSite?.imageSite
                 ? `https://cms.depok.go.id/upload/profilesite/${profileSite?.imageSite}`
-                : "/img/kecamatan/kec-depok.png"
+                : "/img/kecamatan/opd.png"
             } className="hidden max-h-10 dark:block" alt="Kecamatan I Kota Depok" />
           </Link>
 

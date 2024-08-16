@@ -15,8 +15,8 @@ export default async function RootLayout({
   return (
     <html>
       <head>
-        <title>{profilSite?.Name ? profilSite.Name : "Disdukcapil"}</title>
-        <meta name="description" content={profilSite?.Description ? profilSite.Description : "Disdukcapil"} />
+        <title>{profilSite?.Name ? profilSite.Name : "Disnaker"}</title>
+        <meta name="description" content={profilSite?.Description ? profilSite.Description : "Disnaker"} />
         <link rel="icon" href="/img/depok-fav.ico" sizes="any" />
         <link rel="stylesheet" href="/css/style.css" />
         <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />

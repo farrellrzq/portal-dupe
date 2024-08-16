@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: 'Informasi Berkala',
-  description: 'Informasi Berkala I Portal Disdukcapil Kota Depok',
+  description: 'Informasi Berkala I Portal Disnaker Kota Depok',
 };
 
 export default async function page() {
