@@ -114,7 +114,7 @@ export async function getBeritaKota() {
 export async function getBerita() {
   const { Id } = await getDomainSite();
   let Berita: BeritaProps[] | null = null;
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K001&limit=&offset=&category=&slug=&key=` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K001` });
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {

@@ -3,6 +3,7 @@ import { formatDate } from '@/helpers/site';
 import React from 'react'
 
 export default function Content({ beritaKota, berita, }: { beritaKota: BeritaKotaProps[] | null, berita: BeritaProps[] | null }) {
+  // return JSON.stringify ( berita )
     return (
         <div className="tab-content">
             {/* <!-- kota Tab --> */}
