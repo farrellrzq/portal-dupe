@@ -11,21 +11,29 @@ export default async function LeftFooter() {
           src={
             profileSite?.imageSite
               ? `https://cms.depok.go.id/upload/profilesite/${profileSite?.imageSite}`
-              : "/img/kecamatan/kec-depok.png"
+              : "/img/logo-opd.png"
           }
           className="max-h-12 dark:hidden"
-          alt="Kecamatan I Kota Depok"
+          alt="Portal OPD Pemerintahan Kota Depok"
         />
         <img
           src={
             profileSite?.imageSite
               ? `https://cms.depok.go.id/upload/profilesite/${profileSite?.imageSite}`
-              : "/img/kecamatan/kec-depok.png"
+              : "/img/logo-opd.png"
           }
           className="hidden max-h-12 dark:block"
-          alt="Kecamatan I Kota Depok"
+          alt="Portal OPD Pemerintahan Kota Depok"
         /> */}
-        <img src="/img/diskomin-foot.png" alt="Diskominfo Depok" srcSet="/img/diskomin-foot.png" />
+        <img src={
+          profileSite?.imageSite
+            ? `https://cms.depok.go.id/upload/profilesite/${profileSite?.imageSite}`
+            : "/img/logo-opd.png"
+         } alt="Portal OPD Pemerintahan Kota Depok" srcSet={
+          profileSite?.imageSite
+            ? `https://cms.depok.go.id/upload/profilesite/${profileSite?.imageSite}`
+            : "/img/logo-opd.png"
+        }/>
       </a>
       <div>
         <p className="mb-2 dark:text-jacarta-300">

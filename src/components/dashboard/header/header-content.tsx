@@ -11,13 +11,13 @@ export default async function HeaderLeft() {
         <img src={
           profileSite?.imageSite
             ? `https://cms.depok.go.id/upload/profilesite/${profileSite?.imageSite}`
-            : "/img/kecamatan/kec-depok.png"
-        } className="max-h-[40px] block dark:hidden" alt="Kecamatan I Kota Depok" />
+            : "/img/logo-opd.png"
+        } className="max-h-[40px] block dark:hidden" alt="Portal OPD Pemerintahan Kota Depok" />
         <img src={
           profileSite?.imageSite
             ? `https://cms.depok.go.id/upload/profilesite/${profileSite?.imageSite}`
-            : "/img/kecamatan/kec-depok.png"
-        } className="hidden max-h-[40px] dark:block" alt="Kecamatan I Kota Depok" />
+            : "/img/logo-opd.png"
+        } className="hidden max-h-[40px] dark:block" alt="Portal OPD Pemerintahan Kota Depok" />
       </Link>
 
       <div className="js-mobile-menu invisible lg:visible fixed inset-0 z-10 ml-auto items-center bg-white dark:bg-jacarta-800 lg:relative lg:inset-auto lg:flex lg:bg-transparent lg:opacity-100 dark:lg:bg-transparent">
@@ -26,13 +26,13 @@ export default async function HeaderLeft() {
             <img src={
               profileSite?.imageSite
                 ? `https://cms.depok.go.id/upload/profilesite/${profileSite?.imageSite}`
-                : "/img/kecamatan/kec-depok.png"
-            } className="max-h-10 dark:hidden" alt="Kecamatan I Kota Depok" />
+                : "/img/logo-opd.png"
+            } className="max-h-10 dark:hidden" alt="Portal OPD Pemerintahan Kota Depok" />
             <img src={
               profileSite?.imageSite
                 ? `https://cms.depok.go.id/upload/profilesite/${profileSite?.imageSite}`
-                : "/img/kecamatan/kec-depok.png"
-            } className="hidden max-h-10 dark:block" alt="Kecamatan I Kota Depok" />
+                : "/img/logo-opd.png"
+            } className="hidden max-h-10 dark:block" alt="Portal OPD Pemerintahan Kota Depok" />
           </Link>
 
           <button className="js-mobile-close group ml-2 flex h-10 w-10 items-center justify-center rounded-full border border-jacarta-100 bg-white transition-colors hover:border-transparent hover:bg-green-600 focus:border-transparent focus:bg-green-600 dark:border-transparent dark:bg-white/[.15] dark:hover:bg-green-600"
