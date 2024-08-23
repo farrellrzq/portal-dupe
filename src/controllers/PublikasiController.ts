@@ -59,7 +59,7 @@ export async function getAgendaKegiatan(): Promise<AgendaProps[] | null> {
 export async function getMenu() {
   const { Id } = await getDomainSite();
   let Menu: ExlinkProps[] | null = null;
-  const result = await api({ url: `${API_CMS}/ViewPortal/getExLink?siteId=${Id}&typeId=&limit=&offset=&code=publikasi` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/getExLink?siteId=${Id}&typeId=&limit=3&offset=&code=publikasi` });
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
@@ -71,7 +71,7 @@ export async function getMenu() {
 export async function getInfografis(): Promise<AgendaProps[] | null> {
   const { Id } = await getDomainSite();
   let Infografis: AgendaProps[] | null = null;
-  const result = await api({ url: `${API_CMS}/ViewPortal/getGallery?siteId=${Id}&category=&limit=&type=&offset=` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/getGallery?siteId=${Id}&category=&limit=3&type=&offset=` });
   if ('error' in result) {
     consoleError('getGallery()', result.error);
   } else {
@@ -82,7 +82,6 @@ export async function getInfografis(): Promise<AgendaProps[] | null> {
 }
 
 export async function getVideo(): Promise<AgendaProps[] | null> {
-  const { Id } = await getDomainSite();
   let Video: AgendaProps[] | null = null;
   const result = await api({ url: `https://www.depok.go.id/api/youtube` });
   if ('error' in result) {
@@ -142,7 +141,6 @@ export async function getDetailPengumumanPopuler() {
 }
 
 export async function getDashboardStatistik() {
-  const { Id } = await getDomainSite();
   let DashboardStatistik: AgendaProps[] | null = null;
   const result = await api({ url: `https://admindata.depok.go.id/api/3/action/package_search?include_private=true&rows=2000` });
   if ('error' in result) {
