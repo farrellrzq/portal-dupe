@@ -56,7 +56,7 @@ export async function getMaklumat() {
 export async function getMotto() {
   const { Id } = await getDomainSite();
   let Motto: MottoProps[] | null = null;
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K003&limit=&offset=&groupId=motto%20pelayanan` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K003&limit=3&offset=&groupId=motto%20pelayanan` });
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {

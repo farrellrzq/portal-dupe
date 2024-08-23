@@ -8,7 +8,7 @@ const API_CMS = process.env.API_CMS;
 export async function getStandarPelayanan() {
   const { Id } = await getDomainSite();
   let standarPelayanan: CmsContentProps[] | null = null;
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K006&limit=&offset=&groupId=Standar%20Pelayanan` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K006&limit=3&offset=&groupId=Standar%20Pelayanan` });
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
@@ -32,7 +32,7 @@ export async function getListStandarPelayanan() {
 export async function getLayanan() {
   const { Id } = await getDomainSite();
   let Layanan: LayananProps[] | null = null;
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&kanalType=K010&limit=&offset=&category=&slug=&key=&groupId=Aplikasi` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&kanalType=K010&limit=3&offset=&category=&slug=&key=&groupId=Aplikasi` });
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
@@ -44,7 +44,7 @@ export async function getLayanan() {
 export async function getLayananKota() {
   const { Id } = await getDomainSite();
   let LayananKota: LayananKotaProps[] | null = null;
-  const result = await api({ url: `${API_CMS}/ViewPortal/getExLink?siteId=2&code=&groupId=&typeId=LM&limit=&offset=&parent=` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/getExLink?siteId=2&code=&groupId=&typeId=LM&limit=3&offset=&parent=` });
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
@@ -56,7 +56,7 @@ export async function getLayananKota() {
 export async function getDetailLayananKota(Id: string) {
   // const { Id } = await getDomainSite();
   let DetailLayananKota: LayananKotaProps[] | null = null;
-  const result = await api({ url: `${API_CMS}/ViewPortal/getExLink?siteId=2&code=&groupId=&typeId=LM&limit=&offset=&parent=${Id}` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/getExLink?siteId=2&code=&groupId=&typeId=LM&limit=3&offset=&parent=${Id}` });
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
@@ -68,7 +68,7 @@ export async function getDetailLayananKota(Id: string) {
 export async function getFaq() {
   const { Id } = await getDomainSite();
   let Faq: FaqProps[] | null = null;
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K017&limit=&offset=&category=&=slug=&key=` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K017&limit=3&offset=&category=&=slug=&key=` });
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {

@@ -54,7 +54,7 @@ export async function getInfografis() {
 export async function getDokumen() {
   const { Id } = await getDomainSite();
   let Dokumen: DokumenProps[] | null = null;
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K010` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K010&limit=3` });
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
@@ -66,7 +66,7 @@ export async function getDokumen() {
 export async function getPengumuman() {
   const { Id } = await getDomainSite();
   let Pengumuman: PengumumanProps[] | null = null;
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K008&limit=&offset=&category=&slug=&key=` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K008&limit=3&offset=&category=&slug=&key=`});
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
@@ -90,7 +90,7 @@ export async function getKomoditas() {
 export async function getPotensi() {
   const { Id } = await getDomainSite();
   let Potensi: PotensiProps[] | null = null;
-  const result = await api({ url: `${API_CMS}/ViewPortal/getPlace?siteId=${Id}&typeId=&limit=&offset=` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/getPlace?siteId=${Id}&typeId=&limit=3&offset=` });
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
@@ -114,7 +114,7 @@ export async function getBeritaKota() {
 export async function getBerita() {
   const { Id } = await getDomainSite();
   let Berita: BeritaProps[] | null = null;
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K001` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K001&limit=3` });
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
@@ -126,7 +126,7 @@ export async function getBerita() {
 export async function getBeritaKelurahan() {
   const { Id } = await getDomainSite();
   let BeritaKelurahan: BeritaKelurahanProps[] | null = null;
-  const result = await api({ url: `${API_CMS}/ViewPortal/getContentByKecamatan?siteId=${Id}&status=&kanalType=K001&limit=&offset=&category=` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/getContentByKecamatan?siteId=${Id}&status=&kanalType=K001&limit=3&offset=&category=`});
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {

@@ -1,3 +1,5 @@
+// import Redis from "ioredis";
+
 export function hardRedirect(path: string) {
   // Perform a hard refresh
   window.location.reload();
@@ -9,13 +11,13 @@ export function getErrorMessage(error: unknown): string {
 
   if (error instanceof Error) {
     message = error.message
-    console.log('here');
+    // console.log('here');
   } else if (error && typeof error === "object" && "message" in error) {
     message = String(error.message)
-    console.log('here2');
+    // console.log('here2');
   } else if (typeof error === "string") {
     message = error;
-    console.log('here3');
+    // console.log('here3');
   } else {
     message = "Something went wrong!";
   }
@@ -70,3 +72,27 @@ export function formatNumberWithCommasTahunWarga(number: string | null) {
 function formatNumberWithCommas(number: number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
+
+// export function connectRedis() {
+//     return new Redis({
+//         host: process.env.HOST,
+//         port: Number(process.env.PORT),  
+//         db: Number(process.env.DB), 
+//         username: process.env.USERNAME_REDIS,
+//         password: process.env.PASSWORD,
+//     });
+// }
+
+// let redis=connectRedis();
+
+// export async function redisSaveString(name:string,id:number){  
+//     await redis.setex(name, 86400, id);
+// }
+
+// export async function redisGetString(name:string){
+//  const data=await redis.get(name);
+
+//  return data;
+// }
+
+// const API_CMS = process.env.API_CMS;
