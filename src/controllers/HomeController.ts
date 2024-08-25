@@ -1,108 +1,223 @@
-import { consoleError } from "@/helpers/site";
-import { api, getDomain, getDomainSite } from "./Controller";
-import { BeritaKelurahanProps, BeritaKotaProps, BeritaProps, DokumenProps, InfografisProps, KomoditasProps, LayananKotaProps, LayananProps, PengumumanProps, PotensiProps, SliderProps } from "./types/home-controller.type";
+import { consoleError, API_CMS, API_DSW, API_BERITA_DEPOK } from "@/helpers/site";
+import { api,  getDomainSite } from "./Controller";
+import { 
+  BeritaKelurahanProps, 
+  BeritaKotaProps, 
+  BeritaProps, 
+  DokumenProps, 
+  InfografisProps, 
+  KomoditasProps, 
+  LayananKotaProps, 
+  LayananProps, 
+  PengumumanProps, 
+  PotensiProps, 
+  SliderProps
+} from "./types/home-controller.type";
+import  redis from '@/helpers/redis-client';
+import {redisSaveString, redisGetString} from "@/helpers/redis";
 
-const API_CMS = process.env.API_CMS;
 export async function getSlider() {
   const { Id } = await getDomainSite();
   let Slider: SliderProps[] | null = null;
+  const cachedKey=`slider_id:${Id}`;
+
+  const cachedResult=await redisGetString(redis,cachedKey);
+
+  if (cachedResult) {
+    Slider=JSON.parse(cachedResult);
+    return Slider;
+  }
+
   const result = await api({ url: `${API_CMS}/ViewPortal/getSlider?siteId=${Id}&typeId=SL01&status=ST01&fileType=FL02` });
+
   if ('error' in result) {
     consoleError('getSlider()', result.error);
   } else {
     Slider = result;
   }
+
+  await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
+
   return Slider;
 }
 
 export async function getLayanan() {
   const { Id } = await getDomainSite();
   let Layanan: LayananProps[] | null = null;
+  
+  const cachedKey=`layanan_id:${Id}`;
+
+  const cachedResult=await redisGetString(redis,cachedKey);
+
+  if (cachedResult) {
+    Layanan=JSON.parse(cachedResult);
+    return Layanan;
+  }
+
   const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&kanalType=K010&limit=&offset=&category=&slug=&key=&groupId=Aplikasi` });
+
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
     Layanan = result;
   }
+
+  await redisSaveString(redis, cachedKey, 3600, JSON.stringify(result));
+
   return Layanan;
 }
 
 export async function getLayananKota() {
-  const { Id } = await getDomainSite();
   let LayananKota: LayananKotaProps[] | null = null;
-  const result = await api({ url: `${API_CMS}/ViewPortal/getExLink?siteId=2&code=&groupId=&typeId=LM&limit=&offset=&slug=` });
+
+  const cachedKey=`layanan_kota`;
+
+  const cachedResult=await redisGetString(redis,cachedKey);
+
+  if (cachedResult) {
+    LayananKota=JSON.parse(cachedResult);
+    return LayananKota;
+  }
+
+  const result = await api({ url: `${API_CMS}/ViewPortal/getExLink?siteId=2&code=&groupId=&typeId=LM&limit=&offset=&slug=`});
+
   if ('error' in result) {
     consoleError('getExLink()', result.error);
   } else {
     LayananKota = result;
   }
+
+  await redisSaveString(redis, cachedKey, 3600, JSON.stringify(result));
+
   return LayananKota;
 }
 
 export async function getInfografis() {
-  const { Id } = await getDomainSite();
   let Infografis: InfografisProps[] | null = null;
-  const result = await api({ url: `https://dsw.depok.go.id/index.php/api/slider` });
+
+  const cachedKey=`infografis`;
+
+  const cachedResult=await redisGetString(redis,cachedKey);
+
+  if (cachedResult) {
+    Infografis=JSON.parse(cachedResult);
+    return Infografis;
+  }
+
+  const result = await api({ url: `${API_DSW}/index.php/api/slider` });
+
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
-    Infografis = result.data;
+    Infografis = result ? result.data : [];
   }
+
+  await redisSaveString(redis, cachedKey, 3600, JSON.stringify(Infografis));
+
   return Infografis;
 }
 
 export async function getDokumen() {
   const { Id } = await getDomainSite();
   let Dokumen: DokumenProps[] | null = null;
+
+  const cachedKey=`dokumen_id:${Id}`;
+
+  const cachedResult=await redisGetString(redis,cachedKey);
+
+  if (cachedResult) {
+    Dokumen=JSON.parse(cachedResult);
+    return Dokumen;
+  }
+
   const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K010&limit=3` });
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
     Dokumen = result;
   }
+
+  await redisSaveString(redis, cachedKey, 3600, JSON.stringify(result));
+
   return Dokumen;
 }
 
 export async function getPengumuman() {
   const { Id } = await getDomainSite();
   let Pengumuman: PengumumanProps[] | null = null;
+
+  const cachedKey=`pengumuman_id:${Id}`;
+
+  const cachedResult=await redisGetString(redis,cachedKey);
+
+  if (cachedResult) {
+    Pengumuman=JSON.parse(cachedResult);
+    return Pengumuman;
+  }
+
   const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K008&limit=3&offset=&category=&slug=&key=`});
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
     Pengumuman = result;
   }
+
+  await redisSaveString(redis, cachedKey, 3600, JSON.stringify(result));
+
   return Pengumuman;
 }
 
 export async function getKomoditas() {
-  const { Id } = await getDomainSite();
   let Komoditas: KomoditasProps[] | null = null;
-  const result = await api({ url: `https://dsw.depok.go.id/api/komoditas/harga_depok` });
+  const result = await api({ url: `${API_DSW}/api/komoditas/harga_depok` });
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
     Komoditas = result.data;
   }
+
+  const cachedKey=`komoditas`;
+
+  const cachedResult=await redisGetString(redis,cachedKey);
+
+  if (cachedResult) {
+    Komoditas=JSON.parse(cachedResult);
+    return Komoditas;
+  }
+
+  await redisSaveString(redis, cachedKey, 3600, JSON.stringify(result));
+
   return Komoditas;
 }
 
 export async function getPotensi() {
   const { Id } = await getDomainSite();
   let Potensi: PotensiProps[] | null = null;
+
+  const cachedKey=`potensi_id:${Id}`;
+
+  const cachedResult=await redisGetString(redis,cachedKey);
+
+  if (cachedResult) {
+    Potensi=JSON.parse(cachedResult);
+    return Potensi;
+  }
+
   const result = await api({ url: `${API_CMS}/ViewPortal/getPlace?siteId=${Id}&typeId=&limit=3&offset=` });
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
     Potensi = result;
   }
+
+  await redisSaveString(redis, cachedKey, 3600, JSON.stringify(result));
+
   return Potensi;
 }
 
 export async function getBeritaKota() {
-  const { Id } = await getDomainSite();
   let BeritaKota: BeritaKotaProps[] | null = null;
-  const result = await api({ url: `https://berita.depok.go.id/api/v1/berita` });
+  const result = await api({ url: `${API_BERITA_DEPOK}` });
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
@@ -114,24 +229,50 @@ export async function getBeritaKota() {
 export async function getBerita() {
   const { Id } = await getDomainSite();
   let Berita: BeritaProps[] | null = null;
+
+  const cachedKey=`berita_id:${Id}`;
+
+  const cachedResult=await redisGetString(redis,cachedKey);
+
+  if (cachedResult) {
+    Berita=JSON.parse(cachedResult);
+    return Berita;
+  }
+
   const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K001&limit=3` });
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
     Berita = result;
   }
+
+  await redisSaveString(redis, cachedKey, 3600, JSON.stringify(result));
+
   return Berita;
 }
 
 export async function getBeritaKelurahan() {
   const { Id } = await getDomainSite();
   let BeritaKelurahan: BeritaKelurahanProps[] | null = null;
+
+  const cachedKey=`berita_kelurahan_id:${Id}`;
+
+  const cachedResult=await redisGetString(redis,cachedKey);
+
+  if (cachedResult) {
+    BeritaKelurahan=JSON.parse(cachedResult);
+    return BeritaKelurahan;
+  }
+  
   const result = await api({ url: `${API_CMS}/ViewPortal/getContentByKecamatan?siteId=${Id}&status=&kanalType=K001&limit=3&offset=&category=`});
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
     BeritaKelurahan = result;
   }
+  
+  await redisSaveString(redis, cachedKey, 3600, JSON.stringify(result));
+
   return BeritaKelurahan;
 }
 
@@ -169,8 +310,6 @@ export async function getToken() {
 }
 
 export async function getWidgetData() {
-  const { Kecamatan, Kelurahan } = await getDomainSite();
-
   try {
     const { token, url } = await getToken();
     const body = {
@@ -193,7 +332,7 @@ export async function getWidgetData() {
       throw new Error(errorMessage);
     }
 
-    const resdsw = await fetch('https://dsw.depok.go.id/html/penyakitdata/');
+    const resdsw = await fetch(`${API_DSW}/html/penyakitdata/`);
     if (!resdsw.ok) {
       const errorMessage = `Fetching penyakit data failed with status: ${resdsw.status}`;
       console.error(errorMessage);

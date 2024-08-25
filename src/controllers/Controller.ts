@@ -1,6 +1,13 @@
 import { headers } from 'next/headers'
-import { CmsContentProps, CategoryProps, DomainSiteProps, ExlinkProps, ProfileSiteProps, VisitProps } from './types/controller.type';
-import { consoleError, getErrorMessage } from '@/helpers/site';
+import { 
+  CmsContentProps, 
+  CategoryProps, 
+  DomainSiteProps, 
+  ExlinkProps, 
+  ProfileSiteProps, 
+  VisitProps 
+} from './types/controller.type';
+import { consoleError, getErrorMessage, API_CMS } from '@/helpers/site';
 import { LandingProps } from './types/landing-controller.type';
 import { getToken } from './HomeController';
 import { isBrowser, isMobile } from 'react-device-detect';
@@ -14,7 +21,6 @@ interface ApiProps {
   revalidate?: number
 }
 type ApiResponse = { error: string } | any
-const API_CMS = process.env.API_CMS;
 export async function api({ url, method = "GET", revalidate = 10 }: ApiProps): Promise<ApiResponse> {
   try {
     const res = await fetch(url, {
@@ -37,7 +43,7 @@ export async function api({ url, method = "GET", revalidate = 10 }: ApiProps): P
 export async function getDomain() {
   const headersList = headers();
   const domain = headersList.get('x-forwarded-host');
-  return 'diskominfo.depok.go.id';
+  return domain ||  'diskominfo.depok.go.id';
 }
 
 export async function getDomainSite() {
@@ -97,7 +103,7 @@ export async function getProfileSite() {
   const cachedResult=await redisGetString(redis,cachedKey);
 
   if (cachedResult) {
-    profileSite=JSON.parse(cachedResult);
+    profileSite=JSON.parse(cachedResult)[0];
     return profileSite;
   }
 
