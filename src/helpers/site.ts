@@ -77,4 +77,5 @@ export const API_CMS=process.env.API_CMS;
 export const API_ADMIN_DATA=process.env.API_ADMIN_DATA;
 export const API_YT=process.env.API_YT;
 export const API_DSW=process.env.API_DSW;
+export const API_BERITA_DEPOK=process.env.API_BERITA_DEPOK;
 
