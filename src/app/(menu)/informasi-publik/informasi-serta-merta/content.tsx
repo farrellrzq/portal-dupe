@@ -60,7 +60,7 @@ export default function Content({ sertaMerta }: { sertaMerta: InformasiSertaMert
             <span className="mb-3 block text-sm text-jacarta-500">{item.content.replace(/<[^>]+>|&nbsp;|&#8203;|[\u200B-\u200D\uFEFF]|-->/g, '')}</span>
             <div className="mt-8 flex items-center justify-between">
                 <span className="block text-xs text-jacarta-300">{formatDate(item.tgl_publish)}</span>
-                <a href={apiUrl} target="_blank">
+                <a href={apiUrl}>
                     <span className="text-sm dark:text-jacarta-200">Detail</span>
                 </a>
             </div>
