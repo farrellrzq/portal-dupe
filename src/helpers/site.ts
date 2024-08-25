@@ -73,26 +73,8 @@ function formatNumberWithCommas(number: number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
 
-// export function connectRedis() {
-//     return new Redis({
-//         host: process.env.HOST,
-//         port: Number(process.env.PORT),  
-//         db: Number(process.env.DB), 
-//         username: process.env.USERNAME_REDIS,
-//         password: process.env.PASSWORD,
-//     });
-// }
+export const API_CMS=process.env.API_CMS;
+export const API_ADMIN_DATA=process.env.API_ADMIN_DATA;
+export const API_YT=process.env.API_YT;
+export const API_DSW=process.env.API_DSW;
 
-// let redis=connectRedis();
-
-// export async function redisSaveString(name:string,id:number){  
-//     await redis.setex(name, 86400, id);
-// }
-
-// export async function redisGetString(name:string){
-//  const data=await redis.get(name);
-
-//  return data;
-// }
-
-// const API_CMS = process.env.API_CMS;
