@@ -4,6 +4,8 @@ import { consoleError, getErrorMessage } from '@/helpers/site';
 import { LandingProps } from './types/landing-controller.type';
 import { getToken } from './HomeController';
 import { isBrowser, isMobile } from 'react-device-detect';
+import  redis from '@/helpers/redis-client';
+import {redisSaveString, redisGetString} from "@/helpers/redis";
 
 
 interface ApiProps {
@@ -35,70 +37,178 @@ export async function api({ url, method = "GET", revalidate = 10 }: ApiProps): P
 export async function getDomain() {
   const headersList = headers();
   const domain = headersList.get('x-forwarded-host');
-  return domain || 'diskominfo.depok.go.id';
+  return 'diskominfo.depok.go.id';
 }
 
 export async function getDomainSite() {
-  let domain = await getDomain();
+const domain=await getDomain();
+
+  const cachedKey=`domainSite:${domain}`;
+
+  const cachedResult=await redisGetString(redis,cachedKey);
+
+  if (cachedResult) {
+    return JSON.parse(cachedResult) as DomainSiteProps;
+  }
+
   const result = await api({ url: `${API_CMS}/ViewPortal/domainsite?domain=${domain}`, revalidate: 60 });
 
   if ('error' in result) {
     throw new Error(result);
   }
 
+  await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
+
   return result as DomainSiteProps;
 }
 
 export async function getKecamatan() {
-  const { Id } = await getDomainSite();
   let Landing: LandingProps[] | null = null;
+  const cachedKey=`kecamatanDomain:${await getDomain()}`;
+  const { Id } = await getDomainSite();
+
+
+  const cachedResult=await redisGetString(redis,cachedKey);
+
+  if (cachedResult) {
+    Landing=JSON.parse(cachedResult);
+    return Landing;
+  }
+
   const result = await api({ url: `${API_CMS}/ViewPortal/getSiteByKecamatan?siteId=${Id}` });
+  
   if ('error' in result) {
     consoleError('getLanding()', result.error);
   } else {
     Landing = result;
   }
+
+  await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
+
   return Landing;
 }
 
 export async function getProfileSite() {
-  const { Id } = await getDomainSite();
   let profileSite: ProfileSiteProps | null = null;
+
+  const cachedKey=`profileDomain:${await getDomain()}`;
+  const {Id}=await getDomainSite();
+
+  const cachedResult=await redisGetString(redis,cachedKey);
+
+  if (cachedResult) {
+    profileSite=JSON.parse(cachedResult);
+    return profileSite;
+  }
+
   const result = await api({ url: `${API_CMS}/ViewPortal/profilsite?siteId=${Id}` });
+
   if ('error' in result) {
     consoleError('getProfileSite()', result.error);
   } else {
     profileSite = result[0];
   }
+
+  await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
+
   return profileSite;
 }
 
+
 export async function getExLink() {
-  const { Id } = await getDomainSite();
   let exlink: ExlinkProps[] | null = null;
+
+  const cachedKey=`exlinkDomain:${await getDomain()}`;
+  const {Id}=await getDomainSite();
+
+
+  const cachedResult=await redisGetString(redis,cachedKey);
+
+  if (cachedResult) {
+    exlink=JSON.parse(cachedResult);
+    return exlink;
+  }
+
   const result = await api({ url: `${API_CMS}/ViewPortal/getExLink?siteId=${Id}&code=&groupId=&typeId=EP&limit=&offset=` });
   if ('error' in result) {
     consoleError('getExLink()', result.error);
   } else {
     exlink = result;
   }
+
+  await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
+
   return exlink;
 }
 
 export async function getBerita() {
-  const { Id } = await getDomainSite();
   let berita: CmsContentProps[] | null = null;
+
+  const cachedKey=`beritaDomain:${await getDomain()}`;
+  const {Id}=await getDomainSite();
+
+
+  const cachedResult=await redisGetString(redis,cachedKey);
+
+  if (cachedResult) {
+    berita=JSON.parse(cachedResult);
+    return berita;
+  }
+
   const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K001&limit=&offset=&category=&slug=&key=` });
   if ('error' in result) {
     consoleError('getBerita()', result.error);
   } else {
     berita = result;
   }
+
+  await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
+
   return berita;
 }
 
+export async function getVisitAgent() {
+  let agentInfo = '';
+
+  if (typeof navigator !== 'undefined') {
+    agentInfo = isBrowser ? navigator.userAgent : isMobile ? 'Mobile Device' : '';
+  }
+  
+  let Logview: VisitProps = {
+    w_tahun: [],
+    w_bulan: [],
+    w_minggu: [],
+    w_kemarin: [],
+    w_hari: []
+  };
+
+  const cachedKey=`visitAgentDomain:${await getDomain()}`;
+  const {Id}=await getDomainSite();
+
+
+  const cachedResult=await redisGetString(redis,cachedKey);
+
+  if (cachedResult) {
+    Logview=JSON.parse(cachedResult);
+    return Logview;
+  }
+
+  const result = await api({
+    url: `${API_CMS}/ViewPortal/log_view?siteid=${Id}&contentid=&codekanal=&device=${agentInfo}&browse=${agentInfo}&codekanal=`
+  });
+
+  if ('error' in result) {
+    console.error('getVisitAgent()', result.error);
+  } else {
+    Logview = result;
+  }
+
+  await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
+
+  return Logview;
+}
+
 export async function getVisit() {
-  const { Id } = await getDomainSite();
   let visit: VisitProps = {
     w_tahun: [],
     w_bulan: [],
@@ -107,11 +217,24 @@ export async function getVisit() {
     w_hari: []
   }; // Inisialisasi visit dengan tipe VisitProps
 
+  const cachedKey=`visitDomain:${await getDomain()}`;
+  const {Id}=await getDomainSite();
+
+
+  const cachedResult=await redisGetString(redis,cachedKey);
+
+
   try {
     // Panggil getVisitAgent secara async
     const Logview = await getVisitAgent();
 
+    if (cachedResult) {
+    visit=JSON.parse(cachedResult);
+    return visit;
+  }
+
     const result = await api({ url: `${API_CMS}/ViewPortal/getPengunjung?siteid=${Id}` });
+
     if ('error' in result) {
       console.error('getVisit()', result.error);
     } else {
@@ -131,54 +254,41 @@ export async function getVisit() {
     throw error;
   }
 
+  await redisSaveString(redis,cachedKey, 3600, JSON.stringify(visit));
+
   return visit;
 }
 
-export async function getVisitAgent() {
-  let agentInfo = '';
-
-  if (typeof navigator !== 'undefined') {
-    agentInfo = isBrowser ? navigator.userAgent : isMobile ? 'Mobile Device' : '';
-  }
-
-  const { Id } = await getDomainSite();
-  let Logview: VisitProps = {
-    w_tahun: [],
-    w_bulan: [],
-    w_minggu: [],
-    w_kemarin: [],
-    w_hari: []
-  };
-
-  const result = await api({
-    url: `${API_CMS}/ViewPortal/log_view?siteid=${Id}&contentid=&codekanal=&device=${agentInfo}&browse=${agentInfo}&codekanal=`
-  });
-
-  if ('error' in result) {
-    console.error('getVisitAgent()', result.error);
-  } else {
-    Logview = result;
-  }
-
-  return Logview;
-}
-
-
 
 export async function getCategories({ kanalType }: { kanalType: 'K001' | 'K008' }): Promise<CategoryProps[] | null> {
-  const { Id } = await getDomainSite();
   let categories: CategoryProps[] | null = null;
+
+  const cachedKey=`categoriesDomain:${await getDomain()}`;
+  const {Id}=await getDomainSite();
+
+
+  const cachedResult=await redisGetString(redis,cachedKey);
+
+  if (cachedResult) {
+    categories=JSON.parse(cachedResult);
+    return categories;
+  }
+
   const result = await api({ url: `${API_CMS}/ViewPortal/ContentCategory?siteId=${Id}&status=ST01&kanalType=${kanalType}&Id=` });
   if ('error' in result) {
     consoleError('getCategories()', result.error);
   } else {
     categories = result;
   }
+
+  await redisSaveString(redis,cachedKey, 3600, JSON.stringify(categories));
+
   return categories;
 }
 
 export async function getPendudukBerakteData() {
-  const { Kelurahan, Kecamatan } = await getDomainSite();
+const { Id, Kecamatan } = await getDomainSite();
+
 
   try {
     const { token, url } = await getToken();
@@ -211,8 +321,6 @@ export async function getPendudukBerakteData() {
 }
 
 export async function getDataSiswa() {
-  const { Kelurahan, Kecamatan } = await getDomainSite();
-
   try {
     const { token, url } = await getToken();
     const body = {
@@ -266,3 +374,4 @@ export function groupByJenjang(data: any) {
 
   return groupedData;
 }
+
