@@ -1,7 +1,6 @@
 "use client";
 import { LayananKotaProps, LayananProps } from "@/controllers/types/home-controller.type";
 import React, { useState } from "react";
-import Skeleton from "react-loading-skeleton";
 
 export default function Content({
   layanan,
@@ -21,7 +20,7 @@ export default function Content({
         role='tabpanel'
         aria-labelledby='offers-tab'>
         <div className='rounded-t-2lg rounded-b-2lg rounded-tl-none border border-jacarta-100 bg-white p-6 dark:border-jacarta-600 dark:bg-jacarta-700 md:p-10'>
-          <div className='grid grid-cols-2 gap-3 md:grid-cols-2 md:gap-[1.875rem] lg:grid-cols-4'>
+          {/* <div className='grid grid-cols-2 gap-3 md:grid-cols-2 md:gap-[1.875rem] lg:grid-cols-4'>
             {layanan &&
               layanan.slice(0, 4).map((item: any, index: number) => {
                 return (
@@ -65,7 +64,7 @@ export default function Content({
                   </div>
                 );
               })}
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -76,7 +75,7 @@ export default function Content({
         role='tabpanel'
         aria-labelledby='properties-tab'>
         <div className='rounded-t-2lg rounded-b-2lg rounded-tl-none border border-jacarta-100 bg-white p-6 dark:border-jacarta-600 dark:bg-jacarta-700 md:p-10'>
-          <div className='grid lg:gap-5 gap-2 grid-cols-2 md:grid-cols-4 mt-6'>
+          {/* <div className='grid lg:gap-5 gap-2 grid-cols-2 md:grid-cols-4 mt-6'>
             {layananKota &&
               layananKota.map((item: any, index: number) => (
                 <div
@@ -123,7 +122,7 @@ export default function Content({
                   )}
                 </div>
               ))}
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -158,7 +157,7 @@ export default function Content({
         </div>
       </div>
 
-      {false &&
+      {/* {false &&
         layananKota.map((item: any, index: number) => {
           const cleanedURL = item.URLMenu.trim(); // Menghapus spasi di sekitar URL
           return (
@@ -199,7 +198,7 @@ export default function Content({
               </div>
             </div>
           );
-        })}
+        })} */}
     </div>
   );
 }
