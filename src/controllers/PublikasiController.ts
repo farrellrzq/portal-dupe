@@ -91,7 +91,7 @@ export async function getMenu() {
     return Menu;
   }
 
-  const result = await api({ url: `${API_CMS}/ViewPortal/getExLink?siteId=${Id}&typeId=&limit=3&offset=&code=publikasi` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/getExLink?siteId=${Id}&typeId=&limit=&offset=&code=publikasi` });
 
   if ('error' in result) {
     consoleError('get_content()', result.error);
@@ -116,7 +116,7 @@ export async function getInfografis(): Promise<AgendaProps[] | null> {
     return Infografis;
   }
 
-  const result = await api({ url: `${API_CMS}/ViewPortal/getGallery?siteId=${Id}&category=&limit=3&type=&offset=` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/getGallery?siteId=${Id}&category=&limit=&type=&offset=` });
   console.log(`infografis : ${result}`);
   if ('error' in result) {
     consoleError('getGallery()', result.error);

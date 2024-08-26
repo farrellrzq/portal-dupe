@@ -17,7 +17,7 @@ export async function getInformasiPublik() {
     return InformasiPublik;
   }
 
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K016&limit=3&offset=&groupId=Berkala&slug=&key=`});
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K016&limit=&offset=&groupId=Berkala&slug=&key=`});
 
   if ('error' in result) {
     consoleError('get_content()', result.error);
@@ -43,7 +43,7 @@ export async function getInformasiSertaMerta() {
     return InformasiSertaMerta;
   }
 
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K016&limit=3&offset=&groupId=Serta%20Merta&slug=&key=` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K016&limit=&offset=&groupId=Serta%20Merta&slug=&key=` });
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
@@ -68,7 +68,7 @@ export async function getInformasiSetiapSaat() {
     return InformasiSetiapSaat;
   }
 
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K016&limit=3&offset=&groupId=Setiap%20Saat&slug=&key=` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K016&limit=&offset=&groupId=Setiap%20Saat&slug=&key=` });
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {

@@ -129,12 +129,12 @@ export default async function HeaderNav() {
                 <span className="font-display text-sm text-jacarta-700 dark:text-white">Layanan Perangkat Daerah</span>
               </a>
             </li>
-            <li>
+            {/* <li>
               <a href="/layanan/layanan-kota"
                 className="flex items-center rounded-xl px-5 py-2 transition-colors hover:bg-jacarta-50 hover:text-green-600 focus:text-green-600 dark:hover:bg-jacarta-600">
                 <span className="font-display text-sm text-jacarta-700 dark:text-white">Layanan Kota</span>
               </a>
-            </li>
+            </li> */}
             <li>
               <a href="/layanan/faq"
                 className="flex items-center rounded-xl px-5 py-2 transition-colors hover:bg-jacarta-50 hover:text-green-600 focus:text-green-600 dark:hover:bg-jacarta-600">
