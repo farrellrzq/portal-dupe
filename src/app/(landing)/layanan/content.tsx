@@ -127,6 +127,9 @@ export default function Content({
         </div>
       </div>
 
+    {layananKota && layananKota.map((item:any, index:number) => {
+      const cleanedURL = item.URLMenu.trim();
+      return(
       <div
         className={`modal fade video-lightbox js-video-lightbox video-lightbox-999`} // Menggunakan kelas CSS
         tabIndex={-1}
@@ -157,6 +160,8 @@ export default function Content({
           </div>
         </div>
       </div>
+      )
+    })}
 
    
     </div>
