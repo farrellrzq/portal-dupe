@@ -1,8 +1,6 @@
 'use client'
-import useModalState from '@/components/dashboard/useModalState';
 import { LayananKotaProps, LayananProps } from '@/controllers/types/home-controller.type';
 import React, { useState } from 'react'
-import Skeleton from 'react-loading-skeleton';
 
 export default function Content({ layanan, layananKota }: { layanan: LayananProps[] | null, layananKota: LayananKotaProps[] | null }) {
     const [videoUrl, setVideoUrl] = useState('');
@@ -91,7 +89,7 @@ export default function Content({ layanan, layananKota }: { layanan: LayananProp
                 <div
                     className="rounded-t-2lg rounded-b-2lg rounded-tl-none border border-jacarta-100 bg-white p-6 dark:border-jacarta-600 dark:bg-jacarta-700 md:p-10"
                 >
-                    <div className="grid lg:gap-5 gap-2 grid-cols-2 md:grid-cols-4 mt-6">
+                    {/* <div className="grid lg:gap-5 gap-2 grid-cols-2 md:grid-cols-4 mt-6">
                         {layananKota && layananKota.slice(0, 8).map((item: any, index: number) => (
                             <div key={index} className="rounded-2lg border border-jacarta-100 bg-white p-2 lg:p-8 text-center transition-shadow hover:shadow-lg dark:border-jacarta-600 dark:bg-jacarta-700">
                                 {item.URLMenu === "" ? (
@@ -121,10 +119,10 @@ export default function Content({ layanan, layananKota }: { layanan: LayananProp
                             </div>
                         ))
                         }
-                    </div>
+                    </div> */}
                 </div>
             </div>
-            {layananKota && layananKota.map((item: any, index: number) => {
+            {/* {layananKota && layananKota.map((item: any, index: number) => {
                 const cleanedURL = item.URLMenu.trim(); // Menghapus spasi di sekitar URL
                 return (
                     <div
@@ -163,7 +161,7 @@ export default function Content({ layanan, layananKota }: { layanan: LayananProp
                         </div>
                     </div>
                 )
-            })}
+            })} */}
         </div>
     )
 }
