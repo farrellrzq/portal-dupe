@@ -66,13 +66,14 @@ export async function getAgendaKegiatan(): Promise<AgendaProps[] | null> {
   }
 
   const result = await api({ url: `${API_CMS}/ViewPortal/getEvent?siteId=${Id}&type=AG01&limit=` });
+
   if ('error' in result) {
     consoleError('getAgendaKegiatan()', result.error);
   } else {
-    agendaKegiatan = result;
+    agendaKegiatan = result ? result : [];
   }
 
-  await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
+  await redisSaveString(redis,cachedKey, 3600, JSON.stringify(agendaKegiatan));
 
   return agendaKegiatan
 }
