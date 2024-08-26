@@ -72,12 +72,12 @@ export async function getLayananKota() {
 
   const cachedKey=`layanan_kota`;
 
-  // const cachedResult=await redisGetString(redis,cachedKey);
+  const cachedResult=await redisGetString(redis,cachedKey);
 
-  // if (cachedResult) {
-  //   LayananKota=JSON.parse(cachedResult);
-  //   return LayananKota;
-  // }
+  if (cachedResult) {
+    LayananKota=JSON.parse(cachedResult);
+    return LayananKota;
+  }
 
   const result = await api({ url: `${API_CMS}/ViewPortal/getExLink?siteId=2&code=&groupId=&typeId=LM&limit=&offset=&slug=`});
 
@@ -87,7 +87,7 @@ export async function getLayananKota() {
     LayananKota = result;
   }
 
-  // await redisSaveString(redis, cachedKey, 3600, JSON.stringify(result));
+  await redisSaveString(redis, cachedKey, 3600, JSON.stringify(result));
 
   return LayananKota;
 }

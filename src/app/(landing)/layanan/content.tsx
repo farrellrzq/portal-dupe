@@ -156,49 +156,6 @@ export default function Content({
           </div>
         </div>
       </div>
-
-      {/* {false &&
-        layananKota.map((item: any, index: number) => {
-          const cleanedURL = item.URLMenu.trim(); // Menghapus spasi di sekitar URL
-          return (
-            <div
-              key={index}
-              className={`modal fade video-lightbox js-video-lightbox video-lightbox-${item.Id}`} // Menggunakan kelas CSS
-              tabIndex={-1}
-              aria-label='Youtube Modal'
-              aria-hidden='true'>
-              <div className='modal-dialog modal-dialog-centered'>
-                <div className='modal-content'>
-                  <div className=''>
-                    <div className='modal-body'>
-                      <button
-                        type='button'
-                        className='btn-close'
-                        onClick={closeModal}
-                        data-bs-dismiss='modal'
-                        aria-label='Close'>
-                        <svg
-                          xmlns='http://www.w3.org/2000/svg'
-                          viewBox='0 0 24 24'
-                          width='24'
-                          height='24'
-                          className='h-6 w-6 fill-jacarta-700'>
-                          <path fill='none' d='M0 0h24v24H0z' />
-                          <path d='M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z' />
-                        </svg>
-                      </button>
-                      <iframe
-                        src={cleanedURL}
-                        width='1000'
-                        height='600'
-                        title='Video Modal'></iframe>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          );
-        })} */}
     </div>
   );
 }
