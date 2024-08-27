@@ -41,7 +41,6 @@ export async function api({ url, method = "GET", revalidate = 10 }: ApiProps): P
 }
 
 export async function getDomain() {
-  return 'diskominfo.depok.go.id'
   const headersList = headers();
   const domain = headersList.get('x-forwarded-host');
   return domain ||  'diskominfo.depok.go.id';
