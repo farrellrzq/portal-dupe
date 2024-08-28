@@ -3,30 +3,40 @@ import { api, getDomainSite } from "./Controller";
 import { CmsContentProps, ExlinkProps } from "./types/controller.type";
 import { AgendaProps, DetailBeritaProps, DetailPengumumanProps } from "./types/publikasi-controller.type";
 import  redis from '@/helpers/redis-client';
-import {redisSaveString, redisGetString} from "@/helpers/redis";
+import {
+  redisSaveString, 
+  redisGetString, 
+  redisSaveList,
+  redisGetList,
+  redisDetailValueList
+} from "@/helpers/redis";
 
 export async function getPengumuman(): Promise<CmsContentProps[] | null> {
   const { Id } = await getDomainSite();
   let pengumuman: CmsContentProps[] | null = null;
 
   const cachedKey=`pengumuman_id:${Id}`;
-  const cachedResult=await redisGetString(redis,cachedKey);
+  const cachedResult=await redisGetList(redis, cachedKey);
 
-  if (cachedResult) {
-    pengumuman=JSON.parse(cachedResult);
-    return pengumuman;
+
+  if (cachedResult.length > 0) {
+     pengumuman = cachedResult.map(item => JSON.parse(item)) as CmsContentProps[];
+     return pengumuman;
   }
   
   const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K008&limit=&offset=&category=&slug=&key=` });
+
   if ('error' in result) {
     consoleError('getPengumuman()', result.error);
   } else {
     pengumuman = result;
   }
 
-  await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
+  result.forEach(async(data:any) => {
+    await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
+  });
 
-  return pengumuman
+  return pengumuman;
 }
 
 export async function getDokumenProduk(): Promise<CmsContentProps[] | null> {
@@ -41,7 +51,8 @@ export async function getDokumenProduk(): Promise<CmsContentProps[] | null> {
     return dokumenProduk;
   }
 
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K010&groupId=&limit=&offset=` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K010&groupId=&limit=&offset=`});
+
   if ('error' in result) {
     consoleError('getDokumenProduk()', result.error);
   } else {
@@ -144,8 +155,13 @@ export async function getDetailBerita(slug_title: string) {
   const { Id } = await getDomainSite();
   let berita: DetailBeritaProps[] | null = null;
 
-  const cachedKey=`detail_berita_id:${Id}`;
-  const cachedResult=await redisGetString(redis,cachedKey);
+  const cachedKey=`berita_id:${Id}`;
+  const cachedResult=await redisDetailValueList(redis, cachedKey, slug_title);
+
+  if (cachedResult) {
+    berita=cachedResult;
+    return berita;
+  }
 
   if (cachedResult) {
     berita=JSON.parse(cachedResult);
@@ -159,8 +175,6 @@ export async function getDetailBerita(slug_title: string) {
     berita = result.slice(0, 10);
   }
 
-  await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
-
   return berita;
 }
 
@@ -168,15 +182,18 @@ export async function getDetailBeritaPopuler() {
   const { Id } = await getDomainSite();
   let beritaPopuler: DetailBeritaProps[] | null = null;
 
-  const cachedKey=`detail_berita_popular_id:${Id}`;
-  const cachedResult=await redisGetString(redis,cachedKey);
+  const cachedKey=`berita_id:${Id}`;
+  const cachedResult=await redisGetList(redis, cachedKey);
+  
 
   if (cachedResult) {
-    beritaPopuler=JSON.parse(cachedResult);
+    beritaPopuler = cachedResult.map(item => JSON.parse(item)) as DetailBeritaProps[];
+    beritaPopuler=beritaPopuler.slice(0,10);
     return beritaPopuler;
   }
 
   const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K001&limit=&offset=&category=&slug=&key=` });
+
   if ('error' in result) {
     consoleError('getBerita()', result.error);
   } else {
@@ -192,22 +209,21 @@ export async function getDetailPengumuman(slug_title: string) {
   const { Id } = await getDomainSite();
   let Pengumuman: DetailPengumumanProps[] | null = null;
 
-  const cachedKey=`detail_pengumuman_id:${Id}`;
-  const cachedResult=await redisGetString(redis,cachedKey);
+  const cachedKey=`pengumuman_publikasi_id:${Id}`;
+  const cachedResult=await redisDetailValueList(redis, cachedKey, slug_title);
 
   if (cachedResult) {
-    Pengumuman=JSON.parse(cachedResult);
+    Pengumuman=cachedResult;
     return Pengumuman;
   }
 
   const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K008&limit=&offset=&category=&slug=${slug_title}&key=` });
+
   if ('error' in result) {
     consoleError('getPengumuman()', result.error);
   } else {
     Pengumuman = result.slice(0, 10);
   }
-
-  await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
 
   return Pengumuman;
 }
@@ -240,7 +256,7 @@ export async function getDashboardStatistik() {
   let DashboardStatistik: AgendaProps[] | null = null;
   const result = await api({ url: `${API_ADMIN_DATA}/api/3/action/package_search?include_private=true&rows=2000` });
   if ('error' in result) {
-    consoleError('getPengumuman()', result.error);
+    consoleError('getDashboardStatistik()', result.error);
   } else {
     DashboardStatistik = result?.result?.results || null;
   }
@@ -251,9 +267,10 @@ export async function getDetailDashboardStatistik(id: string) {
   let DetailDashboardStatistik: AgendaProps[] | null = null;
   const result = await api({ url: `${API_ADMIN_DATA}/api/3/action/package_show?id=${id}` });
   if ('error' in result) {
-    consoleError('getPengumuman()', result.error);
+    consoleError('getDetailDashboardStatistik()', result.error);
   } else {
     DetailDashboardStatistik = result?.result?.resources || null;
   }
+
   return DetailDashboardStatistik;
 }

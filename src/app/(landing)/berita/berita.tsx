@@ -1,11 +1,10 @@
-import { getBeritaKelurahan, getBeritaKota, getBerita } from '@/controllers/HomeController'
+import {  getBeritaKota, getBerita } from '@/controllers/HomeController'
 import React from 'react'
 import Content from './content';
 
 export default async function berita() {
     const beritaKota = await getBeritaKota();
     const berita = await getBerita();
-    const beritaKelurahan = await getBeritaKelurahan();
     return (
         <section className="relative lg:py-8 lg:px-20 py-5 px-4">
             <picture className="pointer-events-none absolute inset-x-0 top-0 -z-10 dark:hidden">

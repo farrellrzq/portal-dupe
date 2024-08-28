@@ -12,7 +12,12 @@ import { LandingProps } from './types/landing-controller.type';
 import { getToken } from './HomeController';
 import { isBrowser, isMobile } from 'react-device-detect';
 import  redis from '@/helpers/redis-client';
-import {redisSaveString, redisGetString} from "@/helpers/redis";
+import {
+  redisSaveString, 
+  redisGetString,
+  redisGetList,
+  redisSaveList
+} from "@/helpers/redis";
 
 
 interface ApiProps {
@@ -20,6 +25,7 @@ interface ApiProps {
   method?: string
   revalidate?: number
 }
+
 type ApiResponse = { error: string } | any
 export async function api({ url, method = "GET", revalidate = 10 }: ApiProps): Promise<ApiResponse> {
   try {
@@ -40,15 +46,18 @@ export async function api({ url, method = "GET", revalidate = 10 }: ApiProps): P
   }
 }
 
+
 export async function getDomain() {
+ 
+  return 'dinsos.depok.go.id';
   const headersList = headers();
   const domain = headersList.get('x-forwarded-host');
   return domain ||  'diskominfo.depok.go.id';
 }
 
 export async function getDomainSite() {
-const domain=await getDomain();
-
+  const domain=await getDomain();
+  
   const cachedKey=`domainSite:${domain}`;
 
   const cachedResult=await redisGetString(redis,cachedKey);
@@ -150,25 +159,27 @@ export async function getExLink() {
 export async function getBerita() {
   let berita: CmsContentProps[] | null = null;
 
-  const cachedKey=`beritaDomain:${await getDomain()}`;
   const {Id}=await getDomainSite();
+  const cachedKey=`berita_id:${Id}`;
 
+  const cachedResult=await redisGetList(redis, cachedKey);
 
-  const cachedResult=await redisGetString(redis,cachedKey);
-
-  if (cachedResult) {
-    berita=JSON.parse(cachedResult);
-    return berita;
+  if (cachedResult.length > 0) {
+     berita = cachedResult.map(item => JSON.parse(item)) as CmsContentProps[];
+     return berita;
   }
 
   const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K001&limit=&offset=&category=&slug=&key=` });
+
   if ('error' in result) {
     consoleError('getBerita()', result.error);
   } else {
     berita = result;
   }
 
-  await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
+  result.forEach(async(data:any) => {
+    await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
+  });
 
   return berita;
 }

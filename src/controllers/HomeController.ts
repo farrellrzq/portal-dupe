@@ -14,10 +14,35 @@ import {
   SliderProps
 } from "./types/home-controller.type";
 import  redis from '@/helpers/redis-client';
-import {redisSaveString, redisGetString} from "@/helpers/redis";
+import {
+  redisSaveString, 
+  redisGetString,
+  redisSaveList,
+  redisGetList,
+  redisCheckList,
+  redisEditList
+} from "@/helpers/redis";
+
+
+async function _logAccess(domain:any){
+  const log={
+      idSite:domain,
+      timeStamp:new Date()
+  }
+  
+  if(await redisCheckList(redis, "log_access_web", domain)){
+      const listLog=await redisGetList(redis,"log_access_web");
+      const index=listLog.indexOf(domain);
+      await redisEditList(redis, "log_access_web",index, JSON.stringify(log));
+  }else{
+    await redisSaveList(redis,"log_access_web",1800, JSON.stringify(log));
+  }
+  
+}
 
 export async function getSlider() {
   const { Id } = await getDomainSite();
+  _logAccess(Id);
   let Slider: SliderProps[] | null = null;
   const cachedKey=`slider_id:${Id}`;
 
@@ -95,24 +120,14 @@ export async function getLayananKota() {
 export async function getInfografis() {
   let Infografis: InfografisProps[] | null = null;
 
-  const cachedKey=`infografis`;
-
-  const cachedResult=await redisGetString(redis,cachedKey);
-
-  if (cachedResult) {
-    Infografis=JSON.parse(cachedResult);
-    return Infografis;
-  }
-
   const result = await api({ url: `${API_DSW}/index.php/api/slider` });
-
+ 
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
     Infografis = result ? result.data : [];
   }
 
-  await redisSaveString(redis, cachedKey, 3600, JSON.stringify(Infografis));
 
   return Infografis;
 }
@@ -147,14 +162,13 @@ export async function getPengumuman() {
   let Pengumuman: PengumumanProps[] | null = null;
 
   const cachedKey=`pengumuman_id:${Id}`;
+  const cachedResult=await redisGetList(redis, cachedKey);
 
-  const cachedResult=await redisGetString(redis,cachedKey);
 
-  if (cachedResult) {
-    Pengumuman=JSON.parse(cachedResult);
-    return Pengumuman;
+  if (cachedResult.length > 0) {
+     Pengumuman = cachedResult.map(item => JSON.parse(item)) as PengumumanProps[];
+     return Pengumuman;
   }
-
   const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K008&limit=3&offset=&category=&slug=&key=`});
   if ('error' in result) {
     consoleError('get_content()', result.error);
@@ -162,7 +176,9 @@ export async function getPengumuman() {
     Pengumuman = result;
   }
 
-  await redisSaveString(redis, cachedKey, 3600, JSON.stringify(result));
+  result.forEach(async(data:any) => {
+    await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
+  });
 
   return Pengumuman;
 }
@@ -170,6 +186,7 @@ export async function getPengumuman() {
 export async function getKomoditas() {
   let Komoditas: KomoditasProps[] | null = null;
   const result = await api({ url: `${API_DSW}/api/komoditas/harga_depok` });
+  
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
@@ -230,13 +247,14 @@ export async function getBerita() {
   const { Id } = await getDomainSite();
   let Berita: BeritaProps[] | null = null;
 
+
   const cachedKey=`berita_id:${Id}`;
 
-  const cachedResult=await redisGetString(redis,cachedKey);
+  const cachedResult=await redisGetList(redis, cachedKey);
 
-  if (cachedResult) {
-    Berita=JSON.parse(cachedResult);
-    return Berita;
+  if (cachedResult.length > 0) {
+     Berita = cachedResult.map(item => JSON.parse(item)) as BeritaProps[];
+     return Berita;
   }
 
   const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K001&limit=3` });
@@ -246,36 +264,12 @@ export async function getBerita() {
     Berita = result;
   }
 
-  await redisSaveString(redis, cachedKey, 3600, JSON.stringify(result));
+  result.forEach(async(data:any) => {
+    await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
+  });
 
   return Berita;
 }
-
-export async function getBeritaKelurahan() {
-  const { Id } = await getDomainSite();
-  let BeritaKelurahan: BeritaKelurahanProps[] | null = null;
-
-  const cachedKey=`berita_kelurahan_id:${Id}`;
-
-  const cachedResult=await redisGetString(redis,cachedKey);
-
-  if (cachedResult) {
-    BeritaKelurahan=JSON.parse(cachedResult);
-    return BeritaKelurahan;
-  }
-  
-  const result = await api({ url: `${API_CMS}/ViewPortal/getContentByKecamatan?siteId=${Id}&status=&kanalType=K001&limit=3&offset=&category=`});
-  if ('error' in result) {
-    consoleError('get_content()', result.error);
-  } else {
-    BeritaKelurahan = result;
-  }
-  
-  await redisSaveString(redis, cachedKey, 3600, JSON.stringify(result));
-
-  return BeritaKelurahan;
-}
-
 
 export async function getToken() {
   try {
