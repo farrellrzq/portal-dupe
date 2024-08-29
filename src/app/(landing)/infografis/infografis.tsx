@@ -13,9 +13,7 @@ export default async function infografis() {
                 Infografis Kota Smart City yang berisi tentang informasi Kota
                 Depok
             </p>
-            {/* <!-- Slider --> */}
             <Content infografis={infografis} />
-            {/* <!-- Slider Navigation --> */}
             <div className="mt-6 flex justify-center space-x-3">
                 <div className="swiper-button-prev swiper-button-prev-5 group z-10 !flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-white p-3 text-base shadow-white-volume">
                     <svg

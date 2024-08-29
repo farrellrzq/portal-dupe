@@ -6,7 +6,6 @@ import Infografis from "./infografis/infografis";
 import Layanan from "./layanan/layanan";
 import Slider from "./slider/slider";
 import Sosmed from "./sosmed/sosmed";
-import Widget from "./widget/widget";
 import Agenda from "./agenda/agenda";
 import Berita from "./berita/berita";
 import ModalPengumuman from "./modal/modalPengumuman";
@@ -14,7 +13,6 @@ import ModalSearchBerita from "../(menu)/modal/page";
 import { HydrationOverlay } from "@builder.io/react-hydration-overlay";
 
 // Loader Skeleton
-import Widgetloader from "./loader/widgerLoader";
 import Sliderloader from "./loader/sliderLoader";
 
 export default async function Home() {
@@ -24,9 +22,6 @@ export default async function Home() {
         <Suspense fallback={<Sliderloader />}>
           <Slider />
         </Suspense>
-        {/* <Suspense fallback={<Widgetloader />}>
-          <Widget />
-        </Suspense> */}
         <Layanan />
         <section className="lg:py-20 lg:px-20 py-5 px-4">
           <div className="lg:flex mb-4">
@@ -34,12 +29,6 @@ export default async function Home() {
             <Dokumen />
           </div>
         </section>
-       {/* <section className="lg:py-24 lg:px-20 pb-5 py-5 px-4">
-          <iframe
-            src="https://dsw.depok.go.id/user/show_titikwifi"
-            className="w-full h-[55rem] overflow-x-hidden"
-          ></iframe>
-        </section> */}
         <section className="py-5 px-4 lg:py-8 lg:px-20 bg-teal-50 dark:bg-jacarta-800">
           <div className="lg:flex">
             <Sosmed />
