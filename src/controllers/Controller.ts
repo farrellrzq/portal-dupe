@@ -9,7 +9,7 @@ import {
 } from './types/controller.type';
 import { consoleError, getErrorMessage, API_CMS } from '@/helpers/site';
 import { LandingProps } from './types/landing-controller.type';
-import { getToken } from './HomeController';
+
 import { isBrowser, isMobile } from 'react-device-detect';
 import  redis from '@/helpers/redis-client';
 import {
@@ -49,7 +49,6 @@ export async function api({ url, method = "GET", revalidate = 10 }: ApiProps): P
 
 export async function getDomain() {
  
-  return 'dinsos.depok.go.id';
   const headersList = headers();
   const domain = headersList.get('x-forwarded-host');
   return domain ||  'diskominfo.depok.go.id';
@@ -302,93 +301,3 @@ export async function getCategories({ kanalType }: { kanalType: 'K001' | 'K008' 
 
   return categories;
 }
-
-export async function getPendudukBerakteData() {
-const { Id, Kecamatan } = await getDomainSite();
-
-
-  try {
-    const { token, url } = await getToken();
-    const body = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify({
-        tahun: '2023',
-        kecamatan: Kecamatan,
-        title: 'KEPEMILIKAN AKTA KELAHIRAN',
-        dimensi: 'Kepemilikan Akta',
-        subdimensi: ''
-      })
-    };
-
-    const response = await fetch(`${url}/api/kependudukan/rekap`, body);
-
-    if (!response.ok) {
-      throw new Error(`Fetching data failed with status: ${response.status}, ${await response.text()}`);
-    }
-
-    return await response.json();
-  } catch (error) {
-    console.error('Error in getPendudukBerakteData:', error);
-    throw error; // Re-throw the error for further handling if necessary
-  }
-}
-
-export async function getDataSiswa() {
-  try {
-    const { token, url } = await getToken();
-    const body = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify({
-        tahun: '2023'
-      })
-    };
-
-    const response = await fetch(`${url}/api/siswa/aggsiswa/perjenjangstatus`, body);
-
-    if (!response.ok) {
-      throw new Error(`Fetching data failed with status: ${response.status}, ${await response.text()}`);
-    }
-
-    return await response.json();
-  } catch (error) {
-    console.error('Error in getDataSiswa:', error);
-    throw error; // Re-throw the error for further handling if necessary
-  }
-}
-
-export function groupBySubdimensi(data: any) {
-  const groupedData: { [key: string]: typeof data } = {};
-
-  data.forEach((item: any) => {
-    const { subdimensi, ...rest } = item;
-    if (!groupedData[subdimensi]) {
-      groupedData[subdimensi] = [];
-    }
-    groupedData[subdimensi].push(rest);
-  });
-
-  return groupedData;
-}
-
-export function groupByJenjang(data: any) {
-  const groupedData: { [key: string]: typeof data } = {};
-
-  data.forEach((item: any) => {
-    const { jenjang, ...rest } = item;
-    if (!groupedData[jenjang]) {
-      groupedData[jenjang] = [];
-    }
-    groupedData[jenjang].push(rest);
-  });
-
-  return groupedData;
-}
-
