@@ -129,17 +129,18 @@ export async function getLayananKota() {
 export async function getInfografis() {
   let Infografis: InfografisProps[] | null = null;
 
-  const result = await api({ url: `${API_DSW}/index.php/api/slider` });
- 
+  
   const cachedKey=`infografis`;
-
+  
   const cachedResult=await redisGetList(redis,cachedKey);
-
+  
   if (cachedResult.length > 0) {
     Infografis = cachedResult.map(item => JSON.parse(item)) as InfografisProps[];
     return Infografis;
   }
-
+  
+  const result = await api({ url: `${API_DSW}/index.php/api/slider` });
+  
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
