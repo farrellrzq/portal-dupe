@@ -143,33 +143,6 @@ export type DokumenProps = {
   TypeLayanan: null | string;
 };
 
-export type KomoditasProps = {
-  komoditi: string;
-  id: string;
-  price_today: string;
-  price_yesterday: string;
-  selisih: string;
-};
-
-export type PotensiProps = {
-  Id: string;
-  SiteId: string;
-  TypeId: string;
-  Nama: string;
-  Image: string;
-  Alamat: string;
-  Lat: string;
-  Lng: string;
-  Deskripsi: string;
-  Mobile: null | string;
-  Telp: string;
-  PJ: string;
-  Facebook: string;
-  Instagram: string;
-  Web: string;
-  Email: string;
-  Type: string;
-};
 
 export type BeritaKotaProps = {
   title: string;
