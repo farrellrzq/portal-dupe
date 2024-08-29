@@ -3,18 +3,23 @@ import { api, getDomainSite } from "./Controller";
 import { ImageProps, LandasanProps, MaklumatProps, MottoProps, TupoksiProps } from "./types/profil-controller.type";
 import { getToken } from "./HomeController";
 import  redis from '@/helpers/redis-client';
-import {redisSaveString, redisGetString} from "@/helpers/redis";
+import {
+  redisSaveString, 
+  redisGetString,
+  redisGetList,
+  redisSaveList
+} from "@/helpers/redis";
 
 export async function getLandasan() {
   const { Id } = await getDomainSite();
   let Landasan: LandasanProps[] | null = null;
 
   const cachedKey=`landasan_id:${Id}`;
-  const cachedResult=await redisGetString(redis,cachedKey);
+  const cachedResult=await redisGetList(redis, cachedKey);
 
-  if (cachedResult) {
-    Landasan=JSON.parse(cachedResult);
-    return Landasan;
+  if (cachedResult.length > 0) {
+     Landasan = cachedResult.map(item => JSON.parse(item)) as LandasanProps[];
+     return Landasan;
   }
 
   const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K003&groupId=landasanhukum` });
@@ -22,10 +27,14 @@ export async function getLandasan() {
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
-    Landasan = result;
+    Landasan = result ? result : [];
   }
 
-  await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
+  if(result.length > 0){
+    result.forEach(async(data:any) => {
+      await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
+    });  
+  }
 
   return Landasan;
 }
@@ -35,21 +44,25 @@ export async function getImage() {
   let Image: ImageProps[] | null = null;
 
   const cachedKey=`image_id:${Id}`;
-  const cachedResult=await redisGetString(redis,cachedKey);
+  const cachedResult=await redisGetList(redis, cachedKey);
 
-  if (cachedResult) {
-    Image=JSON.parse(cachedResult);
-    return Image;
+  if (cachedResult.length > 0) {
+     Image = cachedResult.map(item => JSON.parse(item)) as ImageProps[];
+     return Image;
   }
 
   const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K006&limit=&offset=&groupId=Image%20Struktur%20Organisasi` });
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
-    Image = result;
+    Image = result ? result : [];
   }
 
-  await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
+  if(result.length > 0){
+    result.forEach(async(data:any) => {
+      await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
+    });  
+  }
 
   return Image;
 }
@@ -59,21 +72,25 @@ export async function getTupoksi() {
   let Tupoksi: TupoksiProps[] | null = null;
 
   const cachedKey=`tupoksi_id:${Id}`;
-  const cachedResult=await redisGetString(redis,cachedKey);
+  const cachedResult=await redisGetList(redis, cachedKey);
 
-  if (cachedResult) {
-    Tupoksi=JSON.parse(cachedResult);
-    return Tupoksi;
+  if (cachedResult.length > 0) {
+     Tupoksi = cachedResult.map(item => JSON.parse(item)) as TupoksiProps[];
+     return Tupoksi;
   }
 
   const result = await api({ url: `${API_CMS}/ViewPortal/getJabatan?siteId=${Id}` });
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
-    Tupoksi = result;
+    Tupoksi = result ? result : [];
   }
 
-  await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
+  if(result.length > 0){
+    result.forEach(async(data:any) => {
+      await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
+    });  
+  }
 
   return Tupoksi;
 }
@@ -83,11 +100,11 @@ export async function getMaklumat() {
   let Maklumat: MaklumatProps[] | null = null;
 
   const cachedKey=`maklumat_id:${Id}`;
-  const cachedResult=await redisGetString(redis,cachedKey);
+  const cachedResult=await redisGetList(redis, cachedKey);
 
-  if (cachedResult) {
-    Maklumat=JSON.parse(cachedResult);
-    return Maklumat;
+  if (cachedResult.length > 0) {
+     Maklumat = cachedResult.map(item => JSON.parse(item)) as MaklumatProps[];
+     return Maklumat;
   }
 
   const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K006&limit=&offset=&groupId=Maklumat` });
@@ -95,10 +112,14 @@ export async function getMaklumat() {
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
-    Maklumat = result;
+    Maklumat = result ? result : [];
   }
 
-  await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
+  if(result.length > 0){
+    result.forEach(async(data:any) => {
+      await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
+    });  
+  }
 
   return Maklumat;
 }
@@ -108,21 +129,26 @@ export async function getMotto() {
   let Motto: MottoProps[] | null = null;
 
   const cachedKey=`motto_id:${Id}`;
-  const cachedResult=await redisGetString(redis,cachedKey);
+  const cachedResult=await redisGetList(redis, cachedKey);
 
-  if (cachedResult) {
-    Motto=JSON.parse(cachedResult);
-    return Motto;
+  if (cachedResult.length > 0) {
+     Motto = cachedResult.map(item => JSON.parse(item)) as MaklumatProps[];
+     return Motto;
   }
+  
   const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K003&limit=3&offset=&groupId=motto%20pelayanan` });
   
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
-    Motto = result;
+    Motto = result ? result : [];
   }
   
-  await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
+  if(result.length > 0){
+    result.forEach(async(data:any) => {
+      await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
+    });  
+  }
 
   return Motto;
 }

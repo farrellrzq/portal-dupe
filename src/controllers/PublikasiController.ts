@@ -18,7 +18,6 @@ export async function getPengumuman(): Promise<CmsContentProps[] | null> {
   const cachedKey=`pengumuman_id:${Id}`;
   const cachedResult=await redisGetList(redis, cachedKey);
 
-
   if (cachedResult.length > 0) {
      pengumuman = cachedResult.map(item => JSON.parse(item)) as CmsContentProps[];
      return pengumuman;
@@ -29,12 +28,14 @@ export async function getPengumuman(): Promise<CmsContentProps[] | null> {
   if ('error' in result) {
     consoleError('getPengumuman()', result.error);
   } else {
-    pengumuman = result;
+    pengumuman = result ? result : [];
   }
 
-  result.forEach(async(data:any) => {
-    await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
-  });
+  if(result.length > 0){
+    result.forEach(async(data:any) => {
+      await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
+    });  
+  }
 
   return pengumuman;
 }
@@ -44,11 +45,11 @@ export async function getDokumenProduk(): Promise<CmsContentProps[] | null> {
   let dokumenProduk: CmsContentProps[] | null = null;
 
   const cachedKey=`dokumen_produk_id:${Id}`;
-  const cachedResult=await redisGetString(redis,cachedKey);
+  const cachedResult=await redisGetList(redis, cachedKey);
 
-  if (cachedResult) {
-    dokumenProduk=JSON.parse(cachedResult);
-    return dokumenProduk;
+  if (cachedResult.length > 0) {
+     dokumenProduk = cachedResult.map(item => JSON.parse(item)) as CmsContentProps[];
+     return dokumenProduk;
   }
 
   const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K010&groupId=&limit=&offset=`});
@@ -56,10 +57,14 @@ export async function getDokumenProduk(): Promise<CmsContentProps[] | null> {
   if ('error' in result) {
     consoleError('getDokumenProduk()', result.error);
   } else {
-    dokumenProduk = result;
+    dokumenProduk = result ? result  : [];
   }
 
-  await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
+  if(result.length > 0){
+    result.forEach(async(data:any) => {
+      await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
+    });  
+  }
 
   return dokumenProduk
 }
@@ -69,11 +74,11 @@ export async function getAgendaKegiatan(): Promise<AgendaProps[] | null> {
   let agendaKegiatan: AgendaProps[] | null = null;
 
   const cachedKey=`agenda_kegiatan_id:${Id}`;
-  const cachedResult=await redisGetString(redis,cachedKey);
+  const cachedResult=await redisGetList(redis, cachedKey);
 
-  if (cachedResult) {
-    agendaKegiatan=JSON.parse(cachedResult);
-    return agendaKegiatan;
+  if (cachedResult.length > 0) {
+     agendaKegiatan = cachedResult.map(item => JSON.parse(item)) as AgendaProps[];
+     return agendaKegiatan;
   }
 
   const result = await api({ url: `${API_CMS}/ViewPortal/getEvent?siteId=${Id}&type=AG01&limit=` });
@@ -84,7 +89,11 @@ export async function getAgendaKegiatan(): Promise<AgendaProps[] | null> {
     agendaKegiatan = result ? result : [];
   }
 
-  await redisSaveString(redis,cachedKey, 3600, JSON.stringify(agendaKegiatan));
+  if(result.length > 0){
+    result.forEach(async(data:any) => {
+      await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
+    });  
+  }
 
   return agendaKegiatan
 }
@@ -95,11 +104,11 @@ export async function getMenu() {
   let Menu: ExlinkProps[] | null = null;
 
   const cachedKey=`menu_id:${Id}`;
-  const cachedResult=await redisGetString(redis,cachedKey);
+  const cachedResult=await redisGetList(redis, cachedKey);
 
-  if (cachedResult) {
-    Menu=JSON.parse(cachedResult);
-    return Menu;
+  if (cachedResult.length > 0) {
+     Menu = cachedResult.map(item => JSON.parse(item)) as ExlinkProps[];
+     return Menu;
   }
 
   const result = await api({ url: `${API_CMS}/ViewPortal/getExLink?siteId=${Id}&typeId=&limit=&offset=&code=publikasi` });
@@ -110,7 +119,11 @@ export async function getMenu() {
     Menu = result ? result : [];
   }
 
-  await redisSaveString(redis,cachedKey, 3600, JSON.stringify(Menu));
+  if(result.length > 0){
+    result.forEach(async(data:any) => {
+      await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
+    });  
+  }
 
   return Menu;
 }
@@ -120,22 +133,27 @@ export async function getInfografis(): Promise<AgendaProps[] | null> {
   let Infografis: AgendaProps[] | null = null;
 
   const cachedKey=`infografis_cms_id:${Id}`;
-  const cachedResult=await redisGetString(redis,cachedKey);
+ 
+  const cachedResult=await redisGetList(redis, cachedKey);
 
-  if (cachedResult) {
-    Infografis=JSON.parse(cachedResult);
-    return Infografis;
+  if (cachedResult.length > 0) {
+     Infografis = cachedResult.map(item => JSON.parse(item)) as AgendaProps[];
+     return Infografis;
   }
 
   const result = await api({ url: `${API_CMS}/ViewPortal/getGallery?siteId=${Id}&category=&limit=&type=&offset=` });
-  console.log(`infografis : ${result}`);
+
   if ('error' in result) {
     consoleError('getGallery()', result.error);
   } else {
-    Infografis = result;
+    Infografis = result ? result : [];
   }
 
-  await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
+  if(result.length > 0){
+    result.forEach(async(data:any) => {
+      await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
+    });  
+  }
 
   return Infografis
 }
@@ -146,7 +164,7 @@ export async function getVideo(): Promise<AgendaProps[] | null> {
   if ('error' in result) {
     consoleError('getAgendaKegiatan()', result.error);
   } else {
-    Video = result;
+    Video = result ? result : [];
   }
   return Video
 }
@@ -163,16 +181,11 @@ export async function getDetailBerita(slug_title: string) {
     return berita;
   }
 
-  if (cachedResult) {
-    berita=JSON.parse(cachedResult);
-    return berita;
-  }
-
   const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K001&limit=&offset=&category=&slug=${slug_title}&key=` });
   if ('error' in result) {
     consoleError('getBerita()', result.error);
   } else {
-    berita = result.slice(0, 10);
+    berita =  result ? result.slice(0, 10) : [];
   }
 
   return berita;
@@ -186,7 +199,7 @@ export async function getDetailBeritaPopuler() {
   const cachedResult=await redisGetList(redis, cachedKey);
   
 
-  if (cachedResult) {
+  if (cachedResult.length > 0) {
     beritaPopuler = cachedResult.map(item => JSON.parse(item)) as DetailBeritaProps[];
     beritaPopuler=beritaPopuler.slice(0,10);
     return beritaPopuler;
@@ -197,10 +210,8 @@ export async function getDetailBeritaPopuler() {
   if ('error' in result) {
     consoleError('getBerita()', result.error);
   } else {
-    beritaPopuler = result.slice(0, 10);
+    beritaPopuler = result ? result.slice(0, 10) : [];
   }
-
-  await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
 
   return beritaPopuler;
 }
@@ -213,8 +224,8 @@ export async function getDetailPengumuman(slug_title: string) {
   const cachedResult=await redisDetailValueList(redis, cachedKey, slug_title);
 
   if (cachedResult) {
-    Pengumuman=cachedResult;
-    return Pengumuman;
+      Pengumuman = cachedResult.map(item => JSON.parse(item)) as DetailPengumumanProps[];
+      Pengumuman= Pengumuman.slice(0,10);
   }
 
   const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K008&limit=&offset=&category=&slug=${slug_title}&key=` });
@@ -222,7 +233,7 @@ export async function getDetailPengumuman(slug_title: string) {
   if ('error' in result) {
     consoleError('getPengumuman()', result.error);
   } else {
-    Pengumuman = result.slice(0, 10);
+    Pengumuman = result ? result.slice(0, 10) : [];
   }
 
   return Pengumuman;
@@ -232,11 +243,12 @@ export async function getDetailPengumumanPopuler() {
   const { Id } = await getDomainSite();
   let PengumumanPopuler: DetailPengumumanProps[] | null = null;
 
-  const cachedKey=`detail_pengumuman_popular_id:${Id}`;
-  const cachedResult=await redisGetString(redis,cachedKey);
+  const cachedKey=`pengumuman_id:${Id}`;
+  const cachedResult=await redisGetList(redis, cachedKey);
 
-  if (cachedResult) {
-    PengumumanPopuler=JSON.parse(cachedResult);
+  if (cachedResult.length > 0) {
+    PengumumanPopuler = cachedResult.map(item => JSON.parse(item)) as DetailPengumumanProps[];
+    PengumumanPopuler=PengumumanPopuler.slice(0,10);
     return PengumumanPopuler;
   }
   
@@ -244,10 +256,8 @@ export async function getDetailPengumumanPopuler() {
   if ('error' in result) {
     consoleError('getPengumuman()', result.error);
   } else {
-    PengumumanPopuler = result.slice(0, 10);
+    PengumumanPopuler = result ? result.slice(0, 10) : [];
   }
-
-  await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
 
   return PengumumanPopuler;
 }
