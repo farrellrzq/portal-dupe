@@ -12,8 +12,6 @@ import {
 } from "./types/home-controller.type";
 import  redis from '@/helpers/redis-client';
 import {
-  redisSaveString, 
-  redisGetString,
   redisSaveList,
   redisGetList,
   redisCheckList,
@@ -39,7 +37,7 @@ async function _logAccess(domain:any){
 
 export async function getSlider() {
   const { Id } = await getDomainSite();
-  _logAccess(Id);
+  // _logAccess(Id);
   let Slider: SliderProps[] | null = null;
   const cachedKey=`slider_id:${Id}`;
 
@@ -160,14 +158,14 @@ export async function getDokumen() {
   const { Id } = await getDomainSite();
   let Dokumen: DokumenProps[] | null = null;
 
-  const cachedKey=`dokumen_id:${Id}`;
+  // const cachedKey=`dokumen_id:${Id}`;
 
-  const cachedResult=await redisGetList(redis,cachedKey);
+  // const cachedResult=await redisGetList(redis,cachedKey);
 
-   if (cachedResult.length > 0) {
-     Dokumen = cachedResult.map(item => JSON.parse(item)) as DokumenProps[];
-     return Dokumen;
-  }
+  //  if (cachedResult.length > 0) {
+  //    Dokumen = cachedResult.map(item => JSON.parse(item)) as DokumenProps[];
+  //    return Dokumen;
+  // }
 
   const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K010&limit=3`});
   if ('error' in result) {
@@ -176,11 +174,11 @@ export async function getDokumen() {
     Dokumen = result ? result : [];
   }
 
-  if(result.length > 0){
-    result.forEach(async(data:any) => {
-      await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
-    });
-  }
+  // if(result.length > 0){
+  //   result.forEach(async(data:any) => {
+  //     await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
+  //   });
+  // }
   
   return Dokumen;
 }
@@ -189,13 +187,13 @@ export async function getPengumuman() {
   const { Id } = await getDomainSite();
   let Pengumuman: PengumumanProps[] | null = null;
 
-  const cachedKey=`pengumuman_id:${Id}`;
-  const cachedResult=await redisGetList(redis, cachedKey);
+  // const cachedKey=`pengumuman_id:${Id}`;
+  // const cachedResult=await redisGetList(redis, cachedKey);
 
-  if (cachedResult.length > 0) {
-     Pengumuman = cachedResult.map(item => JSON.parse(item)) as PengumumanProps[];
-     return Pengumuman;
-  }
+  // if (cachedResult.length > 0) {
+  //    Pengumuman = cachedResult.map(item => JSON.parse(item)) as PengumumanProps[];
+  //    return Pengumuman;
+  // }
 
   const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K008&limit=3&offset=&category=&slug=&key=`});
   if ('error' in result) {
@@ -204,11 +202,11 @@ export async function getPengumuman() {
     Pengumuman = result ? result : [];
   }
 
-  if(result.length > 0){
-    result.forEach(async(data:any) => {
-      await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
-    });
-  }
+  // if(result.length > 0){
+  //   result.forEach(async(data:any) => {
+  //     await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
+  //   });
+  // }
 
   return Pengumuman;
 }
@@ -245,14 +243,14 @@ export async function getBerita() {
   const { Id } = await getDomainSite();
   let Berita: BeritaProps[] | null = null;
 
-  const cachedKey=`berita_id:${Id}`;
+  // const cachedKey=`berita_id:${Id}`;
 
-  const cachedResult=await redisGetList(redis, cachedKey);
+  // const cachedResult=await redisGetList(redis, cachedKey);
 
-  if (cachedResult.length > 0) {
-     Berita = cachedResult.map(item => JSON.parse(item)) as BeritaProps[];
-     return Berita;
-  }
+  // if (cachedResult.length > 0) {
+  //    Berita = cachedResult.map(item => JSON.parse(item)) as BeritaProps[];
+  //    return Berita;
+  // }
 
   const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K001&limit=3` });
 
@@ -262,11 +260,11 @@ export async function getBerita() {
     Berita = result ? result : [];
   }
 
-  if(result.length > 0){
-    result.forEach(async(data:any) => {
-      await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
-    });
-  }
+  // if(result.length > 0){
+  //   result.forEach(async(data:any) => {
+  //     await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
+  //   });
+  // }
 
   return Berita;
 }

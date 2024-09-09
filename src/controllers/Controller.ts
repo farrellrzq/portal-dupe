@@ -136,21 +136,21 @@ export async function getExLink() {
   const {Id}=await getDomainSite();
 
 
-  const cachedResult=await redisGetString(redis,cachedKey);
+  // const cachedResult=await redisGetString(redis,cachedKey);
 
-  if (cachedResult) {
-    exlink=JSON.parse(cachedResult);
-    return exlink;
-  }
+  // if (cachedResult) {
+  //   exlink=JSON.parse(cachedResult);
+  //   return exlink;
+  // }
 
-  const result = await api({ url: `${API_CMS}/ViewPortal/getExLink?siteId=${Id}&code=&groupId=&typeId=EP&limit=&offset=` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/getExLink?siteId=${Id}&code=&groupId=&typeId=EP&limit=3&offset=` });
   if ('error' in result) {
     consoleError('getExLink()', result.error);
   } else {
     exlink = result;
   }
 
-  await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
+  // await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
 
   return exlink;
 }
@@ -163,12 +163,12 @@ export async function getBerita() {
 
   const cachedResult=await redisGetList(redis, cachedKey);
 
-  if (cachedResult.length > 0) {
-     berita = cachedResult.map(item => JSON.parse(item)) as CmsContentProps[];
-     return berita;
-  }
+  // if (cachedResult.length > 0) {
+  //    berita = cachedResult.map(item => JSON.parse(item)) as CmsContentProps[];
+  //    return berita;
+  // }
 
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K001&limit=&offset=&category=&slug=&key=` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K001&limit=3&offset=&category=&slug=&key=` });
 
   if ('error' in result) {
     consoleError('getBerita()', result.error);
@@ -176,9 +176,9 @@ export async function getBerita() {
     berita = result;
   }
 
-  result.forEach(async(data:any) => {
-    await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
-  });
+  // result.forEach(async(data:any) => {
+  //   await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
+  // });
 
   return berita;
 }
@@ -202,12 +202,12 @@ export async function getVisitAgent() {
   const {Id}=await getDomainSite();
 
 
-  const cachedResult=await redisGetString(redis,cachedKey);
+  // const cachedResult=await redisGetString(redis,cachedKey);
 
-  if (cachedResult) {
-    Logview=JSON.parse(cachedResult);
-    return Logview;
-  }
+  // if (cachedResult) {
+  //   Logview=JSON.parse(cachedResult);
+  //   return Logview;
+  // }
 
   const result = await api({
     url: `${API_CMS}/ViewPortal/log_view?siteid=${Id}&contentid=&codekanal=&device=${agentInfo}&browse=${agentInfo}&codekanal=`
@@ -219,7 +219,7 @@ export async function getVisitAgent() {
     Logview = result;
   }
 
-  await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
+  // await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
 
   return Logview;
 }
@@ -233,21 +233,21 @@ export async function getVisit() {
     w_hari: []
   }; // Inisialisasi visit dengan tipe VisitProps
 
-  const cachedKey=`visitDomain:${await getDomain()}`;
+  // const cachedKey=`visitDomain:${await getDomain()}`;
   const {Id}=await getDomainSite();
 
 
-  const cachedResult=await redisGetString(redis,cachedKey);
+  // const cachedResult=await redisGetString(redis,cachedKey);
 
 
   try {
     // Panggil getVisitAgent secara async
     const Logview = await getVisitAgent();
 
-    if (cachedResult) {
-    visit=JSON.parse(cachedResult);
-    return visit;
-  }
+    // if (cachedResult) {
+    //   visit=JSON.parse(cachedResult);
+    //   return visit;
+    // }
 
     const result = await api({ url: `${API_CMS}/ViewPortal/getPengunjung?siteid=${Id}` });
 
@@ -270,7 +270,7 @@ export async function getVisit() {
     throw error;
   }
 
-  await redisSaveString(redis,cachedKey, 3600, JSON.stringify(visit));
+  // await redisSaveString(redis,cachedKey, 3600, JSON.stringify(visit));
 
   return visit;
 }
@@ -279,16 +279,16 @@ export async function getVisit() {
 export async function getCategories({ kanalType }: { kanalType: 'K001' | 'K008' }): Promise<CategoryProps[] | null> {
   let categories: CategoryProps[] | null = null;
 
-  const cachedKey=`categoriesDomain:${await getDomain()}`;
+  // const cachedKey=`categoriesDomain:${await getDomain()}`;
   const {Id}=await getDomainSite();
 
 
-  const cachedResult=await redisGetString(redis,cachedKey);
+  // const cachedResult=await redisGetString(redis,cachedKey);
 
-  if (cachedResult) {
-    categories=JSON.parse(cachedResult);
-    return categories;
-  }
+  // if (cachedResult) {
+  //   categories=JSON.parse(cachedResult);
+  //   return categories;
+  // }
 
   const result = await api({ url: `${API_CMS}/ViewPortal/ContentCategory?siteId=${Id}&status=ST01&kanalType=${kanalType}&Id=` });
   if ('error' in result) {
@@ -297,7 +297,7 @@ export async function getCategories({ kanalType }: { kanalType: 'K001' | 'K008' 
     categories = result;
   }
 
-  await redisSaveString(redis,cachedKey, 3600, JSON.stringify(categories));
+  // await redisSaveString(redis,cachedKey, 3600, JSON.stringify(categories));
 
   return categories;
 }

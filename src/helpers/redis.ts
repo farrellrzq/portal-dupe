@@ -54,6 +54,10 @@ export async function redisDetailValueList(redis:Redis, key:string, checkItem:an
     return null;
 }
 
-export function redisEditList(redis:Redis, key:string, index:number, newValue:any){
+export async function redisEditList(redis:Redis, key:string, index:number, newValue:any){
     redis.lset(key,index,newValue);
+}
+
+export async function redisDelete(redis:Redis, key:string){
+    await redis.del(key);
 }

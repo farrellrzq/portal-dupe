@@ -9,14 +9,14 @@ export async function getLanding() {
   const { Id } = await getDomainSite();
   let Landing: LandingProps[] | null = null;
 
-  const cachedKey=`landing_id:${Id}`;
+  // const cachedKey=`landing_id:${Id}`;
 
-  const cachedResult=await redisGetString(redis,cachedKey);
+  // const cachedResult=await redisGetString(redis,cachedKey);
 
-  if (cachedResult) {
-    Landing=JSON.parse(cachedResult);
-    return Landing;
-  }
+  // if (cachedResult) {
+  //   Landing=JSON.parse(cachedResult);
+  //   return Landing;
+  // }
 
   const result = await api({ url: `${API_CMS}/ViewPortal/getSiteByKecamatan?siteId=${Id}` });
   if ('error' in result) {
@@ -25,7 +25,7 @@ export async function getLanding() {
     Landing = result;
   }
 
-  await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
+  // await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
 
   return Landing;
 }
