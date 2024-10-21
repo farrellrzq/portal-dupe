@@ -141,6 +141,18 @@ export async function getDetailPengumumanPopuler() {
   return PengumumanPopuler;
 }
 
+export async function getDashboard() {
+  const { Id } = await getDomainSite();
+  let Dashboard: CmsContentProps[] | null = null;
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K009&limit=&offset=&category=&slug=&key=` });
+  if ('error' in result) {
+    consoleError('getDashboard()', result.error);
+  } else {
+    Dashboard = result.slice(0, 10);
+  }
+  return Dashboard;
+}
+
 export async function getDashboardStatistik() {
   const { Id } = await getDomainSite();
   let DashboardStatistik: AgendaProps[] | null = null;

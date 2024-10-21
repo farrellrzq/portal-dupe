@@ -21,7 +21,17 @@ export async function api({ url, method = "GET", revalidate = 10 }: ApiProps): P
         revalidate
       }
     });
-    const result = await res.json();
+
+    // Ambil teks respons
+    const text = await res.text();
+
+    // Cek jika respons kosong
+    if (!text) {
+      throw new Error('Empty response from API');
+    }
+
+    // Coba parsing respons sebagai JSON
+    const result = JSON.parse(text);
     return result;
   } catch (error) {
     console.error('There was an error: ', error);
@@ -32,10 +42,11 @@ export async function api({ url, method = "GET", revalidate = 10 }: ApiProps): P
   }
 }
 
+
 export async function getDomain() {
   const headersList = headers();
   const domain = headersList.get('x-forwarded-host');
-  return 'disnaker.depok.go.id';
+  return 'diskominfo.depok.go.id';
 }
 
 export async function getDomainSite() {
