@@ -59,7 +59,9 @@ export type ExlinkProps = {
   CreateDate: string,
   Creator: string,
   ModifyDate: string,
-  Modifier: string
+  Modifier: string,
+  Dashboard: string | null;
+  url: string | null;
 }
 
 export type CmsContentProps = {
@@ -90,7 +92,8 @@ export type CmsContentProps = {
   Kanal: string
   Category: string | null,
   Author: string
-  TypeLayanan: string | null
+  TypeLayanan: string | null,
+  Dashboard: string | null
 }
 
 export type VisitProps = {

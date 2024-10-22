@@ -35,7 +35,7 @@ export default function Content({ slider }: { slider: SliderProps[] | null }) {
                             ? `https://cms.depok.go.id/upload/slider/${item.File}`
                             : "/img/kecamatan/dsw/kesehatan.png"}
                           alt="gradient"
-                          className="h-fit w-full object-cover"
+                          className="h-fit w-full object-cover bg-center bg-no-repeat bg-cover"
                         />
                       </picture>
                       <picture className="pointer-events-none absolute inset-0 -z-10 hidden dark:block">
@@ -44,7 +44,7 @@ export default function Content({ slider }: { slider: SliderProps[] | null }) {
                             ? `https://cms.depok.go.id/upload/slider/${item.File}`
                             : "/img/kecamatan/dsw/kesehatan.png"}
                           alt="gradient dark"
-                          className="h-fit w-full object-cover"
+                          className="h-fit w-full object-cover bg-center bg-no-repeat bg-cover"
                         />
                       </picture>
                       <div className="items-center justify-between md:flex">

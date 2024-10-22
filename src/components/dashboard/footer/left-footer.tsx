@@ -7,24 +7,6 @@ export default async function LeftFooter() {
     <div className="col-span-full sm:col-span-3 md:col-span-4">
       {/* <!-- Logo --> */}
       <a href="#" className="mb-6 inline-block">
-        {/* <img
-          src={
-            profileSite?.imageSite
-              ? `https://cms.depok.go.id/upload/profilesite/${profileSite?.imageSite}`
-              : "/img/logo-opd.png"
-          }
-          className="max-h-12 dark:hidden"
-          alt="Portal OPD Pemerintahan Kota Depok"
-        />
-        <img
-          src={
-            profileSite?.imageSite
-              ? `https://cms.depok.go.id/upload/profilesite/${profileSite?.imageSite}`
-              : "/img/logo-opd.png"
-          }
-          className="hidden max-h-12 dark:block"
-          alt="Portal OPD Pemerintahan Kota Depok"
-        /> */}
         <img src={
           profileSite?.imageSite
             ? `https://cms.depok.go.id/upload/profilesite/${profileSite?.imageSite}`
@@ -41,7 +23,7 @@ export default async function LeftFooter() {
             ? profileSite.Description.length > 165
               ? `${profileSite.Description.substring(0, 165)}...`
               : profileSite.Description
-            : "Dinas Komunikasi dan Informatika | Pemerintah Kota Depok Portal Resmi Kecamatan Kota Depok"}
+            : "Dinas Komunikasi dan Informatika | Pemerintah Kota Depok Portal Resmi Disnaker Kota Depok"}
         </p>
         {profileSite?.Description &&
           profileSite.Description.length > 165 && (

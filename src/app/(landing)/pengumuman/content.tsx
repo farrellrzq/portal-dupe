@@ -2,6 +2,7 @@ import { PengumumanProps } from '@/controllers/types/home-controller.type';
 import React from 'react'
 
 export default function Content({ pengumuman }: { pengumuman: PengumumanProps[] | null }) {
+    // return JSON.stringify ( pengumuman )
     return (
         <div className="swiper single-slider text-center mb-0">
             <div className="swiper-wrapper">
