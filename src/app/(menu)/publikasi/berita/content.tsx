@@ -2,6 +2,7 @@
 import Search from '@/components/dashboard/source/search';
 import React, { useState } from 'react'
 import { CmsContentProps } from '@/controllers/types/controller.type';
+import { formatDate } from '@/helpers/site';
 
 export default function Content({ berita }: { berita: CmsContentProps[] | null }) {
 
@@ -90,14 +91,14 @@ export default function Content({ berita }: { berita: CmsContentProps[] | null }
                   </span>
                 </div>
                 <div className="flex flex-wrap items-center space-x-2 text-sm text-jacarta-400 mb-2">
-                  <span>{item.created_at}</span>
+                  <span>{formatDate(item.created_at)}</span>
                 </div>
                 <h2
                   className="mb-4 mt-2 font-display text-xl text-jacarta-700 hover:text-green-600 dark:text-white dark:hover:text-green-600">
                   <a href={`/publikasi/berita/${item?.slug_title}`}> {item.title.slice(0, 38)} </a>
                 </h2>
                 <p className="mb-8 text-sm dark:text-jacarta-200 line-clamp-2">
-                  {item.content.replace(/<[^>]+>|&nbsp;|&#8203;|[\u200B-\u200D\uFEFF]|-->/g, '').slice(0, 100) + '...'}
+                  {item.content.replace(/<[^>]+>|&nbsp;|&#8203;|[\u200B-\u200D\uFEFF]|-->/g, '').slice(0, 100)}
                 </p>
               </div>
             </div>

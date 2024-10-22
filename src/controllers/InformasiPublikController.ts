@@ -8,7 +8,7 @@ export async function getInformasiPublik() {
   const { Id } = await getDomainSite();
   let InformasiPublik: InformasiPublikProps[] | null = null;
 
-  const cachedKey=`informasi_publik_id:${Id}`;
+  // const cachedKey=`informasi_publik_id:${Id}`;
 
   // const cachedResult=await redisGetList(redis, cachedKey);
 
@@ -17,7 +17,7 @@ export async function getInformasiPublik() {
   //    return InformasiPublik;
   // }
 
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K016&limit=5&offset=&groupId=Berkala&slug=&key=`});
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K016&limit=&groupId=Berkala`});
 
   if ('error' in result) {
     consoleError('get_content()', result.error);
@@ -47,7 +47,7 @@ export async function getInformasiSertaMerta() {
   //    return InformasiSertaMerta;
   // }
 
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K016&limit=5&offset=&groupId=Serta%20Merta&slug=&key=` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K016&limit=&offset=&groupId=Serta%20Merta&slug=&key=` });
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {

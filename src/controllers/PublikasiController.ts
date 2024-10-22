@@ -81,7 +81,7 @@ export async function getAgendaKegiatan(): Promise<AgendaProps[] | null> {
   //    return agendaKegiatan;
   // }
 
-  const result = await api({ url: `${API_CMS}/ViewPortal/getEvent?siteId=${Id}&type=AG01&limit=3` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/getEvent?siteId=${Id}&type=AG01&limit=` });
 
   if ('error' in result) {
     consoleError('getAgendaKegiatan()', result.error);
@@ -141,7 +141,7 @@ export async function getInfografis(): Promise<AgendaProps[] | null> {
   //    return Infografis;
   // }
 
-  const result = await api({ url: `${API_CMS}/ViewPortal/getGallery?siteId=${Id}&category=&limit=3&type=&offset=` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/getGallery?siteId=${Id}&category=&limit=&type=&offset=` });
 
   if ('error' in result) {
     consoleError('getGallery()', result.error);

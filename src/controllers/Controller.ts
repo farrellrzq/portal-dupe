@@ -164,11 +164,11 @@ export async function getBerita() {
   const cachedResult=await redisGetList(redis, cachedKey);
 
   // if (cachedResult.length > 0) {
-  //    berita = cachedResult.map(item => JSON.parse(item)) as CmsContentProps[];
-  //    return berita;
+  //   berita = cachedResult.map(item => JSON.parse(item)) as CmsContentProps[];
+  //   return berita;
   // }
 
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K001&limit=3&offset=&category=&slug=&key=` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K001` });
 
   if ('error' in result) {
     consoleError('getBerita()', result.error);
@@ -177,7 +177,7 @@ export async function getBerita() {
   }
 
   // result.forEach(async(data:any) => {
-  //   await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
+  //  await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
   // });
 
   return berita;

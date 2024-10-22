@@ -22,7 +22,7 @@ export async function getLandasan() {
   //    return Landasan;
   // }
 
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K003&groupId=landasanhukum&limit=5` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K003&groupId=landasanhukum&limit=` });
 
   if ('error' in result) {
     consoleError('get_content()', result.error);
@@ -43,26 +43,26 @@ export async function getImage() {
   const { Id } = await getDomainSite();
   let Image: ImageProps[] | null = null;
 
-  const cachedKey=`image_id:${Id}`;
-  const cachedResult=await redisGetList(redis, cachedKey);
+  // const cachedKey=`image_id:${Id}`;
+  // const cachedResult=await redisGetList(redis, cachedKey);
 
-  if (cachedResult.length > 0) {
-     Image = cachedResult.map(item => JSON.parse(item)) as ImageProps[];
-     return Image;
-  }
+  // if (cachedResult.length > 0) {
+  //   Image = cachedResult.map(item => JSON.parse(item)) as ImageProps[];
+  //   return Image;
+  // }
 
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K006&limit=&offset=&groupId=Image%20Struktur%20Organisasi` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K006&groupId=Image%20Struktur%20Organisasi` });
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
     Image = result ? result : [];
   }
 
-  if(result.length > 0){
-    result.forEach(async(data:any) => {
-      await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
-    });  
-  }
+  // if(result.length > 0){
+  //  result.forEach(async(data:any) => {
+  //    await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
+  //  });  
+  // }
 
   return Image;
 }
@@ -73,6 +73,7 @@ export async function getTupoksi() {
 
   // const cachedKey=`tupoksi_id:${Id}`;
   // const cachedResult=await redisGetList(redis, cachedKey);
+
 
   // if (cachedResult.length > 0) {
   //    Tupoksi = cachedResult.map(item => JSON.parse(item)) as TupoksiProps[];
@@ -107,7 +108,7 @@ export async function getMaklumat() {
   //    return Maklumat;
   // }
 
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K006&limit=&offset=&groupId=Maklumat` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K006&groupId=Maklumat` });
 
   if ('error' in result) {
     consoleError('get_content()', result.error);

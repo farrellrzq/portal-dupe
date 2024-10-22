@@ -195,7 +195,7 @@ export async function getPengumuman() {
   //    return Pengumuman;
   // }
 
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K008&limit=3&offset=&category=&slug=&key=`});
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K008`});
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
