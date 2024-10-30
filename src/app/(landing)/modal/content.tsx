@@ -54,7 +54,7 @@ export default function Content({ pengumuman }: { pengumuman: PengumumanProps[] 
                 <div className="modal-body">
                   <button
                     type="button"
-                    className="btn-close py-1 xl:py-3.5 sm:w-8 xl:w-[3.3rem] rounded-full self-center m-1 mt-6 bg-slate-900 webkit-center"
+                    className="btn-close py-1 xl:py-3.5 sm:w-8 xl:w-[2.5rem] xl:h-[2.5rem] rounded-full self-center m-1 mt-6 bg-slate-900 webkit-center"
                     onClick={closeWelcomeModal}
                     data-bs-dismiss="modal"
                     aria-label="Close"

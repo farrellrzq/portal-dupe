@@ -79,7 +79,7 @@ export default function Content() {
         href="tos.html" className="text-blue">Ketentuan Layanan</a></label>
         </div>
 
-        <button type="submit" className="rounded-full bg-blue-900 py-3 px-8 text-center font-semibold text-white shadow-blue-volume transition-all hover:bg-blue-700" id="contact-form-submit">
+        <button type="submit" className="rounded-full bg-blue-900 py-3 px-8 text-center font-semibold text-jacarta-600 shadow shadow-blue-volume transition-all bg-white hover:bg-green-700 hover:text-white" id="contact-form-submit">
         Kirim
         </button>
 

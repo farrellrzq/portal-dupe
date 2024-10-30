@@ -52,7 +52,7 @@ export async function getDokumenProduk(): Promise<CmsContentProps[] | null> {
   //    return dokumenProduk;
   // }
 
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K010&groupId=&limit=5&offset=`});
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K010&groupId=&limit=&offset=`});
 
   if ('error' in result) {
     consoleError('getDokumenProduk()', result.error);

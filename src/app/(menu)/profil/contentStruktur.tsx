@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { LandasanProps } from '@/controllers/types/profil-controller.type';
 import { DomainSiteProps } from '@/controllers/types/controller.type';
 
-export default function ContentStruktur({ pegawai }: { pegawai: LandasanProps[] | null }, { StrukturImg }: { StrukturImg: DomainSiteProps[] | null }) {
+export default function ContentStruktur({ pegawai }: { pegawai: LandasanProps[] | null }) {
 
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);

@@ -252,7 +252,7 @@ export async function getBerita() {
   //    return Berita;
   // }
 
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K001&limit=3` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K001&limit=` });
 
   if ('error' in result) {
     consoleError('get_content()', result.error);

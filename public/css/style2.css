@@ -3605,7 +3605,7 @@ input[type="search"]::-webkit-search-results-decoration {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 .btn-close {
-  background-color: transparent;
+  background-color: #fff;
   border-width: 0;
   position: absolute;
   right: 1.5rem;

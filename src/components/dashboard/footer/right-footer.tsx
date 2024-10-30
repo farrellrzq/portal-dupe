@@ -24,25 +24,25 @@ export default async function RightFooter() {
       <ul className="flex flex-col space-y-1 dark:text-jacarta-300 mt-5">
         <li className="flex">
           <div className="flex flex-wrap items-center space-x-2 text-base text-jacarta-400">
-            <strong>Hari Ini</strong><br />
-            <span>{visit?.w_hari[0]?.Jumlah ?? "0"} Kunjungan</span>
+            <strong>Hari Ini</strong>
+            <p>{visit?.w_hari[0]?.Jumlah ?? "0"} Kunjungan</p>
           </div>
 
           <div className="ml-5 flex flex-wrap items-center space-x-2 text-base text-jacarta-400">
-            <strong>Minggu Ini</strong><br />
-            <span>{visit?.w_minggu[0]?.Jumlah ?? "0"} Kunjungan</span>
+            <strong>Minggu Ini</strong>
+            <p>{visit?.w_minggu[0]?.Jumlah ?? "0"} Kunjungan</p>
           </div>
         </li>
 
         <li className="flex pt-3">
           <div className="flex flex-wrap items-center space-x-2 text-base text-jacarta-400">
-            <strong>Bulan Ini</strong><br />
-            <span>{visit?.w_bulan[0]?.Jumlah ?? "0"} Kunjungan</span>
+            <strong>Bulan Ini</strong>
+            <p>{visit?.w_bulan[0]?.Jumlah ?? "0"} Kunjungan</p>
           </div>
 
           <div className="ml-5 flex flex-wrap items-center space-x-2 text-base text-jacarta-400">
-            <strong>Tahun Ini</strong><br />
-            <span>{visit?.w_tahun[0]?.Jumlah ?? "0"} Kunjungan</span>
+            <strong>Tahun Ini</strong>
+            <p>{visit?.w_tahun[0]?.Jumlah ?? "0"} Kunjungan</p>
           </div>
         </li>
       </ul>

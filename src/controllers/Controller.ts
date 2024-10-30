@@ -1,4 +1,4 @@
-import { headers } from 'next/headers'
+import { headers } from 'next/headers';
 import { 
   CmsContentProps, 
   CategoryProps, 
@@ -7,11 +7,10 @@ import {
   ProfileSiteProps, 
   VisitProps 
 } from './types/controller.type';
-import { consoleError, getErrorMessage, API_CMS } from '@/helpers/site';
+import { consoleError, API_CMS } from '@/helpers/site';
 import { LandingProps } from './types/landing-controller.type';
-
 import { isBrowser, isMobile } from 'react-device-detect';
-import  redis from '@/helpers/redis-client';
+import redis from '@/helpers/redis-client';
 import {
   redisSaveString, 
   redisGetString,
@@ -19,39 +18,85 @@ import {
   redisSaveList
 } from "@/helpers/redis";
 
-
 interface ApiProps {
-  url: string
-  method?: string
-  revalidate?: number
+  url: string;
+  method?: string;
+  revalidate?: number;
 }
 
-type ApiResponse = { error: string } | any
+type ApiResponse = { error: string } | any;
+
 export async function api({ url, method = "GET", revalidate = 10 }: ApiProps): Promise<ApiResponse> {
   try {
+    if (!url) {
+      throw new Error("URL is required for the API call.");
+    }
+
     const res = await fetch(url, {
       method,
       next: {
-        revalidate
-      }
+        revalidate,
+      },
     });
-    const result = await res.json();
-    return result;
+
+    if (!res.ok) {
+      console.error(`HTTP Error: ${res.status} ${res.statusText}`);
+      return { error: `Request failed with status ${res.status} - ${res.statusText}` };
+    }
+
+    // Ambil respons sebagai teks
+    const textResponse = await res.text(); 
+
+    // Periksa respons kosong
+    if (textResponse.trim() === "") {
+      console.error("Received empty response.");
+      return { error: "Received empty response from API." };
+    }
+
+    // Coba parse teks menjadi JSON
+    try {
+      const result = JSON.parse(textResponse);
+      return result;
+    } catch (jsonError) {
+      console.error("JSON Parsing Error:", jsonError);
+      return { error: "Failed to parse response as JSON." };
+    }
   } catch (error) {
-    console.error('There was an error: ', error);
+    console.error('There was an error:', error);
     const msg = getErrorMessage(error);
     return {
-      error: msg
-    }
+      error: msg,
+    };
   }
+}
+
+// Fungsi lokal getErrorMessage untuk menangani pesan error dengan jelas
+function getErrorMessage(error: unknown): string {
+  let message: string;
+
+  if (error instanceof Error) {
+    message = error.message;
+  } else if (error && typeof error === "object" && "message" in error) {
+    message = String((error as any).message);
+  } else if (typeof error === "string") {
+    message = error;
+  } else {
+    message = "Something went wrong!";
+  }
+
+  if (message === 'fetch failed') {
+    message = 'Internal server error';
+  }
+
+  return message;
 }
 
 
 export async function getDomain() {
  
   const headersList = headers();
-  const domain = headersList.get('x-forwarded-host');
-  return domain ||  'diskominfo.depok.go.id';
+  const domain = (await headersList).get('x-forwarded-host');
+  return 'diskominfo.depok.go.id';
 }
 
 export async function getDomainSite() {
@@ -156,32 +201,23 @@ export async function getExLink() {
 }
 
 export async function getBerita() {
-  let berita: CmsContentProps[] | null = null;
+  const { Id } = await getDomainSite();
+  let Berita: CmsContentProps[] | null = null;
 
-  const {Id}=await getDomainSite();
-  const cachedKey=`berita_id:${Id}`;
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K001&limit=` });
 
-  const cachedResult=await redisGetList(redis, cachedKey);
-
-  // if (cachedResult.length > 0) {
-  //    berita = cachedResult.map(item => JSON.parse(item)) as CmsContentProps[];
-  //    return berita;
-  // }
-
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K001&limit=3&offset=&category=&slug=&key=` });
+  console.log("API response:", result); // Log respons API untuk debugging
 
   if ('error' in result) {
-    consoleError('getBerita()', result.error);
+    consoleError('get_content()', result.error);
   } else {
-    berita = result;
+    Berita = result ? result : [];
   }
 
-  // result.forEach(async(data:any) => {
-  //   await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
-  // });
-
-  return berita;
+  console.log("Processed Berita:", Berita); // Log hasil akhir Berita
+  return Berita;
 }
+
 
 export async function getVisitAgent() {
   let agentInfo = '';

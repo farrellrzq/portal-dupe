@@ -31,7 +31,7 @@ export default async function Content({ layanan, layananKota, params }: { layana
             key={index}
         >
             <img
-            src={item.ImageMenu ? `https://cms.depok.go.id/upload/externalLogo/${item.ImageMenu}` : '/img/kecamatan/dsw/kesehatan.png'}
+          src={item.ImageMenu ? `https://cms.depok.go.id/upload/externalLogo/${item.ImageMenu}` : '/img/kecamatan/dsw/kesehatan.png'}
             className="mx-auto mb-6 h-[5.125rem] w-[5.125rem]"
             alt="team"
             />
