@@ -64,7 +64,7 @@ export default function Content({ agenda }: { agenda: AgendaProps[] | null }) {
                   onClick={() => handleYearChange('')}
                   aria-selected={!selectedYear}
                 >
-                  <span className="px-2 font-display text-lg font-medium md:text-2xl text-black">Semua Tahun</span>
+                  <span className="px-2 font-display text-lg font-medium md:text-2xl dark:text-white">Semua Tahun</span>
                 </button>
               </li>
               {['2024', '2023', '2022', '2021', '2020'].map((year) => (
@@ -76,7 +76,7 @@ export default function Content({ agenda }: { agenda: AgendaProps[] | null }) {
                     onClick={() => handleYearChange(year)}
                     aria-selected={selectedYear === year}
                   >
-                    <span className="px-2 font-display text-lg font-medium md:text-2xl text-black">{year}</span>
+                    <span className="px-2 font-display text-lg font-medium md:text-2xl dark:text-white">{year}</span>
                   </button>
                 </li>
               ))}
@@ -92,7 +92,7 @@ export default function Content({ agenda }: { agenda: AgendaProps[] | null }) {
                         currentAgenda.map((item: any, index: number) => (
                           <div className="swiper-slide" key={index}>
                             <article>
-                              <div className="block overflow-hidden rounded-2.5xl bg-white shadow-md transition-shadow hover:shadow-lg">
+                              <div className="block overflow-hidden rounded-2.5xl bg-white shadow-md transition-shadow hover:shadow-lg dark:bg-jacarta-700">
                                 <figure className="relative">
                                   <a href="#">
                                     <img
@@ -108,14 +108,14 @@ export default function Content({ agenda }: { agenda: AgendaProps[] | null }) {
                                 <div className="p-6">
                                   <div className="flex items-center justify-between">
                                     <a href="#">
-                                      <span className="font-display text-base text-jacarta-700">{formatTanggal(item.TanggalAwal)}</span>
+                                      <span className="font-display text-base text-jacarta-700 dark:text-white">{formatTanggal(item.TanggalAwal)}</span>
                                     </a>
                                     <span className="flex items-center whitespace-nowrap rounded-md border border-jacarta-100 py-1 px-2">
-                                      <span className="text-sm font-medium tracking-tight text-gray">Sudah Berlalu</span>
+                                      <span className="text-sm font-medium tracking-tight text-gray dark:text-white">Sudah Berlalu</span>
                                     </span>
                                   </div>
-                                  <h2 className="mb-4 mt-2 font-display text-xl text-jacarta-700">{item.Title}</h2>
-                                  <p className="text-sm text-jacarta-200">{item.Deskripsi.slice(0, 150) + '...'}</p>
+                                  <h2 className="mb-4 mt-2 font-display text-xl text-jacarta-700 dark:text-white">{item.Title}</h2>
+                                  <p className="text-sm text-jacarta-200 dark:text-white">{item.Deskripsi.slice(0, 150) + '...'}</p>
                                 </div>
                               </div>
                             </article>
