@@ -20,7 +20,7 @@ export default function Header() {
               >Terbaru
               </span>
             </div>
-            <RunningText berita={[]} />
+            <RunningText />
           </div>
         </div>
         <div className="flex items-center px-4 py-2 xl:px-24">
