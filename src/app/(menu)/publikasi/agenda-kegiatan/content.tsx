@@ -50,7 +50,7 @@ export default function Content({ agenda }: { agenda: AgendaProps[] | null }) {
     <>
       <section className="relative bg-cover bg-center bg-no-repeat py-12">
         <div className="container relative z-10">
-          <h2 className="mb-6 font-display text-3xl text-black dark:text-white">Agenda</h2>
+          <h2 className="mb-6 font-display text-3xl text-jacarta-300">Agenda</h2>
           <p className="mb-12 max-w-xl text-lg text-jacarta-300">Agenda Diskominfo</p>
 
           {/* Tahun Filter */}
@@ -64,7 +64,7 @@ export default function Content({ agenda }: { agenda: AgendaProps[] | null }) {
                   onClick={() => handleYearChange('')}
                   aria-selected={!selectedYear}
                 >
-                  <span className="px-2 font-display text-lg font-medium md:text-2xl dark:text-white">Semua Tahun</span>
+                  <span className="px-2 font-display text-lg font-medium md:text-2xl text-jacarta-300">Semua Tahun</span>
                 </button>
               </li>
               {['2024', '2023', '2022', '2021', '2020'].map((year) => (
@@ -76,7 +76,7 @@ export default function Content({ agenda }: { agenda: AgendaProps[] | null }) {
                     onClick={() => handleYearChange(year)}
                     aria-selected={selectedYear === year}
                   >
-                    <span className="px-2 font-display text-lg font-medium md:text-2xl dark:text-white">{year}</span>
+                    <span className="px-2 font-display text-lg font-medium md:text-2xl text-jacarta-300">{year}</span>
                   </button>
                 </li>
               ))}

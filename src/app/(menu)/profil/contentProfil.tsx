@@ -111,10 +111,10 @@ export default async function contentProfil() {
         </div>
         {/* <!-- Image --> */}
         <div className="lg:w-[45%]">
-          <div className="relative">
+          {/* <div className="relative">
             <Image src="/img/about/GDPR-cuate.png" alt="" className="absolute w-full top-0 animate-fly" width={500}
               height={500} />
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
