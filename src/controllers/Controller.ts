@@ -1,4 +1,4 @@
-import { headers } from 'next/headers';
+// import { headers } from 'next/headers';
 import { 
   CmsContentProps, 
   CategoryProps, 
@@ -10,13 +10,6 @@ import {
 import { consoleError, API_CMS } from '@/helpers/site';
 import { LandingProps } from './types/landing-controller.type';
 import { isBrowser, isMobile } from 'react-device-detect';
-import redis from '@/helpers/redis-client';
-import {
-  redisSaveString, 
-  redisGetString,
-  redisGetList,
-  redisSaveList
-} from "@/helpers/redis";
 
 interface ApiProps {
   url: string;
@@ -26,7 +19,7 @@ interface ApiProps {
 
 type ApiResponse = { error: string } | any;
 
-export async function api({ url, method = "GET", revalidate = 10 }: ApiProps): Promise<ApiResponse> {
+export async function api({ url, method = "GET", revalidate = 30 }: ApiProps): Promise<ApiResponse> {
   try {
     if (!url) {
       throw new Error("URL is required for the API call.");
@@ -94,21 +87,21 @@ function getErrorMessage(error: unknown): string {
 
 export async function getDomain() {
  
-  const headersList = headers();
-  const domain = (await headersList).get('x-forwarded-host');
-  return 'diskominfo.depok.go.id';
+  // const headersList = headers();
+  // const domain = (await headersList).get('x-forwarded-host');
+  return process.env.DOMAIN;
 }
 
 export async function getDomainSite() {
   const domain=await getDomain();
   
-  const cachedKey=`domainSite:${domain}`;
+  // const cachedKey=`domainSite:${domain}`;
 
-  const cachedResult=await redisGetString(redis,cachedKey);
+  // const cachedResult=await redisGetString(redis,cachedKey);
 
-  if (cachedResult) {
-    return JSON.parse(cachedResult) as DomainSiteProps;
-  }
+  // if (cachedResult) {
+  //   return JSON.parse(cachedResult) as DomainSiteProps;
+  // }
 
   const result = await api({ url: `${API_CMS}/ViewPortal/domainsite?domain=${domain}`, revalidate: 60 });
 
@@ -116,7 +109,7 @@ export async function getDomainSite() {
     throw new Error(result);
   }
 
-  await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
+  // await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
 
   return result as DomainSiteProps;
 }
@@ -127,12 +120,12 @@ export async function getKecamatan() {
   const { Id } = await getDomainSite();
 
 
-  const cachedResult=await redisGetString(redis,cachedKey);
+  // const cachedResult=await redisGetString(redis,cachedKey);
 
-  if (cachedResult) {
-    Landing=JSON.parse(cachedResult);
-    return Landing;
-  }
+  // if (cachedResult) {
+  //   Landing=JSON.parse(cachedResult);
+  //   return Landing;
+  // }
 
   const result = await api({ url: `${API_CMS}/ViewPortal/getSiteByKecamatan?siteId=${Id}` });
   
@@ -142,7 +135,7 @@ export async function getKecamatan() {
     Landing = result;
   }
 
-  await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
+  // await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
 
   return Landing;
 }
@@ -150,15 +143,7 @@ export async function getKecamatan() {
 export async function getProfileSite() {
   let profileSite: ProfileSiteProps | null = null;
 
-  const cachedKey=`profileDomain:${await getDomain()}`;
   const {Id}=await getDomainSite();
-
-  const cachedResult=await redisGetString(redis,cachedKey);
-
-  if (cachedResult) {
-    profileSite=JSON.parse(cachedResult)[0];
-    return profileSite;
-  }
 
   const result = await api({ url: `${API_CMS}/ViewPortal/profilsite?siteId=${Id}` });
 
@@ -167,8 +152,6 @@ export async function getProfileSite() {
   } else {
     profileSite = result[0];
   }
-
-  await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
 
   return profileSite;
 }
@@ -206,15 +189,12 @@ export async function getBerita() {
 
   const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K001&limit=` });
 
-  console.log("API response:", result); // Log respons API untuk debugging
-
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
     Berita = result ? result : [];
   }
 
-  console.log("Processed Berita:", Berita); // Log hasil akhir Berita
   return Berita;
 }
 
@@ -278,14 +258,14 @@ export async function getVisit() {
 
   try {
     // Panggil getVisitAgent secara async
-    const Logview = await getVisitAgent();
+    // const Logview = await getVisitAgent();
 
     // if (cachedResult) {
     //   visit=JSON.parse(cachedResult);
     //   return visit;
     // }
 
-    const result = await api({ url: `${API_CMS}/ViewPortal/getPengunjung?siteid=${Id}` });
+    const result = await api({ url: `${API_CMS}/ViewPortal/getPengunjung?siteid=${Id}`, revalidate: 3600 });
 
     if ('error' in result) {
       console.error('getVisit()', result.error);
@@ -294,13 +274,13 @@ export async function getVisit() {
     }
 
     // Gunakan Logview dari getVisitAgent
-    if (Logview) {
-      // Pastikan properti Logview sesuai dengan tipe VisitProps
-      visit.agentInfo = Logview.agentInfo;
-      visit.agentBrowser = Logview.agentBrowser;
-      visit.device = Logview.device;
-      visit.browse = Logview.browse;
-    }
+    // if (Logview) {
+    //   // Pastikan properti Logview sesuai dengan tipe VisitProps
+    //   visit.agentInfo = Logview.agentInfo;
+    //   visit.agentBrowser = Logview.agentBrowser;
+    //   visit.device = Logview.device;
+    //   visit.browse = Logview.browse;
+    // }
   } catch (error) {
     console.error('Error in getVisit:', error);
     throw error;

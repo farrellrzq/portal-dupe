@@ -9,7 +9,8 @@ export const metadata: Metadata = {
 };
 
 export default async function page() {
-  const DashboardStatistik = await getDashboardStatistik();
+  // const DashboardStatistik = await getDashboardStatistik();
+  const DashboardStatistik = null;
   return (
     <main className="pt-[5.5rem] lg:pt-24">
       <section className="hero relative py-16 dark:bg-jacarta-800 bg-white">

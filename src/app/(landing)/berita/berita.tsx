@@ -3,8 +3,11 @@ import React from 'react'
 import Content from './content';
 
 export default async function berita() {
-    const beritaKota = await getBeritaKota();
-    const berita = await getBerita();
+    const [beritaKota, berita] = await Promise.all([
+        await getBeritaKota(),
+        await getBerita({limit:'3'})
+    ])
+
     return (
         <section className="relative lg:py-8 lg:px-20 py-5 px-4">
             <picture className="pointer-events-none absolute inset-x-0 top-0 -z-10 dark:hidden">

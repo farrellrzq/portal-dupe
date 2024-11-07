@@ -11,8 +11,10 @@ export const metadata: Metadata = {
 };
 
 export default async function page() {
-  const infografis = await getInfografis();
-  const video = await getVideo();
+  // const infografis = await getInfografis();
+  // const video = await getVideo();
+  const infografis = null;
+  const video = null;
   return (
     <main className="pt-[5.5rem] lg:pt-24">
       <section className="hero relative py-16 dark:bg-jacarta-800 bg-white">
