@@ -15,9 +15,11 @@ export default function ContentStruktur({ pegawai }: { pegawai: LandasanProps[] 
     };
 
     // Filter dokumen berdasarkan nilai pencarian   
-    const filtered = pegawai && pegawai.filter((item: any) => {
-        return item.jabatan.toLowerCase().includes(searchTerm.toLowerCase());
-    });
+    const filtered = pegawai 
+    ? pegawai.filter((item: any) => {
+        return item?.jabatan?.toLowerCase().includes(searchTerm.toLowerCase());
+    }) 
+    : [];
 
     // Hitung dokumen yang harus ditampilkan sesuai halaman saat ini
     const maxButtons = 3; // Menentukan jumlah tombol yang ingin ditampilkan

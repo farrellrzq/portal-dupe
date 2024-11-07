@@ -14,9 +14,11 @@ export default function ContentLandasan({ landasan }: { landasan: LandasanProps[
     };
 
     // Filter dokumen berdasarkan nilai pencarian
-    const filtered = landasan && landasan.filter((item: any) => {
-        return item.title.toLowerCase().includes(searchTerm.toLowerCase());
-    });
+    const filtered = landasan 
+    ? landasan.filter((item: any) => {
+        return item?.title?.toLowerCase().includes(searchTerm.toLowerCase());
+    }) 
+    : [];
 
     // Hitung dokumen yang harus ditampilkan sesuai halaman saat ini
     const maxButtons = 3; // Menentukan jumlah tombol yang ingin ditampilkan

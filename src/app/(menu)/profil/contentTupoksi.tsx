@@ -14,9 +14,11 @@ export default function ContentTupoksi({ tupoksi }: { tupoksi: TupoksiProps[] | 
     };
 
     // Filter dokumen berdasarkan nilai pencarian
-    const filtered = tupoksi && tupoksi.filter((item: any) => {
-        return item.Jabatan.toLowerCase().includes(searchTerm.toLowerCase());
-    });
+    const filtered = tupoksi 
+    ? tupoksi.filter((item: any) => {
+        return item?.Jabatan?.toLowerCase().includes(searchTerm.toLowerCase());
+    }) 
+    : [];
 
     // Hitung dokumen yang harus ditampilkan sesuai halaman saat ini
     const maxButtons = 3; // Menentukan jumlah tombol yang ingin ditampilkan
