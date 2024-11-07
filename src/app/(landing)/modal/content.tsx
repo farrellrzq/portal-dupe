@@ -54,7 +54,7 @@ export default function Content({ pengumuman }: { pengumuman: PengumumanProps[] 
                 <div className="modal-body">
                   <button
                     type="button"
-                    className="btn-close py-1 xl:py-3.5 sm:w-8 xl:w-[2.5rem] xl:h-[2.5rem] rounded-full self-center m-1 mt-6 bg-slate-900 webkit-center"
+                    className="btn-close py-1 xl:py-3.5 sm:w-8 xl:w-[2.5rem] xl:h-[2.5rem] rounded-full self-center m-1 mt-6 bg-slate-900 webkit-center shadow-md"
                     onClick={closeWelcomeModal}
                     data-bs-dismiss="modal"
                     aria-label="Close"
@@ -64,7 +64,7 @@ export default function Content({ pengumuman }: { pengumuman: PengumumanProps[] 
                       viewBox="0 0 24 24"
                       width="24"
                       height="24"
-                      className="h-6 w-6 fill-jacarta-700 dark:fill-white"
+                      className="h-6 w-6 fill-jacarta-700"
                     >
                       <path fill="none" d="M0 0h24v24H0z" />
                       <path d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z" />
