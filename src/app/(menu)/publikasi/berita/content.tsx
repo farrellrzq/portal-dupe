@@ -42,7 +42,7 @@ export default function Content({ berita }: { berita: CmsContentProps[] | null }
       <div>
         <div className="my-4">
           <h3 className="font-display px-4 text-3xl text-jacarta-700 dark:text-white">List Berita</h3>
-          <span className="text-md px-4 pb-2">Berita Diskominfo</span>
+          <span className="text-md px-4 pb-2">Berita</span>
         </div>
         <div className="flex mb-4">
           <div className="w-1/2 lg:w-1/4">

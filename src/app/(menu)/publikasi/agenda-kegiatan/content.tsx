@@ -51,7 +51,7 @@ export default function Content({ agenda }: { agenda: AgendaProps[] | null }) {
       <section className="relative bg-cover bg-center bg-no-repeat py-12">
         <div className="container relative z-10">
           <h2 className="mb-6 font-display text-3xl text-jacarta-300">Agenda</h2>
-          <p className="mb-12 max-w-xl text-lg text-jacarta-300">Agenda Diskominfo</p>
+          <p className="mb-12 max-w-xl text-lg text-jacarta-300">Agenda OPD</p>
 
           {/* Tahun Filter */}
           <div className="flex">

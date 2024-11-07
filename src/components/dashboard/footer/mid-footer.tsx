@@ -29,7 +29,7 @@ export default async function MidFooter() {
               />
             </svg>
             &nbsp;
-            <span> {profileSite?.Alamat ?? "Diskominfo Depok"}</span>
+            <span> {profileSite?.Alamat ?? "OPD Depok"}</span>
           </Link>
         </li>
         <li className="pt-3">
