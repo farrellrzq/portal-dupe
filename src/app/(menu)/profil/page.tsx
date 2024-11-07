@@ -18,10 +18,13 @@ export const metadata: Metadata = {
 };
 
 export default async function page() {
-  const landasan = await getLandasan();
-  const tupoksi = await getTupoksi();
-  const listPegawai = await dataPegawai();
-  const pegawai = listPegawai.data.content;
+  // const landasan = await getLandasan();
+  // const tupoksi = await getTupoksi();
+  // const listPegawai = await dataPegawai();
+  // const pegawai = listPegawai.data.content;
+  const landasan = null;
+  const pegawai = null;
+  const tupoksi = null;
 
   return (
     <main className="pt-[5.5rem] lg:pt-24">

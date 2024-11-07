@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import React, { Suspense } from "react";
 import Pengumuman from "./pengumuman/pengumuman";
 import Dokumen from "./dokumen/dokumen";
 import Government from "./government/government";
@@ -19,9 +19,7 @@ export default async function Home() {
   return (
     <HydrationOverlay>
       <main>
-        <Suspense fallback={<Sliderloader />}>
-          <Slider />
-        </Suspense>
+        <Slider />
         <Layanan />
         <section className="lg:py-20 lg:px-20 py-5 px-4">
           <div className="lg:flex mb-4">
@@ -45,7 +43,7 @@ export default async function Home() {
         </section>
         <Berita />
         <ModalPengumuman />
-        <ModalSearchBerita />
+        {/* <ModalSearchBerita /> */}
       </main>
     </HydrationOverlay>
   );

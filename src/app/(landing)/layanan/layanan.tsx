@@ -5,10 +5,12 @@ import { getLayanan, getLayananKota } from '@/controllers/HomeController';
 import ModalLayanan from './modal';
 
 export default async function layanan() {
-  const profilSite = await getProfileSite();
-  const layanan = await getLayanan();
-  const layananKota = await getLayananKota();
-
+  const [profilSite, layanan, layananKota] = await Promise.all([
+    await getProfileSite(),
+    await getLayanan(),
+    await getLayananKota(),
+  ]);
+  
   return (
     <>
       <section className="lg:py-8 lg:px-20 py-5 px-4 bg-teal-50 dark:bg-jacarta-800">

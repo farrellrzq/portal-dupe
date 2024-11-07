@@ -2,14 +2,6 @@ import { consoleError, API_CMS, API_YT, API_ADMIN_DATA } from "@/helpers/site";
 import { api, getDomainSite } from "./Controller";
 import { CmsContentProps, ExlinkProps } from "./types/controller.type";
 import { AgendaProps, DetailBeritaProps, DetailPengumumanProps } from "./types/publikasi-controller.type";
-import  redis from '@/helpers/redis-client';
-import {
-  redisSaveString, 
-  redisGetString, 
-  redisSaveList,
-  redisGetList,
-  redisDetailValueList
-} from "@/helpers/redis";
 
 export async function getPengumuman(): Promise<CmsContentProps[] | null> {
   const { Id } = await getDomainSite();
@@ -103,13 +95,13 @@ export async function getMenu() {
   const { Id } = await getDomainSite();
   let Menu: ExlinkProps[] | null = null;
 
-  const cachedKey=`menu_id:${Id}`;
-  const cachedResult=await redisGetList(redis, cachedKey);
+  // const cachedKey=`menu_id:${Id}`;
+  // const cachedResult=await redisGetList(redis, cachedKey);
 
-  if (cachedResult.length > 0) {
-     Menu = cachedResult.map(item => JSON.parse(item)) as ExlinkProps[];
-     return Menu;
-  }
+  // if (cachedResult.length > 0) {
+  //    Menu = cachedResult.map(item => JSON.parse(item)) as ExlinkProps[];
+  //    return Menu;
+  // }
 
   const result = await api({ url: `${API_CMS}/ViewPortal/getExLink?siteId=${Id}&typeId=&limit=&offset=&code=publikasi` });
 
@@ -119,11 +111,11 @@ export async function getMenu() {
     Menu = result ? result : [];
   }
 
-  if(result.length > 0){
-    result.forEach(async(data:any) => {
-      await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
-    });  
-  }
+  // if(result.length > 0){
+  //   result.forEach(async(data:any) => {
+  //     await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
+  //   });  
+  // }
 
   return Menu;
 }
