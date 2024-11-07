@@ -1,14 +1,15 @@
-import { consoleError, API_CMS } from "@/helpers/site";
+import { consoleError, API_CMS, getErrorMessage } from "@/helpers/site";
 import { api, getDomainSite } from "./Controller";
-import { ImageProps, LandasanProps, MaklumatProps, MottoProps, TupoksiProps } from "./types/profil-controller.type";
-import { getToken } from "./HomeController";
-import  redis from '@/helpers/redis-client';
 import {
-  redisSaveString, 
-  redisGetString,
-  redisGetList,
-  redisSaveList
-} from "@/helpers/redis";
+  ImageProps,
+  LandasanProps,
+  MaklumatProps,
+  MottoProps,
+  TupoksiProps,
+} from "./types/profil-controller.type";
+import { getToken } from "./HomeController";
+import redis from "@/helpers/redis-client";
+import { redisSaveString, redisGetString, redisGetList, redisSaveList } from "@/helpers/redis";
 
 export async function getLandasan() {
   const { Id } = await getDomainSite();
@@ -22,10 +23,12 @@ export async function getLandasan() {
   //    return Landasan;
   // }
 
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K003&groupId=landasanhukum&limit=` });
+  const result = await api({
+    url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K003&groupId=landasanhukum&limit=`,
+  });
 
-  if ('error' in result) {
-    consoleError('get_content()', result.error);
+  if ("error" in result) {
+    consoleError("get_content()", result.error);
   } else {
     Landasan = result ? result : [];
   }
@@ -33,7 +36,7 @@ export async function getLandasan() {
   // if(result.length > 0){
   //   result.forEach(async(data:any) => {
   //     await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
-  //   });  
+  //   });
   // }
 
   return Landasan;
@@ -51,9 +54,11 @@ export async function getImage() {
   //   return Image;
   // }
 
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K006&groupId=Image%20Struktur%20Organisasi` });
-  if ('error' in result) {
-    consoleError('get_content()', result.error);
+  const result = await api({
+    url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K006&groupId=Image%20Struktur%20Organisasi`,
+  });
+  if ("error" in result) {
+    consoleError("get_content()", result.error);
   } else {
     Image = result ? result : [];
   }
@@ -61,7 +66,7 @@ export async function getImage() {
   // if(result.length > 0){
   //  result.forEach(async(data:any) => {
   //    await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
-  //  });  
+  //  });
   // }
 
   return Image;
@@ -74,15 +79,14 @@ export async function getTupoksi() {
   // const cachedKey=`tupoksi_id:${Id}`;
   // const cachedResult=await redisGetList(redis, cachedKey);
 
-
   // if (cachedResult.length > 0) {
   //    Tupoksi = cachedResult.map(item => JSON.parse(item)) as TupoksiProps[];
   //    return Tupoksi;
   // }
 
   const result = await api({ url: `${API_CMS}/ViewPortal/getJabatan?siteId=${Id}` });
-  if ('error' in result) {
-    consoleError('get_content()', result.error);
+  if ("error" in result) {
+    consoleError("get_content()", result.error);
   } else {
     Tupoksi = result ? result : [];
   }
@@ -90,7 +94,7 @@ export async function getTupoksi() {
   // if(result.length > 0){
   //   result.forEach(async(data:any) => {
   //     await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
-  //   });  
+  //   });
   // }
 
   return Tupoksi;
@@ -108,10 +112,12 @@ export async function getMaklumat() {
   //    return Maklumat;
   // }
 
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K006&groupId=Maklumat` });
+  const result = await api({
+    url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K006&groupId=Maklumat`,
+  });
 
-  if ('error' in result) {
-    consoleError('get_content()', result.error);
+  if ("error" in result) {
+    consoleError("get_content()", result.error);
   } else {
     Maklumat = result ? result : [];
   }
@@ -119,7 +125,7 @@ export async function getMaklumat() {
   // if(result.length > 0){
   //   result.forEach(async(data:any) => {
   //     await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
-  //   });  
+  //   });
   // }
 
   return Maklumat;
@@ -129,41 +135,53 @@ export async function getMotto() {
   const { Id } = await getDomainSite();
   let Motto: MottoProps[] | null = null;
 
-  const cachedKey=`motto_id:${Id}`;
-  const cachedResult=await redisGetList(redis, cachedKey);
+  const cachedKey = `motto_id:${Id}`;
+  const cachedResult = await redisGetList(redis, cachedKey);
 
   if (cachedResult.length > 0) {
-     Motto = cachedResult.map(item => JSON.parse(item)) as MaklumatProps[];
-     return Motto;
+    Motto = cachedResult.map(item => JSON.parse(item)) as MaklumatProps[];
+    return Motto;
   }
-  
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K003&limit=3&offset=&groupId=motto%20pelayanan` });
-  
-  if ('error' in result) {
-    consoleError('get_content()', result.error);
+
+  const result = await api({
+    url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K003&limit=3&offset=&groupId=motto%20pelayanan`,
+  });
+
+  if ("error" in result) {
+    consoleError("get_content()", result.error);
   } else {
     Motto = result ? result : [];
   }
-  
-  if(result.length > 0){
-    result.forEach(async(data:any) => {
+
+  if (result.length > 0) {
+    result.forEach(async (data: any) => {
       await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
-    });  
+    });
   }
 
   return Motto;
 }
 
 export async function dataPegawai() {
-  const { token, url } = await getToken();
-  const { Organisasi } = await getDomainSite();
-  const body = { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }, body: JSON.stringify({ tahun: '2023', instansi: Organisasi, }) }
+  let pegawai: LandasanProps[] | null = null;
+  try {
+    const { token, url } = await getToken();
+    const { Organisasi } = await getDomainSite();
+    const body = {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+      body: JSON.stringify({ tahun: "2023", instansi: Organisasi }),
+    };
 
-  const response = await fetch(`${url}/api/kepegawaian/rawdata`, body)
+    const response = await fetch(`${url}/api/kepegawaian/rawdata`, body);
 
-  if (!response.ok) {
-    throw new Error('Fething data gagal');
+    if (!response.ok) {
+      throw new Error("Failed to get dataPegawai :" + response.statusText);
+    }
+    const result =await  response.json();
+    pegawai = result.data?.content;
+  } catch (error) {
+    consoleError('dataPegawai()', getErrorMessage(error));
   }
-  const pegawai = response.json();
-  return pegawai
+  return pegawai;
 }
