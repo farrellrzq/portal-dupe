@@ -24,7 +24,6 @@ export default async function page() {
 
   return (
     <main className="pt-[5.5rem] lg:pt-24">
-
       <section className="relative pt-24 bg-teal-50 dark:bg-transparent">
         <picture className="pointer-events-none absolute inset-x-0 top-0 -z-10 hidden dark:hidden">
           <img src="/img/gradient.jpg" alt="gradient" className="w-full" />
@@ -33,54 +32,31 @@ export default async function page() {
           <img src="/img/gradient_light.jpg" alt="gradient" className="h-full w-full" />
         </picture>
         <div className="">
-
           <Tabcontent />
-
           <div className="tab-content">
-            {/* <!-- On Sale Tab --> */}
             <div className="tab-pane fade" id="tentang-kami" role="tabpanel">
               <ContentProfil />
             </div>
-            {/* <!-- end on sale tab --> */}
-
-            {/* <!-- Owned Tab --> */}
             <div className="tab-pane fade" id="visi" role="tabpanel">
               <ContentVisi />
             </div>
-            {/* <!-- end owned tab --> */}
-
-            {/* <!-- Created Tab --> */}
             <div className="tab-pane fade" id="landasan" role="tabpanel">
               <ContentLandasan landasan={landasan} />
             </div>
-            {/* <!-- end created tab --> */}
-
-            {/* <!-- Collections Tab --> */}
             <div className="tab-pane fade" id="struktur" role="tabpanel">
               <ContentImgSotk />
               <ContentStruktur pegawai={pegawai} />
             </div>
-            {/* <!-- end collections tab --> */}
-
-            {/* <!-- Activity Tab --> */}
             <div className="tab-pane fade" id="tupoksi" role="tabpanel">
               <ContentTupoksi tupoksi={tupoksi} />
             </div>
-            {/* <!-- end activity tab --> */}
-
-            {/* <!-- Collections Tab --> */}
             <div className="tab-pane fade" id="maklumat" role="tabpanel">
               <ContentMaklumat />
             </div>
-            {/* <!-- end collections tab --> */}
-
-            {/* <!-- Collections Tab --> */}
             <div className="tab-pane fade" id="motto" role="tabpanel">
               <ContentMotto />
             </div>
-            {/* <!-- end collections tab --> */}
           </div>
-
         </div>
       </section>
       <ModalSearchBerita />

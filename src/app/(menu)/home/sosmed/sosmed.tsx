@@ -24,7 +24,7 @@ export default async function sosmed() {
                         INSTAGRAM
                     </h3>
                     <p className="dark:text-jacarta-300">
-                        Informasi Perangkat Daerah Kota Depok yang dipublikasikan melalui
+                        Informasi Kecamatan Kota Depok yang dipublikasikan melalui
                         instagram
                     </p>
                 </a>

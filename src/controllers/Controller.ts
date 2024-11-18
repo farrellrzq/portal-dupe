@@ -30,6 +30,9 @@ export async function api({ url, method = "GET", revalidate = 30 }: ApiProps): P
       next: {
         revalidate,
       },
+      headers: {
+        "Cache-Control": `public, max-age=${revalidate}`,
+      },
     });
 
     if (!res.ok) {
@@ -37,16 +40,13 @@ export async function api({ url, method = "GET", revalidate = 30 }: ApiProps): P
       return { error: `Request failed with status ${res.status} - ${res.statusText}` };
     }
 
-    // Ambil respons sebagai teks
     const textResponse = await res.text(); 
 
-    // Periksa respons kosong
     if (textResponse.trim() === "") {
       console.error("Received empty response.");
       return { error: "Received empty response from API." };
     }
 
-    // Coba parse teks menjadi JSON
     try {
       const result = JSON.parse(textResponse);
       return result;
@@ -63,7 +63,6 @@ export async function api({ url, method = "GET", revalidate = 30 }: ApiProps): P
   }
 }
 
-// Fungsi lokal getErrorMessage untuk menangani pesan error dengan jelas
 function getErrorMessage(error: unknown): string {
   let message: string;
 
@@ -87,29 +86,17 @@ function getErrorMessage(error: unknown): string {
 
 export async function getDomain() {
  
-  // const headersList = headers();
-  // const domain = (await headersList).get('x-forwarded-host');
   return process.env.DOMAIN;
 }
 
 export async function getDomainSite() {
   const domain=await getDomain();
-  
-  // const cachedKey=`domainSite:${domain}`;
-
-  // const cachedResult=await redisGetString(redis,cachedKey);
-
-  // if (cachedResult) {
-  //   return JSON.parse(cachedResult) as DomainSiteProps;
-  // }
 
   const result = await api({ url: `${API_CMS}/ViewPortal/domainsite?domain=${domain}`, revalidate: 60 });
 
   if ('error' in result) {
     throw new Error(result);
   }
-
-  // await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
 
   return result as DomainSiteProps;
 }
@@ -119,14 +106,6 @@ export async function getKecamatan() {
   const cachedKey=`kecamatanDomain:${await getDomain()}`;
   const { Id } = await getDomainSite();
 
-
-  // const cachedResult=await redisGetString(redis,cachedKey);
-
-  // if (cachedResult) {
-  //   Landing=JSON.parse(cachedResult);
-  //   return Landing;
-  // }
-
   const result = await api({ url: `${API_CMS}/ViewPortal/getSiteByKecamatan?siteId=${Id}` });
   
   if ('error' in result) {
@@ -134,8 +113,6 @@ export async function getKecamatan() {
   } else {
     Landing = result;
   }
-
-  // await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
 
   return Landing;
 }
@@ -163,22 +140,12 @@ export async function getExLink() {
   const cachedKey=`exlinkDomain:${await getDomain()}`;
   const {Id}=await getDomainSite();
 
-
-  // const cachedResult=await redisGetString(redis,cachedKey);
-
-  // if (cachedResult) {
-  //   exlink=JSON.parse(cachedResult);
-  //   return exlink;
-  // }
-
   const result = await api({ url: `${API_CMS}/ViewPortal/getExLink?siteId=${Id}&code=&groupId=&typeId=EP&limit=3&offset=` });
   if ('error' in result) {
     consoleError('getExLink()', result.error);
   } else {
     exlink = result;
   }
-
-  // await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
 
   return exlink;
 }
@@ -217,14 +184,6 @@ export async function getVisitAgent() {
   const cachedKey=`visitAgentDomain:${await getDomain()}`;
   const {Id}=await getDomainSite();
 
-
-  // const cachedResult=await redisGetString(redis,cachedKey);
-
-  // if (cachedResult) {
-  //   Logview=JSON.parse(cachedResult);
-  //   return Logview;
-  // }
-
   const result = await api({
     url: `${API_CMS}/ViewPortal/log_view?siteid=${Id}&contentid=&codekanal=&device=${agentInfo}&browse=${agentInfo}&codekanal=`
   });
@@ -234,8 +193,6 @@ export async function getVisitAgent() {
   } else {
     Logview = result;
   }
-
-  // await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
 
   return Logview;
 }
@@ -247,23 +204,11 @@ export async function getVisit() {
     w_minggu: [],
     w_kemarin: [],
     w_hari: []
-  }; // Inisialisasi visit dengan tipe VisitProps
-
-  // const cachedKey=`visitDomain:${await getDomain()}`;
+  }; 
+  
   const {Id}=await getDomainSite();
 
-
-  // const cachedResult=await redisGetString(redis,cachedKey);
-
-
   try {
-    // Panggil getVisitAgent secara async
-    // const Logview = await getVisitAgent();
-
-    // if (cachedResult) {
-    //   visit=JSON.parse(cachedResult);
-    //   return visit;
-    // }
 
     const result = await api({ url: `${API_CMS}/ViewPortal/getPengunjung?siteid=${Id}`, revalidate: 3600 });
 
@@ -273,20 +218,10 @@ export async function getVisit() {
       visit = result;
     }
 
-    // Gunakan Logview dari getVisitAgent
-    // if (Logview) {
-    //   // Pastikan properti Logview sesuai dengan tipe VisitProps
-    //   visit.agentInfo = Logview.agentInfo;
-    //   visit.agentBrowser = Logview.agentBrowser;
-    //   visit.device = Logview.device;
-    //   visit.browse = Logview.browse;
-    // }
   } catch (error) {
     console.error('Error in getVisit:', error);
     throw error;
   }
-
-  // await redisSaveString(redis,cachedKey, 3600, JSON.stringify(visit));
 
   return visit;
 }
@@ -294,17 +229,7 @@ export async function getVisit() {
 
 export async function getCategories({ kanalType }: { kanalType: 'K001' | 'K008' }): Promise<CategoryProps[] | null> {
   let categories: CategoryProps[] | null = null;
-
-  // const cachedKey=`categoriesDomain:${await getDomain()}`;
   const {Id}=await getDomainSite();
-
-
-  // const cachedResult=await redisGetString(redis,cachedKey);
-
-  // if (cachedResult) {
-  //   categories=JSON.parse(cachedResult);
-  //   return categories;
-  // }
 
   const result = await api({ url: `${API_CMS}/ViewPortal/ContentCategory?siteId=${Id}&status=ST01&kanalType=${kanalType}&Id=` });
   if ('error' in result) {
@@ -312,8 +237,6 @@ export async function getCategories({ kanalType }: { kanalType: 'K001' | 'K008' 
   } else {
     categories = result;
   }
-
-  // await redisSaveString(redis,cachedKey, 3600, JSON.stringify(categories));
 
   return categories;
 }

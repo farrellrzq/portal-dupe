@@ -2,7 +2,7 @@ import { InfografisProps } from '@/controllers/types/home-controller.type'
 import React from 'react'
 
 export default function Content({ infografis }: { infografis: InfografisProps[] | null }) {
-
+  // return JSON.stringify ( infografis )
   return (
     <div className="swiper single-slider text-center m-10 mb-0">
       <div className="swiper-wrapper">

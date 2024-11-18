@@ -10,7 +10,7 @@ export default function Widgetloader() {
             <div className="flex">
                 <div className="w-3/4">
                     <span className="text-sm dark:text-jacarta-300">
-                        Sumber : Data Kependudukan Bersih Kemendagri Total Semester Tahun 2022 <Skeleton />
+                        Sumber : Total Data Kependudukan Bersih Kemendagri, Semester 1 Tahun 2023 <Skeleton />
                     </span>
                 </div>
             </div>

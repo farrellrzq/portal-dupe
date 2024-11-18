@@ -1,23 +1,18 @@
 import { consoleError, API_CMS, API_DSW, API_BERITA_DEPOK } from "@/helpers/site";
 import { api,  getDomainSite } from "./Controller";
 import { 
+  BeritaKelurahanProps,
   BeritaKotaProps, 
   BeritaProps, 
   DokumenProps, 
   InfografisProps, 
+  KomoditasProps, 
   LayananKotaProps, 
   LayananProps, 
   PengumumanProps, 
+  PotensiProps, 
   SliderProps
 } from "./types/home-controller.type";
-// import  redis from '@/helpers/redis-client';
-// import {
-//   redisSaveList,
-//   redisGetList,
-//   redisCheckList,
-//   redisEditList
-// } from "@/helpers/redis";
-
 
 export async function getSlider() {
   const { Id } = await getDomainSite();
@@ -69,13 +64,6 @@ export async function getInfografis() {
   
   const cachedKey=`infografis`;
   
-  // const cachedResult=await redisGetList(redis,cachedKey);
-  
-  // if (cachedResult.length > 0) {
-  //   Infografis = cachedResult.map(item => JSON.parse(item)) as InfografisProps[];
-  //   return Infografis;
-  // }
-  
   const result = await api({ url: `${API_DSW}/index.php/api/slider` });
   
   if ('error' in result) {
@@ -84,27 +72,12 @@ export async function getInfografis() {
     Infografis = result ? result.data : [];
   }
 
-  // if(result.length > 0){
-  //   result.forEach(async(data:any) => {
-  //     await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
-  //   });
-  // }
-  
   return Infografis;
 }
 
 export async function getDokumen() {
   const { Id } = await getDomainSite();
   let Dokumen: DokumenProps[] | null = null;
-
-  // const cachedKey=`dokumen_id:${Id}`;
-
-  // const cachedResult=await redisGetList(redis,cachedKey);
-
-  //  if (cachedResult.length > 0) {
-  //    Dokumen = cachedResult.map(item => JSON.parse(item)) as DokumenProps[];
-  //    return Dokumen;
-  // }
 
   const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K010&limit=3`});
   if ('error' in result) {
@@ -113,26 +86,12 @@ export async function getDokumen() {
     Dokumen = result ? result : [];
   }
 
-  // if(result.length > 0){
-  //   result.forEach(async(data:any) => {
-  //     await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
-  //   });
-  // }
-  
   return Dokumen;
 }
 
 export async function getPengumuman() {
   const { Id } = await getDomainSite();
   let Pengumuman: PengumumanProps[] | null = null;
-
-  // const cachedKey=`pengumuman_id:${Id}`;
-  // const cachedResult=await redisGetList(redis, cachedKey);
-
-  // if (cachedResult.length > 0) {
-  //    Pengumuman = cachedResult.map(item => JSON.parse(item)) as PengumumanProps[];
-  //    return Pengumuman;
-  // }
 
   const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K008`});
   if ('error' in result) {
@@ -141,71 +100,67 @@ export async function getPengumuman() {
     Pengumuman = result ? result : [];
   }
 
-  // if(result.length > 0){
-  //   result.forEach(async(data:any) => {
-  //     await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
-  //   });
-  // }
-
   return Pengumuman;
 }
 
-export async function getBeritaKota() {
-  let BeritaKota: BeritaKotaProps[] | null = null;
-
-  // const cachedKey=`berita_kota`;
-  // const cachedResult=await redisGetList(redis, cachedKey);
-
-  // if (cachedResult.length > 0) {
-  //    BeritaKota = cachedResult.map(item => JSON.parse(item)) as BeritaKotaProps[];
-  //    return BeritaKota;
-  // }
-
-  const result = await api({ url: `${API_BERITA_DEPOK}` });
-
+export async function getKomoditas() {
+  const { Id } = await getDomainSite();
+  let Komoditas: KomoditasProps[] | null = null;
+  const result = await api({ url: `https://dsw.depok.go.id/api/komoditas/harga_depok` });
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
-    BeritaKota = result ? result : [];
+    Komoditas = result.data;
   }
+  return Komoditas;
+}
 
-  // if(result.length > 0){
-  //   result.forEach(async(data:any) => {
-  //     await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
-  //   });
-  // }
+export async function getPotensi() {
+  const { Id } = await getDomainSite();
+  let Potensi: PotensiProps[] | null = null;
+  const result = await api({ url: `${API_CMS}/ViewPortal/getPlace?siteId=${Id}` });
+  if ('error' in result) {
+    consoleError('get_content()', result.error);
+  } else {
+    Potensi = result;
+  }
+  return Potensi;
+}
 
+export async function getBeritaKota() {
+  const { Id } = await getDomainSite();
+  let BeritaKota: BeritaKotaProps[] | null = null;
+  const result = await api({ url: `https://berita.depok.go.id/api/v1/berita` });
+  if ('error' in result) {
+    consoleError('get_content()', result.error);
+  } else {
+    BeritaKota = result;
+  }
   return BeritaKota;
 }
 
-export async function getBerita({limit = ''}:{limit?:string} = {}) {
+export async function getBerita(p0: { limit: string; }) {
   const { Id } = await getDomainSite();
   let Berita: BeritaProps[] | null = null;
-
-  // const cachedKey=`berita_id:${Id}`;
-
-  // const cachedResult=await redisGetList(redis, cachedKey);
-
-  // if (cachedResult.length > 0) {
-  //    Berita = cachedResult.map(item => JSON.parse(item)) as BeritaProps[];
-  //    return Berita;
-  // }
-
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K001&limit=${limit}` });
-
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K001` });
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
-    Berita = result ? result : [];
+    Berita = result;
   }
-
-  // if(result.length > 0){
-  //   result.forEach(async(data:any) => {
-  //     await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
-  //   });
-  // }
-
   return Berita;
+}
+
+export async function getBeritaKelurahan(p0: { limit: string; }) {
+  const { Id } = await getDomainSite();
+  let BeritaKelurahan: BeritaKelurahanProps[] | null = null;
+  const result = await api({ url: `${API_CMS}/ViewPortal/getContentByKecamatan?siteId=${Id}&kanalType=K001` });
+  if ('error' in result) {
+    consoleError('get_content()', result.error);
+  } else {
+    BeritaKelurahan = result;
+  }
+  return BeritaKelurahan;
 }
 
 export async function getToken() {
@@ -240,3 +195,115 @@ export async function getToken() {
   }
 }
 
+export async function getWidgetData() {
+  const { Kecamatan } = await getDomainSite();
+
+  try {
+    const { token, url } = await getToken();
+    const body = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ tahun: '2023', kecamatan: Kecamatan })
+    };
+
+    const [response, disease] = await Promise.all([
+      fetch(`${url}/api/kependudukan/aggpenduduk/perjkel`, body),
+      fetch(`${url}/api/kesehatan/aggkesehatan/penyakitperjkel`, body)
+    ]);
+
+    if (!response.ok || !disease.ok) {
+      const errorMessage = `Fetching widget data failed with status: ${response.status}, ${disease.status}`;
+      console.error(errorMessage);
+      throw new Error(errorMessage);
+    }
+
+    const resdsw = await fetch('https://dsw.depok.go.id/html/penyakitdata/');
+    if (!resdsw.ok) {
+      const errorMessage = `Fetching penyakit data failed with status: ${resdsw.status}`;
+      console.error(errorMessage);
+      throw new Error(errorMessage);
+    }
+
+    const jumlahPenyakit = await resdsw.json();
+    const dataPenyakit = jumlahPenyakit.data;
+    const getHighest = dataPenyakit.map((item: any) => item.total);
+    const sorten = formatterNumber(parseInt(getHighest.sort()[0]));
+
+    const Penyakit = jumlahPenyakit.data;
+    const getPenyakit = Penyakit.map((item: any) => item.penyakit);
+    const PenyakitName = getPenyakit;
+
+    const [dataAll, dataDisease] = await Promise.all([
+      response.json(),
+      disease.json()
+    ]);
+
+    const kepen = dataAll.data;
+    const yearPenduduk = kepen && kepen.length > 0 ? kepen[0].tahun : null; // Kondisi untuk menangani data null
+    const perjenis = groupPerjkel(kepen);
+    const total = formatterNumber(sumJumlah(kepen));
+    const totalPenyakit = formatterNumber(sumJumlah(dataDisease.data));
+    const totalMale = formatterNumber(sumJumlah(perjenis['Laki - Laki']));
+    const totalFemale = formatterNumber(sumJumlah(perjenis['Perempuan']));
+
+    return { total, totalMale, totalFemale, totalPenyakit, sorten, yearPenduduk, dataPenyakit, PenyakitName };
+  } catch (error) {
+    console.error('Error in getWidgetData:', error);
+    // Handle error here, for example return a default response
+    return { total: null, totalMale: null, totalFemale: null, totalPenyakit: null, sorten: null, yearPenduduk: null, dataPenyakit: [], PenyakitName: [] };
+  }
+}
+
+
+export function sumJumlah(data: any) {
+  try {
+    if (!Array.isArray(data) || data.length === 0) {
+      return 0;
+    }
+
+    const total = data.reduce((acc: number, obj: any) => {
+      const jumlah = obj.jumlah ? parseInt(obj.jumlah) : parseInt(obj.total);
+      return acc + jumlah;
+    }, 0);
+
+    return total;
+  } catch (error) {
+    console.error('Error in sumJumlah:', error);
+    return 0; // Return default value in case of error
+  }
+}
+
+export function groupPerjkel(data: any) {
+  try {
+    const groupedData: { [key: string]: typeof data } = {};
+
+    if (!Array.isArray(data) || data.length === 0) {
+      return groupedData;
+    }
+
+    data.forEach((item: any) => {
+      const { jenis_kelamin, ...rest } = item;
+      if (!groupedData[jenis_kelamin]) {
+        groupedData[jenis_kelamin] = [];
+      }
+      groupedData[jenis_kelamin].push(rest);
+    });
+
+    return groupedData;
+  } catch (error) {
+    console.error('Error in groupPerjkel:', error);
+    return {}; // Return default value in case of error
+  }
+}
+
+export function formatterNumber(num: any) {
+  try {
+    return num.toLocaleString('en-US', { maximumFractionDigits: 2 });
+  } catch (error) {
+    console.error('Error in formatterNumber:', error);
+    return ''; // Return default value in case of error
+  }
+}

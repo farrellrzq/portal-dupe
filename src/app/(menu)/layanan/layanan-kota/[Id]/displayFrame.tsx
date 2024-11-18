@@ -6,8 +6,6 @@ import React, { useState } from 'react'
 
 export default function Content({ layanan, layananKota, params }: { layanan: LayananProps[] | null, layananKota: LayananKotaProps[] | null, params: { Id: string } }) {
     const LayananKotaDetail:any = [];
-    // const LayananKotaDetail = await getDetailLayananKota(params.Id);
-    // const agenda = await getAgendaKegiatan();
     const [videoUrl, setVideoUrl] = useState('');
     const [showModal, setShowModal] = useState(false);
   

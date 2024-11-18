@@ -54,7 +54,7 @@ export default function Content({ pengumuman }: { pengumuman: PengumumanProps[] 
                 <div className="modal-body">
                   <button
                     type="button"
-                    className="btn-close py-1 xl:py-3.5 sm:w-8 xl:w-[2.5rem] xl:h-[2.5rem] rounded-full self-center m-1 mt-6 bg-slate-900 webkit-center shadow-md"
+                    className="btn-close py-1 xl:py-3.5 sm:w-8 xl:w-[3.3rem] rounded-full self-center m-1 mt-6 bg-slate-900 webkit-center"
                     onClick={closeWelcomeModal}
                     data-bs-dismiss="modal"
                     aria-label="Close"
@@ -64,7 +64,7 @@ export default function Content({ pengumuman }: { pengumuman: PengumumanProps[] 
                       viewBox="0 0 24 24"
                       width="24"
                       height="24"
-                      className="h-6 w-6 fill-jacarta-700"
+                      className="h-6 w-6 fill-jacarta-700 dark:fill-white"
                     >
                       <path fill="none" d="M0 0h24v24H0z" />
                       <path d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z" />
@@ -74,7 +74,7 @@ export default function Content({ pengumuman }: { pengumuman: PengumumanProps[] 
                     <div className="block rounded-2.5xl border min-h-[22rem] border-jacarta-100 bg-white p-[1.1875rem] transition-shadow hover:shadow-lg dark:border-jacarta-700 dark:bg-jacarta-700">
                       <figure className="relative">
                         <a
-                          href={`/publikasi/pengumuman/${item.slug_title}`}
+                          href={`/publikasi/pengumuman/${item.slug_title}/${item.content_id}`}
                         >
                           <img
                             src={
@@ -95,7 +95,7 @@ export default function Content({ pengumuman }: { pengumuman: PengumumanProps[] 
                       </div>
                       <div className="mt-2 flex items-center justify-between">
                         <a
-                          href={`/publikasi/pengumuman/${item.slug_title}`}
+                          href={`/publikasi/pengumuman/${item.slug_title}/${item.content_id}`}
                         >
                           <span className="font-display text-base lg:text-xl text-jacarta-700 hover:text-accent dark:text-white">
                             {item.title ? item.title : ""}
@@ -115,7 +115,7 @@ export default function Content({ pengumuman }: { pengumuman: PengumumanProps[] 
 
                       <div className="flex mt-4">
                         <a
-                          href={`/publikasi/pengumuman/${item.slug_title}`}
+                          href={`/publikasi/pengumuman/${item.slug_title}/${item.content_id}`}
                           className="flex rounded-md bg-green-600 p-1.5 px-4 m-1 text-center items-center text-[0.55rem] lg:text-xs font-semibold text-white shadow-green-600-volume transition-all hover:bg-green-600-dark"
                         >
                           <svg

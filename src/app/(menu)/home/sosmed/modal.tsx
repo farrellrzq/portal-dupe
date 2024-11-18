@@ -68,7 +68,7 @@ export default function modal() {
                       className="text-gray-500 font-normal text-sm"
                       target="_blank"
                     >
-                      A post shared by OPD Kota Depok
+                      A post shared by Diskominfo Kota Depok (@diskominfodepok)
                     </a>
                   </p>
                 </div>

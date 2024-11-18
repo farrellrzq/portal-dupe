@@ -10,7 +10,7 @@ export default async function layanan() {
     await getLayanan(),
     await getLayananKota(),
   ]);
-  
+
   return (
     <>
       <section className="lg:py-8 lg:px-20 py-5 px-4 bg-teal-50 dark:bg-jacarta-800">
@@ -18,7 +18,7 @@ export default async function layanan() {
           <div className="lg:flex">
             <div className="lg:w-full w-full grid grid-cols-1 text-center lg:text-start">
               <h3 className="font-display p-4 text-3xl text-jacarta-700 dark:text-white">
-                Layanan Perangkat Daerah
+                Layanan Kecamatan
               </h3>
               <span className="text-md px-4 pb-2">
                 Layanan {profilSite?.Name ? profilSite.Name : ""}
@@ -55,7 +55,7 @@ export default async function layanan() {
                               <path d="M8 4h13v2H8V4zm-5-.5h3v3H3v-3zm0 7h3v3H3v-3zm0 7h3v3H3v-3zM8 11h13v2H8v-2zm0 7h13v2H8v-2z" />
                             </svg>
                             <span className="font-display text-xs lg:text-base font-medium">
-                              Layanan Perangkat Daerah
+                              Layanan Kecamatan
                             </span>
                           </button>
                         </li>
@@ -90,7 +90,7 @@ export default async function layanan() {
                       </ul>
                     </div>
                     <div className="lg:w-3/4 hidden lg:block w-full lg:text-right sm:text-center">
-                      <a href="/layanan/layanan-opd">
+                      <a href="/layanan/layanan-kecamatan">
                         <button className="rounded-full bg-green-600 my-6 lg:my-0 px-6 py-4 lg:py-2 font-display text-sm text-white hover:bg-green-600-dark">
                           Lihat Selengkapnya
                         </button>
