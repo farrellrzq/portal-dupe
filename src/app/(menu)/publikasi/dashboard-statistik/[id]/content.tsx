@@ -42,7 +42,7 @@ export default function Content({ detailDashboardStatistik }: { detailDashboardS
     // };
   return (
     <>
-    <section className="lg:py-24 lg:px-20 pb-5 bg-teal-50 dark:bg-jacarta-800">
+    <section className="lg:py-24 lg:px-20 pb-5 bg-amber-50 dark:bg-jacarta-800">
         <article>
             <div className="relative overflow-hidden rounded-2.5xl mb-4 bg-white dark:bg-jacarta-700">
             <figure className="relative">

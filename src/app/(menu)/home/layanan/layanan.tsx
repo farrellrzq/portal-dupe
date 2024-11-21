@@ -13,12 +13,12 @@ export default async function layanan() {
 
   return (
     <>
-      <section className="lg:py-8 lg:px-20 py-5 px-4 bg-teal-50 dark:bg-jacarta-800">
+      <section className="lg:py-8 lg:px-20 py-5 px-4 bg-amber-50 dark:bg-jacarta-800">
         <div className="">
           <div className="lg:flex">
             <div className="lg:w-full w-full grid grid-cols-1 text-center lg:text-start">
               <h3 className="font-display p-4 text-3xl text-jacarta-700 dark:text-white">
-                Layanan Kecamatan
+                Layanan {profilSite?.Name ? profilSite.Name : ""}
               </h3>
               <span className="text-md px-4 pb-2">
                 Layanan {profilSite?.Name ? profilSite.Name : ""}

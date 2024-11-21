@@ -5,7 +5,7 @@ import { getKomoditas } from '@/controllers/HomeController'
 export default async function komoditas() {
     const hargaKomoditas = await getKomoditas();
   return (
-    <section className="lg:py-8 lg:px-20 bg-teal-50 dark:bg-jacarta-800">
+    <section className="lg:py-8 lg:px-20 bg-amber-50 dark:bg-jacarta-800">
           <div className="">
             <h2 className="mb-2 text-center font-display text-3xl text-jacarta-700 dark:text-white lg:mt-10">
               Harga Komoditas Pasar

@@ -9,14 +9,14 @@ export default async function Slider() {
       <section className="relative h-fit">
         <picture className="pointer-events-none absolute inset-0 -z-10 block dark:hidden">
           <img
-            src="img/blog/Wallpaper Kecamatan Depok-02.png"
+            src="img/blog/Wallpaper Kecamatan Depok Orange-01.png"
             alt="gradient"
             className="h-full w-full"
           />
         </picture>
         <picture className="pointer-events-none absolute inset-0 -z-10 hidden dark:block">
           <img
-            src="img/blog/Wallpaper Kecamatan Depok-03.png"
+            src="img/blog/Wallpaper Kelurahan-02.png"
             alt="gradient"
             className="h-full w-full"
           />
