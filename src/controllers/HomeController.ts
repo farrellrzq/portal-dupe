@@ -140,9 +140,10 @@ export async function getBeritaKota() {
 }
 
 export async function getBerita(p0: { limit: string; }) {
+  const { limit } = p0;
   const { Id } = await getDomainSite();
   let Berita: BeritaProps[] | null = null;
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K001` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K001&limit=${limit}` });
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
@@ -152,6 +153,7 @@ export async function getBerita(p0: { limit: string; }) {
 }
 
 export async function getBeritaKelurahan(p0: { limit: string; }) {
+  const { limit } = p0;
   const { Id } = await getDomainSite();
   let BeritaKelurahan: BeritaKelurahanProps[] | null = null;
   const result = await api({ url: `${API_CMS}/ViewPortal/getContentByKecamatan?siteId=${Id}&kanalType=K001` });
