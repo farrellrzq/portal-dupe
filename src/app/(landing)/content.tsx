@@ -38,7 +38,7 @@ export default function Content({ getKecamatan }: { getKecamatan: LandingProps[]
                                                 </span>
                                             </a>
                                             <a href={`https://${item.Domain}`} target="_blank" className="text-2xs text-green-600">
-                                                {item.Alamat ? item.Alamat : "Alamat Tidak Tercantum" || <Skeleton />}
+                                                {item.Alamat ? item.Alamat : <Skeleton />}
                                             </a>
                                         </div>
                                     </div>
