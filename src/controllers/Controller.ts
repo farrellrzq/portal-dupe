@@ -1,4 +1,4 @@
-// import { headers } from 'next/headers';
+import { headers } from 'next/headers';
 import { 
   CmsContentProps, 
   CategoryProps, 
@@ -85,8 +85,9 @@ function getErrorMessage(error: unknown): string {
 
 
 export async function getDomain() {
- 
-  return process.env.DOMAIN;
+  const headersList = headers();
+  const domain = headersList.get('x-forwarded-host');
+  return domain;
 }
 
 export async function getDomainSite() {
