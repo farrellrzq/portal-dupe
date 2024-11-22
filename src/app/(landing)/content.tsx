@@ -26,7 +26,7 @@ export default function Content({ getKecamatan }: { getKecamatan: LandingProps[]
                                             height="430"
                                             width="379"
                                         />
-                                        <div className="swiper-lazy-preloader"></div>
+                                        {/* <div className="swiper-lazy-preloader"></div> */}
                                     </a>
                                 </figure>
                                 <div className="p-6">
