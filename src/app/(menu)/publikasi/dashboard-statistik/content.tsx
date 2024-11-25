@@ -3,36 +3,40 @@ import { AgendaProps } from "@/controllers/types/publikasi-controller.type";
 import { useState } from "react";
 
 export default function Content({ DashboardStatistik }: { DashboardStatistik: AgendaProps[] | null }) {
-    // return JSON.stringify ( DashboardStatistik )
-    const [searchTerm, setSearchTerm] = useState('');
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 6;
-    const [selectedCategory, setSelectedCategory] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
+  const [selectedCategory, setSelectedCategory] = useState('');
+
+  const filteredStatistik = (DashboardStatistik || []).filter((item: any) => {
+    const categoryCondition = selectedCategory ? item?.["@type"] === selectedCategory : true;
+    const searchTermCondition = item?.title?.toLowerCase().includes(searchTerm.toLowerCase());
+    return categoryCondition && searchTermCondition;
+  });
+
+  const totalPages = Math.ceil(filteredStatistik.length / itemsPerPage);
   
-    const filteredStatistik = (DashboardStatistik || []).filter((item: any) => {
-      const categoryCondition = selectedCategory ? item.category === selectedCategory : true;
-      const searchTermCondition = item.title.toLowerCase().includes(searchTerm.toLowerCase());
-      return categoryCondition && searchTermCondition;
-    });  
-  
-    const paginate = (pageNumber: number) => {
-      setCurrentPage(pageNumber);
-    };
-  
-    const maxButtons = 3;
-    let startPage = Math.max(1, currentPage - Math.floor(maxButtons / 2));
-    let endPage = Math.min(startPage + maxButtons - 1, Math.ceil(filteredStatistik.length / itemsPerPage));
-  
-    if (endPage - startPage + 1 < maxButtons) {
-      startPage = Math.max(1, endPage - maxButtons + 1);
-    }
-  
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentStatistik = filteredStatistik.slice(indexOfFirstItem, indexOfLastItem);
+  const paginate = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentStatistik = filteredStatistik.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Pagination Buttons (Limit to 3 buttons)
+  const maxButtons = 3;
+  const pageNumbers = [];
+  const startPage = Math.max(1, currentPage - Math.floor(maxButtons / 2));
+  const endPage = Math.min(totalPages, startPage + maxButtons - 1);
+
+  for (let i = startPage; i <= endPage; i++) {
+    pageNumbers.push(i);
+  }  
+
   return (
     <section className="lg:py-24 lg:px-20 pb-5 bg-teal-50 dark:bg-jacarta-800">
-        <article>
+      <article>
             <div className="relative overflow-hidden rounded-2.5xl mb-4 bg-white dark:bg-jacarta-700">
             <figure className="relative">
                 <a href="#"
@@ -78,138 +82,76 @@ export default function Content({ DashboardStatistik }: { DashboardStatistik: Ag
             </div>
             </div>
         </article>
-        
-        <div>
-            <div className="flex mb-4">
-            <div className="w-3/4 mr-2">
-                {/* <div className="sm:col-span-3">
-                <div className="mt-2">
-                <select
-                    value={selectedCategory}
-                    onChange={(e) => setSelectedCategory(e.target.value)} // Update kategori saat terjadi perubahan pada select
-                    className="block w-full border border-jacarta-100 rounded-md py-1.5 p-1.5 text-gray-900 sm:max-w-xs sm:text-sm sm:leading-6 text-jacarta-700 placeholder-jacarta-500 focus:ring-accent dark:border-transparent dark:bg-white/[.15] dark:text-jacarta-300 dark:placeholder-white"
-                    >
-                    <option value="">Semua Kategori</option>
-                    {categories.map((category: any) => (
-                        <option key={category.Id} value={category.Id}>
-                        {category.Category}
-                        </option>
-                    ))}
-                    </select>
-                </div>
-                </div> */}
-            </div>
-            <div className="w-1/4">
-                <form onSubmit={(e) => e.preventDefault()} className="relative ml-12 mr-8 basis-3/12">
-                <input type="search"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full rounded-2xl border border-jacarta-100 py-[0.6875rem] px-4 pl-10 text-jacarta-700 placeholder-jacarta-500 focus:ring-accent dark:border-transparent dark:bg-white/[.15] dark:text-white dark:placeholder-white"
-                        placeholder="Search" />
-                <span className="absolute left-0 top-0 flex h-full w-12 items-center justify-center rounded-2xl">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
-                    className="h-4 w-4 fill-jacarta-500 dark:fill-white">
-                    <path fill="none" d="M0 0h24v24H0z" />
-                    <path
-                        d="M18.031 16.617l4.283 4.282-1.415 1.415-4.282-4.283A8.96 8.96 0 0 1 11 20c-4.968 0-9-4.032-9-9s4.032-9 9-9 9 4.032 9 9a8.96 8.96 0 0 1-1.969 5.617zm-2.006-.742A6.977 6.977 0 0 0 18 11c0-3.868-3.133-7-7-7-3.868 0-7 3.132-7 7 0 3.867 3.132 7 7 7a6.977 6.977 0 0 0 4.875-1.975l.15-.15z" />
-                    </svg>
-                </span>
-                </form>
-            </div>
-            </div>
-        </div>
 
-        <div className="grid grid-cols-1 gap-[1.875rem] sm:grid-cols-2 md:grid-cols-2">
-        {currentStatistik && currentStatistik.map((item: any, index: number) => (
-            <a
-            href={`/publikasi/dashboard-statistik/${item?.id}`}
-            // href="#"
-            className="relative flex items-center rounded-2.5xl border border-jacarta-100 bg-white p-8 transition-shadow hover:shadow-lg dark:border-jacarta-700 dark:bg-jacarta-700"
+      <div className="flex mb-4">
+        <div className="w-3/4">
+          {/* <select
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="w-full border rounded-md py-2 px-3 dark:bg-gray-800 dark:text-white"
+          >
+            <option value="">All Categories</option>
+            <option value="education">Education</option>
+            <option value="health">Health</option>
+          </select> */}
+        </div>
+        <div className="w-1/4 ml-4">
+          <input
+            type="search"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search"
+            className="w-full border border-jacarta-100 rounded-md py-2 px-3 dark:bg-gray-800 dark:text-white"
+          />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+        {currentStatistik.map((item: any, index: number) => (
+          <div
+            // href={`/publikasi/dashboard-statistik/${item?.identifier}`}
             key={index}
-            >
-            <figure className="mr-5 self-start">
-                <img src="/img/avatars/pendidikan.png" alt="avatar 2" className="rounded-lg w-16" loading="lazy" />
+            className="block flex border border-jacarta-100 p-8 rounded-lg bg-white dark:bg-gray-700 dark:border-jacarta-700 dark:bg-jacarta-700"
+          >
+            <figure className="mb-3 w-1/4 content-center">
+              <img src="/img/avatars/bigdata.png" alt={item?.title || 'Dataset'} className="w-16 h-16 rounded-lg" />
             </figure>
-
-            <div key={index}>
-                <h3 className="mb-1 font-display text-base font-semibold text-jacarta-700 dark:text-white">
-                {item.title}
-                </h3>
-                <span className="mb-3 flex text-sm text-jacarta-500 dark:text-jacarta-200">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-4 h-4 mr-2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
-                </svg>
-                {item.organization.title}
-                </span>
-                <span className="mb-3 flex text-sm text-jacarta-500 dark:text-jacarta-200">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-4 h-4 mr-2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
-                </svg>
-                {item.metadata_created.slice(0, 10)}</span>
+            <div className="w-3/4">
+            <h3 className="font-bold text-base mb-2">{item?.title.toLowerCase() || 'No Title Available'}</h3>
+            <p className="text-sm text-gray-600">{item?.publisher?.name || 'Unknown Organization'}</p>
             </div>
+          </div>
+        ))}
+      </div>
 
-            <div className="ml-auto rounded-full border border-jacarta-100 p-3 dark:border-jacarta-600">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 00-1.883 2.542l.857 6a2.25 2.25 0 002.227 1.932H19.05a2.25 2.25 0 002.227-1.932l.857-6a2.25 2.25 0 00-1.883-2.542m-16.5 0V6A2.25 2.25 0 016 3.75h3.879a1.5 1.5 0 011.06.44l2.122 2.12a1.5 1.5 0 001.06.44H18A2.25 2.25 0 0120.25 9v.776" />
-            </svg>
-            </div>
-            </a>
-            )
-            )}
-            
-        </div>
-
-        <div className="flex items-center justify-between border-t border-gray-200 my-5 bg-white px-4 py-3 sm:px-6 dark:border-jacarta-700 dark:bg-jacarta-700">
-            <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
-            <div>
-                <p className="text-sm text-gray-700 dark:text-white">
-                Showing
-                <span className="font-medium mx-1">{indexOfFirstItem + 1}</span>
-                to
-                <span className="font-medium mx-1">
-                    {indexOfLastItem > filteredStatistik.length ? filteredStatistik.length : indexOfLastItem}
-                </span>
-                of
-                <span className="font-medium mx-1">{filteredStatistik.length}</span>
-                results
-                </p>
-            </div>
-            <nav className="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+      <div className="flex justify-end mt-6">
+        <button
+            onClick={() => paginate(currentPage - 1)}
+            disabled={currentPage === 1}
+            className={`relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 ${currentPage === 1 ? 'opacity-50' : 'hover:bg-gray-300'} rounded-md`}
+        >
+            Prev
+        </button>
+        {pageNumbers.map((page) => (
             <button
-                onClick={() => paginate(currentPage - 1)} // Fungsi untuk halaman sebelumnya
-                className={`relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 ${
-                currentPage === 1 ? 'hidden' : ''
-                }`}
+            key={page}
+            onClick={() => paginate(page)}
+            className={`px-4 py-2 mx-1 ${
+                page === currentPage ? 'bg-blue-500 text-white' : 'hover:bg-gray-300'
+            } rounded-md`}
             >
-                <span className="sr-only">Previous</span>
-                Prev
+            {page}
             </button>
-            {Array.from({ length: endPage - startPage + 1 }, (_, index) => {
-                const pageNumber = startPage + index;
-                return (
-                <button
-                    key={pageNumber}
-                    onClick={() => paginate(pageNumber)}
-                    className={`relative dark:text-white inline-flex items-center px-4 py-2 text-sm font-semibold ${
-                    currentPage === pageNumber ? 'bg-indigo-600 text-white' : 'text-gray-900'
-                    } ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0`}
-                >
-                    {pageNumber}
-                </button>
-                );
-            })}
-            <button
-                onClick={() => paginate(currentPage + 1)} // Fungsi untuk halaman selanjutnya
-                className={`relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 ${
-                indexOfLastItem >= filteredStatistik.length ? 'hidden' : ''
-                }`}
-            >
-                <span className="sr-only">Next</span>
-                Next
-            </button>
-            </nav>
-            </div>
+        ))}
+        <button
+            onClick={() => paginate(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className={`relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 ${currentPage === totalPages ? 'opacity-50' : 'hover:bg-gray-300'} rounded-md`}
+        >
+            Next
+        </button>
         </div>
     </section>
-  )
+  );
 }
+

@@ -180,7 +180,7 @@ export default async function HeaderNav() {
             <li>
               <a href="/publikasi/galeri-kegiatan"
                 className="flex items-center rounded-xl px-5 py-2 transition-colors hover:bg-jacarta-50 hover:text-green-600 focus:text-green-600 dark:hover:bg-jacarta-600">
-                <span className="font-display text-sm text-jacarta-700 dark:text-white">Infografis</span>
+                <span className="font-display text-sm text-jacarta-700 dark:text-white">Galeri Kegiatan</span>
               </a>
             </li>
             <li>
