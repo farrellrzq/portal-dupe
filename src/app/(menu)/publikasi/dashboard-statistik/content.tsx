@@ -114,7 +114,7 @@ export default function Content({ DashboardStatistik }: { DashboardStatistik: Ag
             className="block flex border border-jacarta-100 p-8 rounded-lg bg-white dark:bg-gray-700 dark:border-jacarta-700 dark:bg-jacarta-700"
           >
             <figure className="mb-3 w-1/4 content-center">
-              <img src="/img/avatars/pendidikan.png" alt={item?.title || 'Dataset'} className="w-16 h-16 rounded-lg" />
+              <img src="/img/avatars/bigdata.png" alt={item?.title || 'Dataset'} className="w-16 h-16 rounded-lg" />
             </figure>
             <div className="w-3/4">
             <h3 className="font-bold text-base mb-2">{item?.title.toLowerCase() || 'No Title Available'}</h3>
