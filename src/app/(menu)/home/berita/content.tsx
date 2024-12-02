@@ -101,7 +101,7 @@ export default function Content({ beritaKota, berita, beritaKelurahan }: { berit
                                     <div className="overflow-hidden">
                                         <figure className="group overflow-hidden">
                                             <a
-                                                href={`/publikasi/detail-berita/${item.slug_title}/${item.content_id}`}
+                                                href={`/publikasi/berita/${item?.slug_title}`}
                                             >
                                                 <img
                                                     src={
@@ -140,7 +140,7 @@ export default function Content({ beritaKota, berita, beritaKelurahan }: { berit
                                             </div>
                                             <h2 className="mb-4 mt-2 font-display text-xl text-jacarta-700 hover:text-green-600 dark:text-white dark:hover:text-green-600">
                                                 <a
-                                                    href={`/publikasi/berita/${item.slug_title}/${item.content_id}`}
+                                                    href={`/publikasi/berita/${item.slug_title}`}
                                                 >
                                                     {item.title.slice(0, 38)}{" ..."}
                                                 </a>

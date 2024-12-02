@@ -1,4 +1,4 @@
-import { headers } from 'next/headers';
+// import { headers } from 'next/headers';
 import { 
   CmsContentProps, 
   CategoryProps, 
@@ -85,9 +85,8 @@ function getErrorMessage(error: unknown): string {
 
 
 export async function getDomain() {
-  const headersList = headers();
-  const domain = headersList.get('x-forwarded-host');
-  return domain;
+ 
+  return process.env.DOMAIN;
 }
 
 export async function getDomainSite() {
@@ -155,7 +154,7 @@ export async function getBerita() {
   const { Id } = await getDomainSite();
   let Berita: CmsContentProps[] | null = null;
 
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K001&limit=` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K001` });
 
   if ('error' in result) {
     consoleError('get_content()', result.error);
