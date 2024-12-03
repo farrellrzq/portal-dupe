@@ -15,7 +15,9 @@ export default async function LeftFooter() {
           profileSite?.imageSite
             ? `https://cms.depok.go.id/upload/profilesite/${profileSite?.imageSite}`
             : "/img/logo-opd.png"
-        }/>
+        }
+        className='max-h-20'
+        />
       </a>
       <div>
         <p className="mb-2 dark:text-jacarta-300">
