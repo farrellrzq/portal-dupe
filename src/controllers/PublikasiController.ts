@@ -97,13 +97,13 @@ export async function getMenu() {
 
   const result = await api({ url: `${API_CMS}/ViewPortal/getExLink?siteId=${Id}&typeId=&limit=&offset=&code=publikasi` });
 
-  if (!result || 'error' in result) {
-    console.error('API Error: ', result?.error || 'Unknown Error');
-    return [];
+  if ('error' in result) {
+    // consoleError('get_content()', result.error);
   } else {
     Menu = result ? result : [];
   }
-  
+
+
   return Menu;
 }
 
