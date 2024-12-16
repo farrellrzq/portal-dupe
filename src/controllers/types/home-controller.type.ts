@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export type SliderProps = {
   Id: string;
   GroupSlider: string;
