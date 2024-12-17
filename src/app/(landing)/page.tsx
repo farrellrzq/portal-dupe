@@ -43,7 +43,7 @@ export default async function Home() {
         </section>
         <Berita />
         <ModalPengumuman />
-        {/* <ModalSearchBerita /> */}
+        <ModalSearchBerita />
       </main>
     </HydrationOverlay>
   );

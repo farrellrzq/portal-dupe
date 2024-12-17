@@ -4,20 +4,12 @@ import {
   BeritaKotaProps, 
   BeritaProps, 
   DokumenProps, 
-  InfografisProps, 
+  InfografisProps,  
   LayananKotaProps, 
   LayananProps, 
   PengumumanProps, 
   SliderProps
 } from "./types/home-controller.type";
-// import  redis from '@/helpers/redis-client';
-// import {
-//   redisSaveList,
-//   redisGetList,
-//   redisCheckList,
-//   redisEditList
-// } from "@/helpers/redis";
-
 
 export async function getSlider() {
   const { Id } = await getDomainSite();
@@ -69,13 +61,6 @@ export async function getInfografis() {
   
   const cachedKey=`infografis`;
   
-  // const cachedResult=await redisGetList(redis,cachedKey);
-  
-  // if (cachedResult.length > 0) {
-  //   Infografis = cachedResult.map(item => JSON.parse(item)) as InfografisProps[];
-  //   return Infografis;
-  // }
-  
   const result = await api({ url: `${API_DSW}/index.php/api/slider` });
   
   if ('error' in result) {
@@ -84,27 +69,12 @@ export async function getInfografis() {
     Infografis = result ? result.data : [];
   }
 
-  // if(result.length > 0){
-  //   result.forEach(async(data:any) => {
-  //     await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
-  //   });
-  // }
-  
   return Infografis;
 }
 
 export async function getDokumen() {
   const { Id } = await getDomainSite();
   let Dokumen: DokumenProps[] | null = null;
-
-  // const cachedKey=`dokumen_id:${Id}`;
-
-  // const cachedResult=await redisGetList(redis,cachedKey);
-
-  //  if (cachedResult.length > 0) {
-  //    Dokumen = cachedResult.map(item => JSON.parse(item)) as DokumenProps[];
-  //    return Dokumen;
-  // }
 
   const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K010&limit=3`});
   if ('error' in result) {
@@ -113,26 +83,12 @@ export async function getDokumen() {
     Dokumen = result ? result : [];
   }
 
-  // if(result.length > 0){
-  //   result.forEach(async(data:any) => {
-  //     await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
-  //   });
-  // }
-  
   return Dokumen;
 }
 
 export async function getPengumuman() {
   const { Id } = await getDomainSite();
   let Pengumuman: PengumumanProps[] | null = null;
-
-  // const cachedKey=`pengumuman_id:${Id}`;
-  // const cachedResult=await redisGetList(redis, cachedKey);
-
-  // if (cachedResult.length > 0) {
-  //    Pengumuman = cachedResult.map(item => JSON.parse(item)) as PengumumanProps[];
-  //    return Pengumuman;
-  // }
 
   const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K008`});
   if ('error' in result) {
@@ -141,70 +97,31 @@ export async function getPengumuman() {
     Pengumuman = result ? result : [];
   }
 
-  // if(result.length > 0){
-  //   result.forEach(async(data:any) => {
-  //     await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
-  //   });
-  // }
-
   return Pengumuman;
 }
 
 export async function getBeritaKota() {
+  const { Id } = await getDomainSite();
   let BeritaKota: BeritaKotaProps[] | null = null;
-
-  // const cachedKey=`berita_kota`;
-  // const cachedResult=await redisGetList(redis, cachedKey);
-
-  // if (cachedResult.length > 0) {
-  //    BeritaKota = cachedResult.map(item => JSON.parse(item)) as BeritaKotaProps[];
-  //    return BeritaKota;
-  // }
-
-  const result = await api({ url: `${API_BERITA_DEPOK}` });
-
+  const result = await api({ url: `https://berita.depok.go.id/api/v1/berita` });
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
-    BeritaKota = result ? result : [];
+    BeritaKota = result;
   }
-
-  // if(result.length > 0){
-  //   result.forEach(async(data:any) => {
-  //     await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
-  //   });
-  // }
-
   return BeritaKota;
 }
 
-export async function getBerita({limit = ''}:{limit?:string} = {}) {
+export async function getBerita(p0: { limit: string; }) {
+  const { limit } = p0;
   const { Id } = await getDomainSite();
   let Berita: BeritaProps[] | null = null;
-
-  // const cachedKey=`berita_id:${Id}`;
-
-  // const cachedResult=await redisGetList(redis, cachedKey);
-
-  // if (cachedResult.length > 0) {
-  //    Berita = cachedResult.map(item => JSON.parse(item)) as BeritaProps[];
-  //    return Berita;
-  // }
-
   const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K001&limit=${limit}` });
-
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
-    Berita = result ? result : [];
+    Berita = result;
   }
-
-  // if(result.length > 0){
-  //   result.forEach(async(data:any) => {
-  //     await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
-  //   });
-  // }
-
   return Berita;
 }
 

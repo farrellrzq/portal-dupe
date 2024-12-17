@@ -10,6 +10,7 @@ import {
 import { consoleError, API_CMS } from '@/helpers/site';
 import { LandingProps } from './types/landing-controller.type';
 import { isBrowser, isMobile } from 'react-device-detect';
+import { NextResponse } from 'next/server';
 
 interface ApiProps {
   url: string;
@@ -94,14 +95,6 @@ export async function getDomain() {
 
 export async function getDomainSite() {
   const domain=await getDomain();
-  
-  // const cachedKey=`domainSite:${domain}`;
-
-  // const cachedResult=await redisGetString(redis,cachedKey);
-
-  // if (cachedResult) {
-  //   return JSON.parse(cachedResult) as DomainSiteProps;
-  // }
 
   const result = await api({ url: `${API_CMS}/ViewPortal/domainsite?domain=${domain}`, revalidate: 60 });
 
@@ -109,9 +102,12 @@ export async function getDomainSite() {
     throw new Error(result);
   }
 
-  // await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
-
   return result as DomainSiteProps;
+}
+
+export async function getSiteData() {
+  const { Id } = await getDomainSite();
+  return Id; // Mengambil Id dari result
 }
 
 export async function getKecamatan() {
@@ -217,14 +213,6 @@ export async function getVisitAgent() {
   const cachedKey=`visitAgentDomain:${await getDomain()}`;
   const {Id}=await getDomainSite();
 
-
-  // const cachedResult=await redisGetString(redis,cachedKey);
-
-  // if (cachedResult) {
-  //   Logview=JSON.parse(cachedResult);
-  //   return Logview;
-  // }
-
   const result = await api({
     url: `${API_CMS}/ViewPortal/log_view?siteid=${Id}&contentid=&codekanal=&device=${agentInfo}&browse=${agentInfo}&codekanal=`
   });
@@ -234,8 +222,6 @@ export async function getVisitAgent() {
   } else {
     Logview = result;
   }
-
-  // await redisSaveString(redis,cachedKey, 3600, JSON.stringify(result));
 
   return Logview;
 }
@@ -247,23 +233,11 @@ export async function getVisit() {
     w_minggu: [],
     w_kemarin: [],
     w_hari: []
-  }; // Inisialisasi visit dengan tipe VisitProps
-
-  // const cachedKey=`visitDomain:${await getDomain()}`;
+  }; 
+  
   const {Id}=await getDomainSite();
 
-
-  // const cachedResult=await redisGetString(redis,cachedKey);
-
-
   try {
-    // Panggil getVisitAgent secara async
-    // const Logview = await getVisitAgent();
-
-    // if (cachedResult) {
-    //   visit=JSON.parse(cachedResult);
-    //   return visit;
-    // }
 
     const result = await api({ url: `${API_CMS}/ViewPortal/getPengunjung?siteid=${Id}`, revalidate: 3600 });
 
@@ -273,20 +247,10 @@ export async function getVisit() {
       visit = result;
     }
 
-    // Gunakan Logview dari getVisitAgent
-    // if (Logview) {
-    //   // Pastikan properti Logview sesuai dengan tipe VisitProps
-    //   visit.agentInfo = Logview.agentInfo;
-    //   visit.agentBrowser = Logview.agentBrowser;
-    //   visit.device = Logview.device;
-    //   visit.browse = Logview.browse;
-    // }
   } catch (error) {
     console.error('Error in getVisit:', error);
     throw error;
   }
-
-  // await redisSaveString(redis,cachedKey, 3600, JSON.stringify(visit));
 
   return visit;
 }

@@ -1,4 +1,5 @@
 export type DomainSiteProps = {
+  siteId: any
   map(arg0: (item: any, index: number) => import("react").JSX.Element): import("react").ReactNode
   Id: string
   Code: string

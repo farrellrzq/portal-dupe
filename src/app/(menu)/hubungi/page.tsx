@@ -105,7 +105,6 @@ export default async function page() {
           </div>
         </div>
       </section>
-      <ModalSearchBerita />
     </main>
   )
 }
