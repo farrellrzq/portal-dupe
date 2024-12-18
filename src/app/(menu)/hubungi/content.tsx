@@ -158,7 +158,7 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={isLoading}
-        className="rounded-full bg-blue-900 py-3 px-8 text-center font-semibold text-white shadow transition-all hover:bg-green-700"
+        className="rounded-full bg-blue-900 py-3 px-8 text-center font-semibold text-jacarta-600 shadow shadow-blue-volume transition-all bg-white hover:bg-green-700 hover:text-white"
       >
         {isLoading ? 'Mengirim...' : 'Kirim'}
       </button>
