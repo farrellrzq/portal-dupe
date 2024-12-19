@@ -13,7 +13,7 @@ export default async function page() {
         <div className="container">
           <div className="mx-auto max-w-4xl text-center">
             <h1 className="font-display text-3xl text-jacarta-700 dark:text-white lg:text-3xl xl:text-4xl">
-            {menu && menu[0].TitleMenu}
+            {menu && menu[0] ? menu[0].TitleMenu : 'Menu Tidak Ditemukan'}
             </h1>
           </div>
         </div>

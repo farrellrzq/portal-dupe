@@ -15,7 +15,9 @@ export default async function LeftFooter() {
           profileSite?.imageSite
             ? `https://cms.depok.go.id/upload/profilesite/${profileSite?.imageSite}`
             : "/img/logo-opd.png"
-        }/>
+        }
+        className='max-h-20'
+        />
       </a>
       <div>
         <p className="mb-2 dark:text-jacarta-300">
@@ -23,7 +25,7 @@ export default async function LeftFooter() {
             ? profileSite.Description.length > 165
               ? `${profileSite.Description.substring(0, 165)}...`
               : profileSite.Description
-            : "Dinas Komunikasi dan Informatika | Pemerintah Kota Depok Portal Resmi OPD Kota Depok"}
+            : "OPD Perangkat Daerah | Pemerintah Kota Depok Portal Resmi OPD Kota Depok"}
         </p>
         {profileSite?.Description &&
           profileSite.Description.length > 165 && (

@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 
 export default function Content({ detailDashboardStatistik }: { detailDashboardStatistik: AgendaProps[] | null}) {    
     
-    // return JSON.stringify ( beritaDetail )
+    return JSON.stringify ( detailDashboardStatistik )
     console.log(detailDashboardStatistik);
 
     const [searchTerm, setSearchTerm] = useState('');
@@ -13,8 +13,8 @@ export default function Content({ detailDashboardStatistik }: { detailDashboardS
     const [selectedCategory, setSelectedCategory] = useState('');
   
     const filteredStatistik = (detailDashboardStatistik || []).filter((item: any) => {
-      const categoryCondition = selectedCategory ? item.category === selectedCategory : true;
-      const searchTermCondition = item.name.toLowerCase().includes(searchTerm.toLowerCase());
+      const categoryCondition = selectedCategory ? item?.["@type"] === selectedCategory : true;
+      const searchTermCondition = item.title.toLowerCase().includes(searchTerm.toLowerCase());
       return categoryCondition && searchTermCondition;
     });
   

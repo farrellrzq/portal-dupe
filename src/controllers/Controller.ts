@@ -1,4 +1,4 @@
-// import { headers } from 'next/headers';
+import { headers } from 'next/headers';
 import { 
   CmsContentProps, 
   CategoryProps, 
@@ -10,6 +10,7 @@ import {
 import { consoleError, API_CMS } from '@/helpers/site';
 import { LandingProps } from './types/landing-controller.type';
 import { isBrowser, isMobile } from 'react-device-detect';
+import { NextResponse } from 'next/server';
 
 interface ApiProps {
   url: string;
@@ -85,8 +86,10 @@ function getErrorMessage(error: unknown): string {
 
 
 export async function getDomain() {
- 
-  return process.env.DOMAIN;
+  const headersList = headers();
+  const domain = headersList.get('x-forwarded-host');
+  return domain || 'beji.depok.go.id';
+  // return process.env.DOMAIN;
 }
 
 export async function getDomainSite() {
@@ -99,6 +102,11 @@ export async function getDomainSite() {
   }
 
   return result as DomainSiteProps;
+}
+
+export async function getSiteData() {
+  const { Id } = await getDomainSite();
+  return Id; // Mengambil Id dari result
 }
 
 export async function getKecamatan() {
