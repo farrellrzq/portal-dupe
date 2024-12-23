@@ -98,7 +98,7 @@ export async function getLayananKota() {
   //    return LayananKota;
   // }
 
-  const result = await api({ url: `${API_CMS}/ViewPortal/getExLink?siteId=2&code=&groupId=&typeId=LM&limit=3&offset=&parent=` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/getExLink?siteId=2&code=&groupId=&typeId=LM&limit=&offset=&parent=` });
   if ('error' in result) {
     consoleError('get_content()', result.error);
   } else {
@@ -123,7 +123,7 @@ export async function getDetailLayananKota(Id: string) {
   //    return DetailLayananKota;
   // }
 
-  const result = await api({ url: `${API_CMS}/ViewPortal/getExLink?siteId=2&code=&groupId=&typeId=LM&limit=3&offset=&parent=${Id}` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/getExLink?siteId=2&code=&groupId=&typeId=LM&limit=&offset=&parent=${Id}` });
 
   if ('error' in result) {
     consoleError('get_content()', result.error);
