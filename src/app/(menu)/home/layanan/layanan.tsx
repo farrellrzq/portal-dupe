@@ -18,7 +18,7 @@ export default async function layanan() {
           <div className="lg:flex">
             <div className="lg:w-full w-full grid grid-cols-1 text-center lg:text-start">
               <h3 className="font-display p-4 text-3xl text-jacarta-700 dark:text-white">
-                Layanan Kecamatan
+                Layanan {profilSite?.Name ? profilSite.Name : ""}
               </h3>
               <span className="text-md px-4 pb-2">
                 Layanan {profilSite?.Name ? profilSite.Name : ""}
@@ -90,7 +90,7 @@ export default async function layanan() {
                       </ul>
                     </div>
                     <div className="lg:w-3/4 hidden lg:block w-full lg:text-right sm:text-center">
-                      <a href="/layanan/layanan-kecamatan">
+                      <a href="/layanan/layanan-kota">
                         <button className="rounded-full bg-green-600 my-6 lg:my-0 px-6 py-4 lg:py-2 font-display text-sm text-white hover:bg-green-600-dark">
                           Lihat Selengkapnya
                         </button>

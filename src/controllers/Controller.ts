@@ -86,10 +86,10 @@ function getErrorMessage(error: unknown): string {
 
 
 export async function getDomain() {
-  const headersList = headers();
-  const domain = headersList.get('x-forwarded-host');
-  return domain || 'beji.depok.go.id';
-  // return process.env.DOMAIN;
+  // const headersList = headers();
+  // const domain = headersList.get('x-forwarded-host');
+  // return domain || 'beji.depok.go.id';
+  return process.env.DOMAIN;
 }
 
 export async function getDomainSite() {

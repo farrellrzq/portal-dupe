@@ -7,10 +7,10 @@ export default async function agenda() {
   return (
     <div className="lg:w-1/2 m-2">
         <h2 className="mb-2 text-center mt-10 lg:mt-0 font-display text-3xl text-jacarta-700 dark:text-white">
-            Agenda Kecamatan
+            Agenda Kelurahan
         </h2>
         <p className="text-center mb-8 text-jacarta-700 dark:text-white">
-            Pengumuman tentang Kecamatan baik kegiatan maupun agenda
+            Pengumuman tentang Kelurahan baik kegiatan maupun agenda
             terdekat yang akan diadakan di
         </p>
         <Content agenda={agenda} />

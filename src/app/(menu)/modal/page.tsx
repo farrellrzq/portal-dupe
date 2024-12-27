@@ -5,7 +5,7 @@ import { getBerita } from '@/controllers/HomeController';
 export default async function ModalSearchBerita() {
   const [berita] = await Promise.all([
     getBerita({ limit: '100' }),
-]);    
+  ]);    
   return (
     <div
         className="modal fade"

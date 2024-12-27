@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function Content({ hargaKomoditas }: { hargaKomoditas: KomoditasProps[] | null }) {
     return (
-        <div className="swiper card-slider-4-columns !py-5">
+        <div className="swiper card-slider-2-columns !py-5">
             <div className="swiper-wrapper">
                 {hargaKomoditas &&
                     hargaKomoditas

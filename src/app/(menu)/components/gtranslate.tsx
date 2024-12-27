@@ -6,9 +6,9 @@ const GTranslate = () => {
         // Pastikan hanya satu instance pengaturan GTranslate
         if (!(window as any).gtranslateSettings) {
             (window as any).gtranslateSettings = {
-                default_language: 'id', // Default ke bahasa Indonesia
-                detect_browser_language: false, // Nonaktifkan deteksi bahasa browser
-                languages: ['id', 'en'], // Bahasa yang didukung
+                default_language: 'id',
+                // detect_browser_language: true,
+                languages: ['id', 'en'],
                 wrapper_selector: '.gtranslate_wrapper',
                 switcher_horizontal_position: 'right', // Posisi horizontal switcher
                 float_switcher_open_direction: 'bottom' // Arah dropdown switcher

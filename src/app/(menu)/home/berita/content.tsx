@@ -2,7 +2,7 @@ import { BeritaKelurahanProps, BeritaKotaProps, BeritaProps } from '@/controller
 import { formatDate } from '@/helpers/site';
 import React from 'react'
 
-export default function Content({ beritaKota, berita, beritaKelurahan }: { beritaKota: BeritaKotaProps[] | null, berita: BeritaProps[] | null, beritaKelurahan: BeritaKelurahanProps[] | null }) {
+export default function Content({ beritaKota, berita }: { beritaKota: BeritaKotaProps[] | null, berita: BeritaProps[] | null }) {
 
     return (
         <div className="tab-content">
@@ -172,14 +172,13 @@ export default function Content({ beritaKota, berita, beritaKelurahan }: { berit
             {/* <!-- end on sale tab --> */}
 
             {/* <!-- kota Tab --> */}
-            <div
+            {/* <div
                 className="tab-pane fade"
                 id="kelurahan"
                 role="tabpanel"
                 aria-labelledby="kelurahan-tab"
             >
                 <div className="grid grid-cols-1 gap-[1.875rem] sm:grid-cols-2 md:grid-cols-3">
-                    {/* <!-- Posts --> */}
                     {beritaKelurahan &&
                         beritaKelurahan
                             .slice(0, 3)
@@ -241,7 +240,6 @@ export default function Content({ beritaKota, berita, beritaKelurahan }: { berit
                                 );
                             })}
                 </div>
-                {/* <!-- Load More --> */}
                 <div className="mt-2 text-center">
                     <a
                         href="https://berita.depok.go.id/"
@@ -250,7 +248,7 @@ export default function Content({ beritaKota, berita, beritaKelurahan }: { berit
                         Selengkapnya
                     </a>
                 </div>
-            </div>
+            </div> */}
             {/* <!-- end kota tab --> */}
         </div>
     )

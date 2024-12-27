@@ -1,12 +1,12 @@
-import { getBeritaKelurahan, getBeritaKota, getBerita  } from '@/controllers/HomeController'
+import { getBeritaKota, getBerita  } from '@/controllers/HomeController'
 import React from 'react'
 import Content from './content';
 
 export default async function berita() {
-    const [beritaKota, berita, beritaKelurahan] = await Promise.all([
+    const [beritaKota, berita] = await Promise.all([
         getBeritaKota(),
         getBerita({ limit: '3' }),
-        getBeritaKelurahan({ limit: '3' })
+        // getBeritaKelurahan({ limit: '3' })
     ]);    
   return (
     <section className="relative lg:py-8 lg:px-20 py-5 px-4">
@@ -48,7 +48,7 @@ export default async function berita() {
                 </span>
             </button>
             </li>
-            <li className="nav-item" role="presentation">
+            {/* <li className="nav-item" role="presentation">
             <button
                 className="nav-link relative flex items-center whitespace-nowrap py-3 px-6 text-jacarta-400 hover:text-jacarta-700 dark:hover:text-white"
                 id="kelurahan-tab"
@@ -63,7 +63,7 @@ export default async function berita() {
                 Berita Kelurahan
                 </span>
             </button>
-            </li>
+            </li> */}
             <li className="nav-item" role="presentation">
             <button
                 className="nav-link relative flex items-center whitespace-nowrap py-3 px-6 text-jacarta-400 hover:text-jacarta-700 dark:hover:text-white"
@@ -81,7 +81,7 @@ export default async function berita() {
             </button>
             </li>
         </ul>
-        <Content beritaKota={beritaKota} berita={berita} beritaKelurahan={beritaKelurahan} />
+        <Content beritaKota={beritaKota} berita={berita} />
         </div>
     </section>
   )
