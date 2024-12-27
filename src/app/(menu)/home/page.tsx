@@ -42,7 +42,7 @@ export default async function Home() {
             </Suspense>
           </div>
         </section>
-        <section className="py-5 px-4 lg:py-8 lg:px-20 bg-amber-50 dark:bg-jacarta-800">
+        <section className="py-5 px-4 lg:py-8 lg:px-20 bg-teal-50 dark:bg-jacarta-800">
           <div className="lg:flex">
             <Suspense fallback={<div>Loading Content...</div>}>
               <Sosmed />

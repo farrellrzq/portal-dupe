@@ -20,10 +20,10 @@ export default async function Home() {
         <section className="hero relative lg:pb-10 lg:pt-10">
           <img src="/img/infografis/badge_789.png" className="fixed bottom-5 right-5 w-48 z-50" alt="" srcSet="/img/infografis/badge_789.png" />
           <picture className="pointer-events-none absolute inset-x-0 bottom-[-31rem] top-0 -z-10 block dark:hidden">
-            <img src="/img/blog/Wallpaper Kecamatan Depok Orange-01.png" alt="gradient" className="w-full h-full bg-cover object-cover" />
+            <img src="/img/blog/Wallpaper Kecamatan Depok-02.png" alt="gradient" className="w-full h-full bg-cover object-cover" />
           </picture>
           <picture className="pointer-events-none absolute inset-x-0 bottom-[-31rem] top-0 -z-10 hidden dark:block">
-            <img src="/img/blog/Wallpaper Kelurahan-02.png" alt="gradient" className="h-full w-full bg-cover object-cover" />
+            <img src="/img/blog/Wallpaper Kecamatan Depok-03.png" alt="gradient" className="h-full w-full bg-cover object-cover" />
           </picture>
           <div className="absolute top-[11.7rem] left-48 lg:relative lg:top-0 lg:left-0 lg:ml-8 flex lg:xl:ml-12 lg:float-right lg:m-10 lg:mr-20">
             <div>
@@ -61,7 +61,7 @@ export default async function Home() {
               <h1 className="mb-5 font-display text-4xl text-jacarta-700 dark:text-white lg:text-4xl xl:text-5xl">
                 Hallo, Selamat Datang di Portal
                 <br />
-                <span className="text-green-600 text-2xl lg:text-4xl"> {profilSite?.Name ? profilSite.Name : "Kelurahan Depok"}</span>
+                <span className="text-green-600 text-2xl lg:text-4xl"> {profilSite?.Name ? profilSite.Name : "Kecamatan Depok"}</span>
               </h1>
               <div className="flex justify-center">
                 <svg

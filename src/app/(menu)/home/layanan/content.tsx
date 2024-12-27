@@ -89,6 +89,7 @@ export default function Content({ layanan, layananKota }: { layanan: LayananProp
                                     (item: { ParentId: string }) =>
                                         item.ParentId === ""
                                 )
+                                .slice(0, 8)
                                 .map(
                                     (
                                         item: {

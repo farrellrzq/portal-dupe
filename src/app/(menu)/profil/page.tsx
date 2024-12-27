@@ -24,7 +24,7 @@ export default async function page() {
 
   return (
     <main className="pt-[5.5rem] lg:pt-24">
-      <section className="relative pt-24 bg-amber-50 dark:bg-transparent">
+      <section className="relative pt-24 bg-teal-50 dark:bg-transparent">
         <picture className="pointer-events-none absolute inset-x-0 top-0 -z-10 hidden dark:hidden">
           <img src="/img/gradient.jpg" alt="gradient" className="w-full" />
         </picture>

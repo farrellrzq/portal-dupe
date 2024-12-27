@@ -7,7 +7,7 @@ export default async function potensi() {
   const potensi = await getPotensi();
   return (
     <>
-      <section className="lg:py-24 lg:px-20 pb-5 bg-amber-50 dark:bg-jacarta-800">
+      <section className="lg:py-24 lg:px-20 pb-5 bg-teal-50 dark:bg-jacarta-800">
         <div className="bg-white lg:p-12 lg:rounded-xl dark:bg-jacarta-900">
           <div className="container">
             <div className="lg:flex mb-7">

@@ -13,7 +13,7 @@ export default async function layanan() {
 
   return (
     <>
-      <section className="lg:py-8 lg:px-20 py-5 px-4 bg-amber-50 dark:bg-jacarta-800">
+      <section className="lg:py-8 lg:px-20 py-5 px-4 bg-teal-50 dark:bg-jacarta-800">
         <div className="">
           <div className="lg:flex">
             <div className="lg:w-full w-full grid grid-cols-1 text-center lg:text-start">
@@ -90,7 +90,7 @@ export default async function layanan() {
                       </ul>
                     </div>
                     <div className="lg:w-3/4 hidden lg:block w-full lg:text-right sm:text-center">
-                      <a href="/layanan/layanan-kecamatan">
+                      <a href="/layanan/layanan-kota">
                         <button className="rounded-full bg-green-600 my-6 lg:my-0 px-6 py-4 lg:py-2 font-display text-sm text-white hover:bg-green-600-dark">
                           Lihat Selengkapnya
                         </button>

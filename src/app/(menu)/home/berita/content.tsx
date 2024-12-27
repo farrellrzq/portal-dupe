@@ -2,7 +2,7 @@ import { BeritaKelurahanProps, BeritaKotaProps, BeritaProps } from '@/controller
 import { formatDate } from '@/helpers/site';
 import React from 'react'
 
-export default function Content({ beritaKota, berita, beritaKelurahan }: { beritaKota: BeritaKotaProps[] | null, berita: BeritaProps[] | null, beritaKelurahan: BeritaKelurahanProps[] | null }) {
+export default function Content({ beritaKota, berita }: { beritaKota: BeritaKotaProps[] | null, berita: BeritaProps[] | null }) {
 
     return (
         <div className="tab-content">
@@ -41,23 +41,23 @@ export default function Content({ beritaKota, berita, beritaKelurahan }: { berit
                                                 <a
                                                     href={item.link ? item.link : ""}
                                                     target="_blank"
-                                                    className="font-display text-jacarta-700 hover:text-yellow-600 dark:text-jacarta-200"
+                                                    className="font-display text-jacarta-700 hover:text-green-600 dark:text-jacarta-200"
                                                 >
-                                                    Sumber
+                                                    Pergi
                                                 </a>
                                                 <span className="dark:text-jacarta-400">
-                                                    dari
+                                                    ke
                                                 </span>
-                                                <span className="inline-flex flex-wrap items-center space-x-1 text-yellow-600">
+                                                <span className="inline-flex flex-wrap items-center space-x-1 text-green-600">
                                                     <a href={item.link ? item.link : ""} target="_blank">
                                                         Berita Kota
                                                     </a>
                                                 </span>
                                             </div>
-                                            <span className="text-sm text-jacarta-700 hover:text-yellow-600 dark:text-white">
+                                            <span className="text-sm text-jacarta-700 hover:text-green-600 dark:text-white">
                                                 {formatDate(item.published_at) ? formatDate(item.published_at) : ""}
                                             </span>
-                                            <h2 className="mb-4 mt-2 font-display text-xl text-jacarta-700 hover:text-yellow-600 dark:text-white dark:hover:text-yellow-600">
+                                            <h2 className="mb-4 mt-2 font-display text-xl text-jacarta-700 hover:text-green-600 dark:text-white dark:hover:text-green-600">
                                                 <a href={item.link ? item.link : ""} target="_blank">
                                                     {item.title?.slice(0, 43) ?? " ..."}
                                                 </a>
@@ -77,7 +77,7 @@ export default function Content({ beritaKota, berita, beritaKelurahan }: { berit
                 <div className="mt-4 text-center">
                     <a
                         href="https://berita.depok.go.id/"
-                        className="inline-block rounded-full bg-yellow-600 py-3 px-8 text-center font-semibold text-white shadow-yellow-600-volume transition-all hover:bg-yellow-600-dark"
+                        className="inline-block rounded-full bg-green-600 py-3 px-8 text-center font-semibold text-white shadow-green-600-volume transition-all hover:bg-green-600-dark"
                     >
                         Selengkapnya
                     </a>
@@ -120,30 +120,38 @@ export default function Content({ beritaKota, berita, beritaKelurahan }: { berit
                                                 <a
                                                     href={item.link ? item.link : ""}
                                                     target="_blank"
-                                                    className="font-display text-jacarta-700 hover:text-yellow-600 dark:text-jacarta-200"
+                                                    className="font-display text-jacarta-700 hover:text-green-600 dark:text-jacarta-200"
                                                 >
                                                     Sumber
                                                 </a>
                                                 <span className="dark:text-jacarta-400">
-                                                    dari
+                                                    in
                                                 </span>
-                                                <span className="inline-flex flex-wrap items-center space-x-1 text-yellow-600">
+                                                <span className="inline-flex flex-wrap items-center space-x-1 text-green-600">
                                                     <a href={item.link ? item.link : ""} target="_blank">
                                                         {item.SiteName ? item.SiteName : ""}
                                                     </a>
                                                 </span>
                                             </div>
                                             <div className="flex flex-wrap items-center space-x-2 text-sm text-jacarta-400 mb-2">
-                                                <span>{formatDate(item.tgl_publish)}</span>
+                                                <span>
+                                                    {formatDate(item.tgl_publish)}
+                                                </span>
                                             </div>
-                                            <h2 className="mb-4 mt-2 font-display text-xl text-jacarta-700 hover:text-yellow-600 dark:text-white dark:hover:text-yellow-600">
+                                            <h2 className="mb-4 mt-2 font-display text-xl text-jacarta-700 hover:text-green-600 dark:text-white dark:hover:text-green-600">
                                                 <a
-                                                    href={`/publikasi/berita/${item.slug_title}/${item.content_id}`}
+                                                    href={`/publikasi/berita/${item.slug_title}`}
                                                 >
                                                     {item.title.slice(0, 38)}{" ..."}
                                                 </a>
                                             </h2>
-                                            <p className="text-sm dark:text-jacarta-200 line-clamp-2" style={{ textTransform: 'inherit' }} dangerouslySetInnerHTML={{ __html: item?.content }}>
+                                            <p className="text-sm dark:text-jacarta-200 line-clamp-2">
+                                                {item.content
+                                                    .replace(
+                                                        /<[^>]+>|&nbsp;|&#8203;|[\u200B-\u200D\uFEFF]|-->/g,
+                                                        ""
+                                                    )
+                                                    .slice(0, 150) + "..."}
                                             </p>
                                         </div>
                                     </div>
@@ -155,7 +163,7 @@ export default function Content({ beritaKota, berita, beritaKelurahan }: { berit
                 <div className="mt-4 text-center">
                     <a
                         href="/publikasi/berita"
-                        className="inline-block rounded-full bg-yellow-600 py-3 px-8 text-center font-semibold text-white shadow-yellow-600-volume transition-all hover:bg-yellow-600-dark"
+                        className="inline-block rounded-full bg-green-600 py-3 px-8 text-center font-semibold text-white shadow-green-600-volume transition-all hover:bg-green-600-dark"
                     >
                         Selengkapnya
                     </a>
@@ -164,14 +172,13 @@ export default function Content({ beritaKota, berita, beritaKelurahan }: { berit
             {/* <!-- end on sale tab --> */}
 
             {/* <!-- kota Tab --> */}
-            <div
+            {/* <div
                 className="tab-pane fade"
                 id="kelurahan"
                 role="tabpanel"
                 aria-labelledby="kelurahan-tab"
             >
                 <div className="grid grid-cols-1 gap-[1.875rem] sm:grid-cols-2 md:grid-cols-3">
-                    {/* <!-- Posts --> */}
                     {beritaKelurahan &&
                         beritaKelurahan
                             .slice(0, 3)
@@ -198,14 +205,14 @@ export default function Content({ beritaKota, berita, beritaKelurahan }: { berit
                                                     <a
                                                         href={item.link ? item.link : ""}
                                                         target="_blank"
-                                                        className="font-display text-jacarta-700 hover:text-yellow-600 dark:text-jacarta-200"
+                                                        className="font-display text-jacarta-700 hover:text-green-600 dark:text-jacarta-200"
                                                     >
                                                         Sumber
                                                     </a>
                                                     <span className="dark:text-jacarta-400">
-                                                        dari
+                                                        in
                                                     </span>
-                                                    <span className="inline-flex flex-wrap items-center space-x-1 text-yellow-600">
+                                                    <span className="inline-flex flex-wrap items-center space-x-1 text-green-600">
                                                         <a href={item.link ? item.link : ""} target="_blank">
                                                             {item.SiteName ? item.SiteName : ""}
                                                         </a>
@@ -214,12 +221,18 @@ export default function Content({ beritaKota, berita, beritaKelurahan }: { berit
                                                 <div className="flex flex-wrap items-center space-x-2 text-sm text-jacarta-400 mb-2">
                                                     <span>{formatDate(item.tgl_publish)}</span>
                                                 </div>
-                                                <h2 className="mb-4 font-display text-xl text-jacarta-700 hover:text-yellow-600 dark:text-white dark:hover:text-yellow-600">
+                                                <h2 className="mb-4 font-display text-xl text-jacarta-700 hover:text-green-600 dark:text-white dark:hover:text-green-600">
                                                     <a href={item.link ? item.link : ""} target="_blank">
                                                         {item.title.slice(0, 38)}{" ..."}
                                                     </a>
                                                 </h2>
-                                                <p className="text-sm dark:text-jacarta-200" style={{ textTransform: 'inherit' }} dangerouslySetInnerHTML={{ __html: item?.content }}>
+                                                <p className="text-sm dark:text-jacarta-200">
+                                                    {item.content
+                                                        .replace(
+                                                            /<[^>]+>|&nbsp;|&#8203;|[\u200B-\u200D\uFEFF]|-->/g,
+                                                            ""
+                                                        )
+                                                        .slice(0, 150) + "..."}
                                                 </p>
                                             </div>
                                         </div>
@@ -227,16 +240,15 @@ export default function Content({ beritaKota, berita, beritaKelurahan }: { berit
                                 );
                             })}
                 </div>
-                {/* <!-- Load More --> */}
                 <div className="mt-2 text-center">
                     <a
                         href="https://berita.depok.go.id/"
-                        className="inline-block rounded-full bg-yellow-600 py-3 px-8 text-center font-semibold text-white shadow-yellow-600-volume transition-all hover:bg-yellow-600-dark"
+                        className="inline-block rounded-full bg-green-600 py-3 px-8 text-center font-semibold text-white shadow-green-600-volume transition-all hover:bg-green-600-dark"
                     >
                         Selengkapnya
                     </a>
                 </div>
-            </div>
+            </div> */}
             {/* <!-- end kota tab --> */}
         </div>
     )

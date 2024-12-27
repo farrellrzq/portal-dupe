@@ -10,7 +10,7 @@ const GTranslate = () => {
                 // detect_browser_language: true,
                 languages: ['id', 'en'],
                 wrapper_selector: '.gtranslate_wrapper',
-                switcher_horizontal_position: 'right',
+                switcher_horizontal_position: 'inline',
                 float_switcher_open_direction: 'bottom'
             };
 

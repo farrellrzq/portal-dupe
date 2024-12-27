@@ -14,7 +14,7 @@ export default function Pengumuman() {
     <main className="pt-[5.5rem] lg:pt-24">
       <Hero title='Pengumuman' />
 
-      <section className="relative py-24">
+      <section className="relative">
         <MainSection />
       </section>
       <ModalSearchBerita />

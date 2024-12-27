@@ -43,7 +43,7 @@ export default function Dashboard({ Dashboard }: { Dashboard: CmsContentProps[] 
     }, [selectedUrl]);
 
     return (
-        <section className="lg:py-24 lg:px-20 pb-5 bg-amber-50 dark:bg-jacarta-800">
+        <section className="lg:py-24 lg:px-20 pb-5 bg-teal-50 dark:bg-jacarta-800">
             {/* Display the iframe content directly */}
             <div className="bg-white px-8 py-2 rounded">
                 {selectedUrl ? (

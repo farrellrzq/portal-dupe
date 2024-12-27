@@ -40,11 +40,11 @@ export default function Content({ berita }: { berita: CmsContentProps[] | null }
   return (
     <>
       <div>
-        <div className="my-4">
-          <h3 className="font-display px-4 text-3xl text-jacarta-700 dark:text-white">List Berita</h3>
-          <span className="text-md px-4 pb-2">Berita</span>
-        </div>
         <div className="flex mb-4">
+          <div className="w-1/2 lg:w-3/4">
+            <h3 className="font-display px-4 text-3xl text-jacarta-700 dark:text-white">List Berita</h3>
+            <span className="text-md px-4 pb-2">Berita</span>
+          </div>
           <div className="w-1/2 lg:w-1/4">
             <form action="search" className="relative basis-3/12">
               <input

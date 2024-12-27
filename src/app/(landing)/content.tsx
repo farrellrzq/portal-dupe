@@ -14,16 +14,13 @@ export default function Content({ getKecamatan }: { getKecamatan: LandingProps[]
                             <div className="block overflow-hidden rounded-2.5xl bg-white shadow-md transition-shadow hover:shadow-lg dark:bg-jacarta-700">
                                 <figure className="relative" key={index}>
                                     <a
-                                        href="#"
+                                        href="https://kel-cilangkap.depok.go.id/Home/tentang"
                                         data-bs-toggle="modal"
                                         data-bs-target={`.popup${item.Id || <Skeleton />}`}
                                         target="_blank"
                                     >
                                         <img
-                                            src={item.Image
-                                                ? `https://cms.depok.go.id/upload/place/${item.Image}`
-                                                : "/img/kecamatan/dsw/kesehatan.png"
-                                            }
+                                            src={item.LandingImage ? `https://cms.depok.go.id/upload/profilesite/${item.LandingImage || <Skeleton />}` : 'img/kelurahan/cilangkap.jpg'}
                                             alt="item 1"
                                             className="swiper-lazy h-[260px] w-full object-cover"
                                             height="430"
@@ -36,11 +33,11 @@ export default function Content({ getKecamatan }: { getKecamatan: LandingProps[]
                                     <div className="flex">
                                         <div>
                                             <a href="#" className="block">
-                                                <span className="font-display text-lg leading-none text-jacarta-700 hover:text-yellow-600 dark:text-white">
-                                                    {item.Nama || <Skeleton />}
+                                                <span className="font-display text-lg leading-none text-jacarta-700 hover:text-green-600 dark:text-white">
+                                                    {item.Name || <Skeleton />}
                                                 </span>
                                             </a>
-                                            <a href={`https://${item.Domain}`} target="_blank" className="text-2xs text-yellow-600">
+                                            <a href={`https://${item.Domain}`} target="_blank" className="text-2xs text-green-600">
                                                 {item.Alamat ? item.Alamat : <Skeleton />}
                                             </a>
                                         </div>
