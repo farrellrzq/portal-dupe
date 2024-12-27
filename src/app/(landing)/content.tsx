@@ -29,7 +29,7 @@ export default function Content({ getKecamatan }: { getKecamatan: LandingProps[]
                                             height="430"
                                             width="379"
                                         />
-                                        <div className="swiper-lazy-preloader"></div>
+                                        {/* <div className="swiper-lazy-preloader"></div> */}
                                     </a>
                                 </figure>
                                 <div className="p-6">
@@ -41,7 +41,7 @@ export default function Content({ getKecamatan }: { getKecamatan: LandingProps[]
                                                 </span>
                                             </a>
                                             <a href={`https://${item.Domain}`} target="_blank" className="text-2xs text-yellow-600">
-                                                {item.Alamat ? item.Alamat : "Alamat Tidak Tercantum" || <Skeleton />}
+                                                {item.Alamat ? item.Alamat : <Skeleton />}
                                             </a>
                                         </div>
                                     </div>

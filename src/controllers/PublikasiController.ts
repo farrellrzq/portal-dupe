@@ -95,27 +95,14 @@ export async function getMenu() {
   const { Id } = await getDomainSite();
   let Menu: ExlinkProps[] | null = null;
 
-  // const cachedKey=`menu_id:${Id}`;
-  // const cachedResult=await redisGetList(redis, cachedKey);
-
-  // if (cachedResult.length > 0) {
-  //    Menu = cachedResult.map(item => JSON.parse(item)) as ExlinkProps[];
-  //    return Menu;
-  // }
-
   const result = await api({ url: `${API_CMS}/ViewPortal/getExLink?siteId=${Id}&typeId=&limit=&offset=&code=publikasi` });
 
   if ('error' in result) {
-    consoleError('get_content()', result.error);
+    // consoleError('get_content()', result.error);
   } else {
     Menu = result ? result : [];
   }
 
-  // if(result.length > 0){
-  //   result.forEach(async(data:any) => {
-  //     await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
-  //   });  
-  // }
 
   return Menu;
 }
@@ -268,22 +255,22 @@ export async function getDashboard() {
 
 export async function getDashboardStatistik() {
   let DashboardStatistik: AgendaProps[] | null = null;
-  const result = await api({ url: `${API_ADMIN_DATA}/api/3/action/package_search?include_private=true&rows=2000` });
+  const result = await api({ url: `${API_ADMIN_DATA}/Api/catalog` });
   if ('error' in result) {
     consoleError('getDashboardStatistik()', result.error);
   } else {
-    DashboardStatistik = result?.result?.results || null;
+    DashboardStatistik = result?.dataset || null;
   }
   return DashboardStatistik;
 }
 
 export async function getDetailDashboardStatistik(id: string) {
   let DetailDashboardStatistik: AgendaProps[] | null = null;
-  const result = await api({ url: `${API_ADMIN_DATA}/api/3/action/package_show?id=${id}` });
+  const result = await api({ url: `${API_ADMIN_DATA}/Api/catalog?id=${id}` });
   if ('error' in result) {
     consoleError('getDetailDashboardStatistik()', result.error);
   } else {
-    DetailDashboardStatistik = result?.result?.resources || null;
+    DetailDashboardStatistik = result?.dataset || null;
   }
 
   return DetailDashboardStatistik;

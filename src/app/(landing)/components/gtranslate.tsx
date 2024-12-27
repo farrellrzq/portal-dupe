@@ -7,10 +7,10 @@ const GTranslate = () => {
         if (!(window as any).gtranslateSettings) {
             (window as any).gtranslateSettings = {
                 default_language: 'id',
-                detect_browser_language: true,
+                // detect_browser_language: true,
                 languages: ['id', 'en'],
                 wrapper_selector: '.gtranslate_wrapper',
-                switcher_horizontal_position: 'inline',
+                switcher_horizontal_position: 'right',
                 float_switcher_open_direction: 'bottom'
             };
 

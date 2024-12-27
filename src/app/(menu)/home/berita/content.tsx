@@ -101,7 +101,7 @@ export default function Content({ beritaKota, berita, beritaKelurahan }: { berit
                                     <div className="overflow-hidden">
                                         <figure className="group overflow-hidden">
                                             <a
-                                                href={`/publikasi/detail-berita/${item.slug_title}/${item.content_id}`}
+                                                href={`/publikasi/berita/${item?.slug_title}`}
                                             >
                                                 <img
                                                     src={

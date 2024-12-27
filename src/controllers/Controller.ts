@@ -1,4 +1,4 @@
-import { headers } from 'next/headers';
+// import { headers } from 'next/headers';
 import { 
   CmsContentProps, 
   CategoryProps, 
@@ -10,6 +10,7 @@ import {
 import { consoleError, API_CMS } from '@/helpers/site';
 import { LandingProps } from './types/landing-controller.type';
 import { isBrowser, isMobile } from 'react-device-detect';
+import { NextResponse } from 'next/server';
 
 interface ApiProps {
   url: string;
@@ -85,11 +86,10 @@ function getErrorMessage(error: unknown): string {
 
 
 export async function getDomain() {
- 
   // const headersList = headers();
-  // const domain = (await headersList).get('x-forwarded-host');
+  // const domain = headersList.get('x-forwarded-host');
   // return domain || 'beji.depok.go.id';
-  return process.env.DOMAIN; 
+  return process.env.DOMAIN;
 }
 
 export async function getDomainSite() {
@@ -102,6 +102,11 @@ export async function getDomainSite() {
   }
 
   return result as DomainSiteProps;
+}
+
+export async function getSiteData() {
+  const { Id } = await getDomainSite();
+  return Id; // Mengambil Id dari result
 }
 
 export async function getKecamatan() {
@@ -157,7 +162,7 @@ export async function getBerita() {
   const { Id } = await getDomainSite();
   let Berita: CmsContentProps[] | null = null;
 
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K001&limit=` });
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K001` });
 
   if ('error' in result) {
     consoleError('get_content()', result.error);

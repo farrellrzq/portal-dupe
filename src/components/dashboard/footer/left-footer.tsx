@@ -23,7 +23,7 @@ export default async function LeftFooter() {
             ? profileSite.Description.length > 165
               ? `${profileSite.Description.substring(0, 165)}...`
               : profileSite.Description
-            : "Dinas Komunikasi dan Informatika | Pemerintah Kota Depok Portal Resmi Disnaker Kota Depok"}
+            : "Dinas Komunikasi dan Informatika | Pemerintah Kota Depok Portal Resmi OPD Kota Depok"}
         </p>
         {profileSite?.Description &&
           profileSite.Description.length > 165 && (

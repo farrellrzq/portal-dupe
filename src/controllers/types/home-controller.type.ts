@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export type SliderProps = {
   Id: string;
   GroupSlider: string;
@@ -172,6 +174,11 @@ export type PotensiProps = {
 };
 
 export type BeritaKotaProps = {
+  slug_title: any;
+  lampiran: any;
+  SiteName: ReactNode;
+  created_at: ReactNode;
+  content: any;
   title: string;
   published_at: string;
   thumb: string;
