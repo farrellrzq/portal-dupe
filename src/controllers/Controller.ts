@@ -21,46 +21,42 @@ interface ApiProps {
 type ApiResponse = { error: string } | any;
 
 export async function api({ url, method = "GET", revalidate = 30 }: ApiProps): Promise<ApiResponse> {
-  try {
-    if (!url) {
-      throw new Error("URL is required for the API call.");
-    }
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 10000); // Timeout 10 detik
 
+  try {
     const res = await fetch(url, {
       method,
-      next: {
-        revalidate,
-      },
-      headers: {
-        "Cache-Control": `public, max-age=${revalidate}`,
-      },
+      next: { revalidate },
+      headers: { "Cache-Control": `public, max-age=${revalidate}` },
+      signal: controller.signal, // Menggunakan AbortController
     });
+
+    clearTimeout(timeout);
 
     if (!res.ok) {
       console.error(`HTTP Error: ${res.status} ${res.statusText}`);
       return { error: `Request failed with status ${res.status} - ${res.statusText}` };
     }
 
-    const textResponse = await res.text(); 
-
+    const textResponse = await res.text();
     if (textResponse.trim() === "") {
       console.error("Received empty response.");
       return { error: "Received empty response from API." };
     }
 
     try {
-      const result = JSON.parse(textResponse);
-      return result;
+      return JSON.parse(textResponse);
     } catch (jsonError) {
       console.error("JSON Parsing Error:", jsonError);
       return { error: "Failed to parse response as JSON." };
     }
   } catch (error) {
-    console.error('There was an error:', error);
-    const msg = getErrorMessage(error);
-    return {
-      error: msg,
-    };
+    if (error instanceof Error) {
+      console.error('There was an error:', error.message);
+    } else {
+      console.error('An unknown error occurred:', error);
+    }
   }
 }
 
