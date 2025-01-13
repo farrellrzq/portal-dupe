@@ -101,14 +101,22 @@ export async function getPengumuman() {
 }
 
 export async function getBeritaKota() {
-  const { Id } = await getDomainSite();
+  const apiKey = 'uXZo1DhiZ06MFmXhvDTdpTFvO30MsPEN70IUTMpkEPiM0dqN4J50YELUqb7lo6XW';
   let BeritaKota: BeritaKotaProps[] | null = null;
-  const result = await api({ url: `https://berita.depok.go.id/api/v1/berita` });
+
+  const result = await api({
+    url: `https://berita.depok.go.id/api/v1/latest/10`,
+    headers: {
+      'x-api-key': apiKey, // Masukkan API key di header
+    },
+  });
+
   if ('error' in result) {
-    consoleError('get_content()', result.error);
+    console.error('get_content()', result.error);
   } else {
-    BeritaKota = result;
+    BeritaKota = result.data;
   }
+
   return BeritaKota;
 }
 

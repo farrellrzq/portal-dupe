@@ -15,12 +15,13 @@ import { NextResponse } from 'next/server';
 interface ApiProps {
   url: string;
   method?: string;
+  headers?: Record<string, string>; // Tambahkan ini
   revalidate?: number;
 }
 
 type ApiResponse = { error: string } | any;
 
-export async function api({ url, method = "GET", revalidate = 30 }: ApiProps): Promise<ApiResponse> {
+export async function api({ url, method = "GET", headers = {}, revalidate = 30 }: ApiProps): Promise<ApiResponse> {
   try {
     if (!url) {
       throw new Error("URL is required for the API call.");
@@ -28,6 +29,7 @@ export async function api({ url, method = "GET", revalidate = 30 }: ApiProps): P
 
     const res = await fetch(url, {
       method,
+      headers, // Masukkan headers di sini
       next: {
         revalidate,
       },
@@ -39,7 +41,7 @@ export async function api({ url, method = "GET", revalidate = 30 }: ApiProps): P
     }
 
     // Ambil respons sebagai teks
-    const textResponse = await res.text(); 
+    const textResponse = await res.text();
 
     // Periksa respons kosong
     if (textResponse.trim() === "") {
@@ -63,6 +65,7 @@ export async function api({ url, method = "GET", revalidate = 30 }: ApiProps): P
     };
   }
 }
+
 
 // Fungsi lokal getErrorMessage untuk menangani pesan error dengan jelas
 function getErrorMessage(error: unknown): string {
