@@ -62,32 +62,38 @@ export async function getDokumenProduk(): Promise<CmsContentProps[] | null> {
 }
 
 export async function getAgendaKegiatan(): Promise<AgendaProps[] | null> {
-  const { Id } = await getDomainSite();
-  let agendaKegiatan: AgendaProps[] | null = null;
+    try {
+      
+    
+    const { Id } = await getDomainSite();
+    let agendaKegiatan: AgendaProps[] | null = null;
 
-  // const cachedKey=`agenda_kegiatan_id:${Id}`;
-  // const cachedResult=await redisGetList(redis, cachedKey);
+    // const cachedKey=`agenda_kegiatan_id:${Id}`;
+    // const cachedResult=await redisGetList(redis, cachedKey);
 
-  // if (cachedResult.length > 0) {
-  //    agendaKegiatan = cachedResult.map(item => JSON.parse(item)) as AgendaProps[];
-  //    return agendaKegiatan;
-  // }
+    // if (cachedResult.length > 0) {
+    //    agendaKegiatan = cachedResult.map(item => JSON.parse(item)) as AgendaProps[];
+    //    return agendaKegiatan;
+    // }
 
-  const result = await api({ url: `${API_CMS}/ViewPortal/getEvent?siteId=${Id}&type=AG01&limit=` });
+    const result = await api({ url: `${API_CMS}/ViewPortal/getEvent?siteId=${Id}&type=AG01&limit=` });
 
-  if ('error' in result) {
-    consoleError('getAgendaKegiatan()', result.error);
-  } else {
-    agendaKegiatan = result ? result : [];
+    if ('error' in result) {
+      consoleError('getAgendaKegiatan()', result.error);
+    } else {
+      agendaKegiatan = result ? result : [];
+    }
+
+    // if(result.length > 0){
+    //   result.forEach(async(data:any) => {
+    //     await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
+    //   });  
+    // }
+
+    return agendaKegiatan
+  } catch (error) {
+    return []   
   }
-
-  // if(result.length > 0){
-  //   result.forEach(async(data:any) => {
-  //     await redisSaveList(redis, cachedKey, 3600, JSON.stringify(data));
-  //   });  
-  // }
-
-  return agendaKegiatan
 }
 
 
