@@ -80,8 +80,9 @@ export async function getAgendaKegiatan(): Promise<AgendaProps[] | null> {
 
     if ('error' in result) {
       consoleError('getAgendaKegiatan()', result.error);
+      agendaKegiatan = []
     } else {
-      agendaKegiatan = result ? result : [];
+      agendaKegiatan = result;
     }
 
     // if(result.length > 0){
