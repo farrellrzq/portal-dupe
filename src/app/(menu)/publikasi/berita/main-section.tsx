@@ -1,9 +1,12 @@
-import { getBerita } from '@/controllers/Controller';
+import { getBerita } from '@/controllers/HomeController';
 import React from 'react'
 import Content from './content';
 
 export default async function MainSection() {
-  const berita = await getBerita();
+  const [berita] = await Promise.all([
+    await getBerita({limit:'3'})
+])
+
   const mainBerita = berita && berita.length > 0 ? berita[0] : null;
   return (
     <>

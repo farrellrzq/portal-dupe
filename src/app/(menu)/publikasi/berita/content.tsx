@@ -3,9 +3,10 @@ import Search from '@/components/dashboard/source/search';
 import React, { useState } from 'react'
 import { CmsContentProps } from '@/controllers/types/controller.type';
 import { formatDate } from '@/helpers/site';
+import { BeritaProps } from '@/controllers/types/home-controller.type';
 
-export default function Content({ berita }: { berita: CmsContentProps[] | null }) {
-
+export default function Content({ berita }: { berita: BeritaProps[] | null }) {
+  // return JSON.stringify ( berita )
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6; // Misalnya, 10 item per halaman

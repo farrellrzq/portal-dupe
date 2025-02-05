@@ -6,7 +6,7 @@ import Link from 'next/link';
 import React, { useState } from 'react'
 
 export default function Content({ pengumuman, categories }: { pengumuman: CmsContentProps[] | null, categories: CategoryProps[] | null  }) {
-  // return JSON.stringify ( video[0].id.videoId )
+  // return JSON.stringify ( pengumuman )
   const [videoUrl, setVideoUrl] = useState('');
   const [showModal, setShowModal] = useState(false);
 
