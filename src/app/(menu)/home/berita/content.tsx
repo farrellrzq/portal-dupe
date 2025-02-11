@@ -2,8 +2,8 @@ import { BeritaKelurahanProps, BeritaKotaProps, BeritaProps } from '@/controller
 import { formatDate } from '@/helpers/site';
 import React from 'react'
 
-export default function Content({ beritaKota, berita }: { beritaKota: BeritaKotaProps[] | null, berita: BeritaProps[] | null }) {
-
+export default function Content({ beritaKota, berita, }: { beritaKota: BeritaKotaProps[] | null, berita: BeritaProps[] | null }) {
+//   return JSON.stringify ( beritaKota )
     return (
         <div className="tab-content">
             {/* <!-- kota Tab --> */}
@@ -24,8 +24,8 @@ export default function Content({ beritaKota, berita }: { beritaKota: BeritaKota
                                             <a href={item.link ? item.link : ""} target="_blank">
                                                 <img
                                                     src={
-                                                        item.image
-                                                            ? item.image
+                                                        item.thumb_url
+                                                            ? item.thumb_url
                                                             : "/img/products/item_27_square.jpg"
                                                     }
                                                     alt="post 2"
