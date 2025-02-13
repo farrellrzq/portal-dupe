@@ -4,6 +4,7 @@ import { LayananKotaProps, LayananProps } from '@/controllers/types/home-control
 import React, { useState } from 'react'
 
 export default function Content({ layanan, layananKota }: { layanan: LayananProps[] | null, layananKota: LayananKotaProps[] | null }) {
+    // return JSON.stringify(layananKota);
     const { videoUrl, showModal, displayIframe, closeModal } = useModalState();
     const [isWelcomeModalOpen, setIsWelcomeModalOpen] = useState(true);
 
@@ -89,7 +90,6 @@ export default function Content({ layanan, layananKota }: { layanan: LayananProp
                                     (item: { ParentId: string }) =>
                                         item.ParentId === ""
                                 )
-                                .slice(0, 8)
                                 .map(
                                     (
                                         item: {

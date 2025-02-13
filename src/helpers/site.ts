@@ -77,5 +77,53 @@ export const API_CMS=process.env.API_CMS;
 export const API_ADMIN_DATA=process.env.API_ADMIN_DATA;
 export const API_YT=process.env.API_YT;
 export const API_DSW=process.env.API_DSW;
-export const API_BERITA_DEPOK=process.env.API_BERITA_DEPOK;
+export const LOGIN_API_DSW=process.env.LOGIN_API_DSW;
 
+export async function loginUser(): Promise<string | null> {
+  try {
+    const response = await fetch("https://cmsdsw.depok.go.id/api/api/Auth/Login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        Username: "penggunadsw@gmail.com",
+        Password: "penggunadswH8@",
+        SiteId: "2",
+      }),
+    });
+
+    const data = await response.json();
+    if (data?.Data?.Token) {
+      return data.Data.Token;
+    }
+  } catch (error) {
+    console.error("Login error:", error);
+  }
+  return null;
+}
+
+// 🔹 Perbaikan: Deklarasi globalThis dengan casting
+interface GlobalCache {
+  token?: string;
+  tokenDate?: string;
+}
+
+const globalCache = globalThis as unknown as GlobalCache;
+
+export async function getTokenDsw(): Promise<string | null> {
+  const storedToken = globalCache.token;
+  const lastLoginDate = globalCache.tokenDate;
+
+  const currentDate = new Date().toISOString().split("T")[0];
+
+  // Jika belum ada token atau token lebih dari 1 hari, login ulang
+  if (!storedToken || lastLoginDate !== currentDate) {
+    const newToken = await loginUser();
+    if (newToken) {
+      globalCache.token = newToken;
+      globalCache.tokenDate = currentDate;
+    }
+    return newToken;
+  }
+
+  return storedToken;
+}

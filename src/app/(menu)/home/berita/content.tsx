@@ -35,7 +35,7 @@ export default function Content({ beritaKota, berita, }: { beritaKota: BeritaKot
                                         </figure>
 
                                         {/*  Body */}
-                                        <div className="rounded-2xl relative m-5 bottom-24 border border-t-0 border-jacarta-100 bg-white px-[10%] py-[5%] dark:border-jacarta-600 dark:bg-jacarta-700">
+                                        <div className="rounded-2xl relative m-5 bottom-24 border border-t-0 border-jacarta-100 bg-white p-[10%] dark:border-jacarta-600 dark:bg-jacarta-700">
                                             {/*  Meta */}
                                             <div className="mb-3 flex flex-wrap items-center space-x-1 text-xs">
                                                 <a

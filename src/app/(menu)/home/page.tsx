@@ -23,8 +23,8 @@ import Sliderloader from "./loader/sliderLoader";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'Portal Kelurahan',
-  description: 'Portal Kelurahan Kota Depok',
+  title: 'Portal Kecamatan',
+  description: 'Portal Kecamatan Kota Depok',
 };
 
 export default async function Home() {
@@ -61,8 +61,8 @@ export default async function Home() {
           </div>
         </section>
         <Suspense fallback={<div>Loading Content...</div>}>
-          <Komoditas />
-          <Potensi />
+          {/* <Komoditas /> */}
+          {/* <Potensi /> */}
           <Berita />
           <ModalPengumuman />
           <ModalSearchBerita />

@@ -19,6 +19,11 @@ export type SliderProps = {
 };
 
 export type KomoditasProps = {
+  beda: ReactNode;
+  price_now: any;
+  kondisi: string;
+  name: string | undefined;
+  image: any;
   komoditi: string;
   id: string;
   price_today: string;
@@ -79,6 +84,8 @@ export type LayananKotaProps = {
 };
 
 export type InfografisProps = {
+  Title: string;
+  Attachment: boolean;
   id: string;
   name: string | null;
   image: string;

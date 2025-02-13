@@ -56,8 +56,8 @@ export default function Content({ DashboardStatistik }: { DashboardStatistik: Ag
                 Temukan kumpulan data-data mentah berupa tabel yang bisa diolah lebih lanjut di sini. Open Data Kota Depok menyediakan akses ke beragam koleksi dataset dari seluruh Organisasi Perangkat Daerah di Kota Depok.</p>
                 <div className="mt-4 w-80 flex items-center justify-between">
                 <a href="#" className="flex text-white dark:text-jacarta-200">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6 mr-1 text-accent dark:text-jacarta-800">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 mr-1 text-accent dark:text-jacarta-800">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     <span
                     className="text-md text-accent dark:text-jacarta-800">
@@ -67,8 +67,8 @@ export default function Content({ DashboardStatistik }: { DashboardStatistik: Ag
                 <div
                     className="flex items-center whitespace-nowrap rounded-md py-1 px-2 dark:border-jacarta-600">
                         <a href="#" className="flex text-white dark:text-jacarta-200">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6 mr-1 text-accent dark:text-jacarta-800">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 mr-1 text-accent dark:text-jacarta-800">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     <span
                         className="text-md text-accent dark:text-jacarta-800">

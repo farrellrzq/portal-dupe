@@ -6,7 +6,7 @@ export default async function agenda() {
     const agenda = await getAgendaKegiatan();
   return (
     <div className="lg:w-1/2 m-2">
-        <h2 className="mb-2 text-center mt-10 lg:mt-0 font-display text-3xl text-jacarta-700 dark:text-white">
+        <h2 className="mb-2 text-center lg:mt-0 font-display text-3xl text-jacarta-700 dark:text-white">
             Agenda Kelurahan
         </h2>
         <p className="text-center mb-8 text-jacarta-700 dark:text-white">

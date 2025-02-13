@@ -8121,11 +8121,11 @@ var Path = Layer.extend({
 		opacity: 1,
 
 		// @option lineCap: String= 'round'
-		// A string that defines [shape to be used at the end](https://developer.mozilla.org/docs/Web/SVG/Attribute/stroke-linecap) of the stroke.
+		// A string that defines [shape to be used at the end](https://developer.mozilla.org/docs/Web/SVG/Attribute/strokeLinecap) of the stroke.
 		lineCap: 'round',
 
 		// @option lineJoin: String = 'round'
-		// A string that defines [shape to be used at the corners](https://developer.mozilla.org/docs/Web/SVG/Attribute/stroke-linejoin) of the stroke.
+		// A string that defines [shape to be used at the corners](https://developer.mozilla.org/docs/Web/SVG/Attribute/strokeLinejoin) of the stroke.
 		lineJoin: 'round',
 
 		// @option dashArray: String = null
@@ -8149,7 +8149,7 @@ var Path = Layer.extend({
 		fillOpacity: 0.2,
 
 		// @option fillRule: String = 'evenodd'
-		// A string that defines [how the inside of a shape](https://developer.mozilla.org/docs/Web/SVG/Attribute/fill-rule) is determined.
+		// A string that defines [how the inside of a shape](https://developer.mozilla.org/docs/Web/SVG/Attribute/fillRule) is determined.
 		fillRule: 'evenodd',
 
 		// className: '',
@@ -13316,9 +13316,9 @@ var SVG = Renderer.extend({
 		if (options.stroke) {
 			path.setAttribute('stroke', options.color);
 			path.setAttribute('stroke-opacity', options.opacity);
-			path.setAttribute('stroke-width', options.weight);
-			path.setAttribute('stroke-linecap', options.lineCap);
-			path.setAttribute('stroke-linejoin', options.lineJoin);
+			path.setAttribute('strokeWidth', options.weight);
+			path.setAttribute('strokeLinecap', options.lineCap);
+			path.setAttribute('strokeLinejoin', options.lineJoin);
 
 			if (options.dashArray) {
 				path.setAttribute('stroke-dasharray', options.dashArray);
@@ -13338,7 +13338,7 @@ var SVG = Renderer.extend({
 		if (options.fill) {
 			path.setAttribute('fill', options.fillColor || options.color);
 			path.setAttribute('fill-opacity', options.fillOpacity);
-			path.setAttribute('fill-rule', options.fillRule || 'evenodd');
+			path.setAttribute('fillRule', options.fillRule || 'evenodd');
 		} else {
 			path.setAttribute('fill', 'none');
 		}
