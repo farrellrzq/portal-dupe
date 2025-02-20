@@ -1,6 +1,5 @@
 import { consoleError, API_CMS, API_DSW } from "@/helpers/site";
-import { api, getDomainSite } from "./Controller";
-import { getTokenDsw } from "@/helpers/site";
+import { api,  getDomainSite } from "./Controller";
 import { 
   BeritaKelurahanProps,
   BeritaKotaProps, 
@@ -15,147 +14,117 @@ import {
   SliderProps
 } from "./types/home-controller.type";
 
-let domainSiteCache: Awaited<ReturnType<typeof getDomainSite>> | null = null;
+export async function getSlider() {
+  const { Id } = await getDomainSite();
+  let Slider: SliderProps[] | null = null;
 
-async function getCachedDomainSite() {
-  if (!domainSiteCache) {
-    domainSiteCache = await getDomainSite();
+  const result = await api({ url: `${API_CMS}/ViewPortal/getSlider?siteId=${Id}&typeId=SL01&status=ST01&fileType=FL02` });
+
+  if ('error' in result) {
+    consoleError('getSlider()', result.error);
+  } else {
+    Slider = result ? result : [];
   }
-  return domainSiteCache;
+  
+  return Slider;
 }
 
-export async function getSlider(): Promise<SliderProps[]> {
-  try {
-    const { Id } = await getCachedDomainSite();
-    const result = await api({ 
-      url: `${API_CMS}/ViewPortal/getSlider?siteId=${Id}&typeId=SL01&status=ST01&fileType=FL02`,
-      revalidate: 60
-    });
-    
-    return result.error ? [] : result;
-  } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    consoleError('getSlider()', errorMessage);
-    return [];
+export async function getLayanan() {
+  const { Id } = await getDomainSite();
+  let Layanan: LayananProps[] | null = null;
+  
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&kanalType=K010&limit=&offset=&category=&slug=&key=&groupId=Aplikasi` });
+
+  if ('error' in result) {
+    consoleError('get_content()', result.error);
+  } else {
+    Layanan = result ? result : [];
   }
+
+  return Layanan;
 }
 
-export async function getLayanan(): Promise<LayananProps[]> {
-  try {
-    const { Id } = await getCachedDomainSite();
-    const result = await api({
-      url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&kanalType=K010&limit=&offset=&category=&slug=&key=&groupId=Aplikasi`,
-      revalidate: 300
-    });
-    
-    return result.error ? [] : result;
-  } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    consoleError('getLayanan()', errorMessage);
-    return [];
+export async function getLayananKota() {
+  let LayananKota: LayananKotaProps[] | null = null;
+
+  const result = await api({ url: `${API_CMS}/ViewPortal/getExLink?siteId=2&code=&groupId=&typeId=LM&limit=&offset=&slug=`});
+
+  if ('error' in result) {
+    consoleError('getExLink()', result.error);
+  } else {
+    LayananKota = result ? result : [];
   }
+  
+  return LayananKota;
 }
 
-export async function getLayananKota(): Promise<LayananKotaProps[]> {
-  try {
-    const result = await api({
-      url: `${API_CMS}/ViewPortal/getExLink?siteId=2&typeId=LM&limit=8`,
-      revalidate: 3600
-    });
-    
-    return result.error ? [] : result;
-  } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    consoleError('getLayananKota()', errorMessage);
-    return [];
+export async function getInfografis() {
+  let Infografis: InfografisProps[] | null = null;
+
+  
+  const cachedKey=`infografis`;
+  
+  const result = await api({ url: `${API_DSW}/index.php/api/slider` });
+  
+  if ('error' in result) {
+    consoleError('get_content()', result.error);
+  } else {
+    Infografis = result ? result.data : [];
   }
+
+  return Infografis;
 }
 
-export async function getInfografis(): Promise<InfografisProps[]> {
-  try {
-    const token = await getTokenDsw();
-    console.log("Token:", token);
+export async function getDokumen() {
+  const { Id } = await getDomainSite();
+  let Dokumen: DokumenProps[] | null = null;
 
-    const result = await api({
-      url: "https://api-cms.ciptadrasoft.com/api/Slider?siteId=2&typeId=SL01&status=ST01&fileType=FL02",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      revalidate: 600,
-    });
-
-    const sliders = result;
-
-    return sliders.Data.Slider;
-  } catch (error) {
-    console.error("Error in getInfografis:", error);
-    return [];
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K010&limit=3`});
+  if ('error' in result) {
+    consoleError('get_content()', result.error);
+  } else {
+    Dokumen = result ? result : [];
   }
+
+  return Dokumen;
 }
 
+export async function getPengumuman() {
+  const { Id } = await getDomainSite();
+  let Pengumuman: PengumumanProps[] | null = null;
 
-export async function getDokumen(): Promise<DokumenProps[]> {
-  try {
-    const { Id } = await getCachedDomainSite();
-    const result = await api({
-      url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K010&limit=3`,
-      revalidate: 300
-    });
-    
-    return result.error ? [] : result;
-  } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    consoleError('getDokumen()', errorMessage);
-    return [];
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K008`});
+  if ('error' in result) {
+    consoleError('get_content()', result.error);
+  } else {
+    Pengumuman = result ? result : [];
   }
+
+  return Pengumuman;
 }
 
-export async function getPengumuman(): Promise<PengumumanProps[]> {
-  try {
-    const { Id } = await getCachedDomainSite();
-    const result = await api({
-      url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K008`,
-      revalidate: 300
-    });
-    
-    return result.error ? [] : result;
-  } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    consoleError('getPengumuman()', errorMessage);
-    return [];
+export async function getKomoditas() {
+  const { Id } = await getDomainSite();
+  let Komoditas: KomoditasProps[] | null = null;
+  const result = await api({ url: `https://dsw.depok.go.id/api/komoditas/harga_depok` });
+  if ('error' in result) {
+    consoleError('get_content()', result.error);
+  } else {
+    Komoditas = result.data;
   }
+  return Komoditas;
 }
 
-export async function getKomoditas(): Promise<KomoditasProps[]> {
-  try {
-    const result = await api({
-      url: `https://dsw.depok.go.id/api/komoditas/harga_depok`,
-      revalidate: 3600
-    });
-    
-    return result.error ? [] : result.data || [];
-  } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    consoleError('getKomoditas()', errorMessage);
-    return [];
+export async function getPotensi() {
+  const { Id } = await getDomainSite();
+  let Potensi: PotensiProps[] | null = null;
+  const result = await api({ url: `${API_CMS}/ViewPortal/getPlace?siteId=${Id}` });
+  if ('error' in result) {
+    consoleError('get_content()', result.error);
+  } else {
+    Potensi = result;
   }
-}
-
-export async function getPotensi(): Promise<PotensiProps[]> {
-  try {
-    const { Id } = await getCachedDomainSite();
-    const result = await api({
-      url: `${API_CMS}/ViewPortal/getPlace?siteId=${Id}`,
-      revalidate: 600
-    });
-    
-    return result.error ? [] : result;
-  } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    consoleError('getPotensi()', errorMessage);
-    return [];
-  }
+  return Potensi;
 }
 
 export async function getBeritaKota(): Promise<BeritaKotaProps[]> {
@@ -177,136 +146,173 @@ export async function getBeritaKota(): Promise<BeritaKotaProps[]> {
   }
 }
 
-
-export async function getBerita({ limit }: { limit: string }): Promise<BeritaProps[]> {
-  try {
-    const { Id } = await getCachedDomainSite();
-    const result = await api({
-      url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K001&limit=${limit}`,
-      revalidate: 300
-    });
-    
-    return result.error ? [] : result;
-  } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    consoleError('getBerita()', errorMessage);
-    return [];
+export async function getBerita(p0: { limit: string; }) {
+  const { limit } = p0;
+  const { Id } = await getDomainSite();
+  let Berita: BeritaProps[] | null = null;
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K001&limit=${limit}` });
+  if ('error' in result) {
+    consoleError('get_content()', result.error);
+  } else {
+    Berita = result;
   }
+  return Berita;
 }
 
-let authToken: string | null = null;
+// export async function getBeritaKelurahan(p0: { limit: string; }) {
+//   const { limit } = p0;
+//   const { Id } = await getDomainSite();
+//   let BeritaKelurahan: BeritaKelurahanProps[] | null = null;
+//   const result = await api({ url: `${API_CMS}/ViewPortal/getContentByKecamatan?siteId=${Id}&kanalType=K001` });
+//   if ('error' in result) {
+//     consoleError('get_content()', result.error);
+//   } else {
+//     BeritaKelurahan = result;
+//   }
+//   return BeritaKelurahan;
+// }
 
 export async function getToken() {
-  if (authToken) return { token: authToken, url: process.env.NEXT_PUBLIC_DWURL };
-
   try {
-    const response = await api({
-      url: `${process.env.NEXT_PUBLIC_DWURL}/api/auth`,
-      method: "POST",
-      headers: { 'Content-Type': 'application/json' },
+    const url = process.env.NEXT_PUBLIC_DWURL;
+    const user = process.env.NEXT_PUBLIC_DWUSR;
+    const password = process.env.NEXT_PUBLIC_DWPASS;
+
+    const response = await fetch(`${url}/api/auth`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({
-        Email: process.env.NEXT_PUBLIC_DWUSR,
-        Password: process.env.NEXT_PUBLIC_DWPASS
+        Email: user,
+        Password: password
       })
     });
 
-    if (response.error) throw new Error(response.error);
-    
-    authToken = response.data.token;
-    return { token: authToken, url: process.env.NEXT_PUBLIC_DWURL };
+    if (!response.ok) {
+      const errorMessage = `Fetching token failed with status: ${response.status}, ${response.statusText}`;
+      console.error(errorMessage);
+      throw new Error(errorMessage);
+    }
+
+    const data = await response.json();
+    const token = data.data.token;
+    return { token, url };
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    consoleError('getToken()', errorMessage);
+    console.error('Error in getToken:', error);
     throw error;
   }
 }
 
 export async function getWidgetData() {
+  const { Kecamatan } = await getDomainSite();
+
   try {
-    const [{ Kecamatan }, { token, url }] = await Promise.all([
-      getCachedDomainSite(),
-      getToken()
-    ]);
-
-    const headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
+    const { token, url } = await getToken();
+    const body = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ tahun: '2023', kecamatan: Kecamatan })
     };
 
-    const [demography, disease, penyakitData] = await Promise.all([
-      api({
-        url: `${url}/api/kependudukan/aggpenduduk/perjkel`,
-        method: "POST",
-        headers,
-        body: JSON.stringify({ tahun: '2025', kecamatan: Kecamatan })
-      }),
-      api({
-        url: `${url}/api/kesehatan/aggkesehatan/penyakitperjkel`,
-        method: "POST",
-        headers,
-        body: JSON.stringify({ tahun: '2025', kecamatan: Kecamatan })
-      }),
-      api({
-        url: 'https://dsw.depok.go.id/html/penyakitdata/',
-        revalidate: 3600
-      })
+    const [response, disease] = await Promise.all([
+      fetch(`${url}/api/kependudukan/aggpenduduk/perjkel`, body),
+      fetch(`${url}/api/kesehatan/aggkesehatan/penyakitperjkel`, body)
     ]);
 
-    const processedData = processWidgetData(demography, disease, penyakitData);
-    return { ...processedData, error: null };
+    if (!response.ok || !disease.ok) {
+      const errorMessage = `Fetching widget data failed with status: ${response.status}, ${disease.status}`;
+      console.error(errorMessage);
+      throw new Error(errorMessage);
+    }
+
+    const resdsw = await fetch('https://dsw.depok.go.id/html/penyakitdata/');
+    if (!resdsw.ok) {
+      const errorMessage = `Fetching penyakit data failed with status: ${resdsw.status}`;
+      console.error(errorMessage);
+      throw new Error(errorMessage);
+    }
+
+    const jumlahPenyakit = await resdsw.json();
+    const dataPenyakit = jumlahPenyakit.data;
+    const getHighest = dataPenyakit.map((item: any) => item.total);
+    const sorten = formatterNumber(parseInt(getHighest.sort()[0]));
+
+    const Penyakit = jumlahPenyakit.data;
+    const getPenyakit = Penyakit.map((item: any) => item.penyakit);
+    const PenyakitName = getPenyakit;
+
+    const [dataAll, dataDisease] = await Promise.all([
+      response.json(),
+      disease.json()
+    ]);
+
+    const kepen = dataAll.data;
+    const yearPenduduk = kepen && kepen.length > 0 ? kepen[0].tahun : null; // Kondisi untuk menangani data null
+    const perjenis = groupPerjkel(kepen);
+    const total = formatterNumber(sumJumlah(kepen));
+    const totalPenyakit = formatterNumber(sumJumlah(dataDisease.data));
+    const totalMale = formatterNumber(sumJumlah(perjenis['Laki - Laki']));
+    const totalFemale = formatterNumber(sumJumlah(perjenis['Perempuan']));
+
+    return { total, totalMale, totalFemale, totalPenyakit, sorten, yearPenduduk, dataPenyakit, PenyakitName };
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    consoleError('getWidgetData()', errorMessage);
-    return { 
-      total: 0, 
-      totalMale: 0, 
-      totalFemale: 0, 
-      totalPenyakit: 0, 
-      sorten: '0', 
-      yearPenduduk: null, 
-      dataPenyakit: [], 
-      PenyakitName: [],
-      error: errorMessage 
-    };
+    console.error('Error in getWidgetData:', error);
+    // Handle error here, for example return a default response
+    return { total: null, totalMale: null, totalFemale: null, totalPenyakit: null, sorten: null, yearPenduduk: null, dataPenyakit: [], PenyakitName: [] };
   }
 }
 
-function processWidgetData(demography: any, disease: any, penyakitData: any) {
-  const kepen = demography.data || [];
-  const diseaseData = disease.data || [];
-  const jumlahPenyakit = penyakitData.data || [];
 
-  const yearPenduduk = kepen[0]?.tahun || null;
-  const perjenis = groupPerjkel(kepen);
-  
-  return {
-    total: sumJumlah(kepen),
-    totalMale: sumJumlah(perjenis['Laki - Laki']),
-    totalFemale: sumJumlah(perjenis['Perempuan']),
-    totalPenyakit: sumJumlah(diseaseData),
-    sorten: formatterNumber(Math.min(...jumlahPenyakit.map((i: any) => i.total))),
-    yearPenduduk,
-    dataPenyakit: jumlahPenyakit,
-    PenyakitName: jumlahPenyakit.map((i: any) => i.penyakit)
-  };
+export function sumJumlah(data: any) {
+  try {
+    if (!Array.isArray(data) || data.length === 0) {
+      return 0;
+    }
+
+    const total = data.reduce((acc: number, obj: any) => {
+      const jumlah = obj.jumlah ? parseInt(obj.jumlah) : parseInt(obj.total);
+      return acc + jumlah;
+    }, 0);
+
+    return total;
+  } catch (error) {
+    console.error('Error in sumJumlah:', error);
+    return 0; // Return default value in case of error
+  }
 }
 
-export function sumJumlah(data: any[] = []): number {
-  return data.reduce((acc, obj) => {
-    const value = obj.jumlah || obj.total || 0;
-    return acc + parseInt(value, 10);
-  }, 0);
+export function groupPerjkel(data: any) {
+  try {
+    const groupedData: { [key: string]: typeof data } = {};
+
+    if (!Array.isArray(data) || data.length === 0) {
+      return groupedData;
+    }
+
+    data.forEach((item: any) => {
+      const { jenis_kelamin, ...rest } = item;
+      if (!groupedData[jenis_kelamin]) {
+        groupedData[jenis_kelamin] = [];
+      }
+      groupedData[jenis_kelamin].push(rest);
+    });
+
+    return groupedData;
+  } catch (error) {
+    console.error('Error in groupPerjkel:', error);
+    return {}; // Return default value in case of error
+  }
 }
 
-export function groupPerjkel(data: any[] = []): Record<string, any[]> {
-  return data.reduce((acc, item) => {
-    const key = item.jenis_kelamin || 'unknown';
-    acc[key] = acc[key] || [];
-    acc[key].push(item);
-    return acc;
-  }, {});
-}
-
-export function formatterNumber(num: number): string {
-  return num.toLocaleString('en-US', { maximumFractionDigits: 2 });
+export function formatterNumber(num: any) {
+  try {
+    return num.toLocaleString('en-US', { maximumFractionDigits: 2 });
+  } catch (error) {
+    console.error('Error in formatterNumber:', error);
+    return ''; // Return default value in case of error
+  }
 }
