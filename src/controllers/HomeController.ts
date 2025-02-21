@@ -1,4 +1,4 @@
-import { consoleError, API_CMS, API_DSW } from "@/helpers/site";
+import { consoleError, API_CMS, API_DSW, getTokenDsw } from "@/helpers/site";
 import { api,  getDomainSite } from "./Controller";
 import { 
   BeritaKelurahanProps,
@@ -20,7 +20,7 @@ export async function getSlider() {
 
   const result = await api({ url: `${API_CMS}/ViewPortal/getSlider?siteId=${Id}&typeId=SL01&status=ST01&fileType=FL02` });
 
-  if ('error' in result) {
+  if (result && typeof result === 'object' && 'error' in result) {
     consoleError('getSlider()', result.error);
   } else {
     Slider = result ? result : [];
@@ -35,7 +35,7 @@ export async function getLayanan() {
   
   const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&kanalType=K010&limit=&offset=&category=&slug=&key=&groupId=Aplikasi` });
 
-  if ('error' in result) {
+  if (result && typeof result === 'object' && 'error' in result) {
     consoleError('get_content()', result.error);
   } else {
     Layanan = result ? result : [];
@@ -49,7 +49,7 @@ export async function getLayananKota() {
 
   const result = await api({ url: `${API_CMS}/ViewPortal/getExLink?siteId=2&code=&groupId=&typeId=LM&limit=&offset=&slug=`});
 
-  if ('error' in result) {
+  if (result && typeof result === 'object' && 'error' in result) {
     consoleError('getExLink()', result.error);
   } else {
     LayananKota = result ? result : [];
@@ -58,21 +58,27 @@ export async function getLayananKota() {
   return LayananKota;
 }
 
-export async function getInfografis() {
-  let Infografis: InfografisProps[] | null = null;
+export async function getInfografis(): Promise<InfografisProps[]> {
+  try {
+    const token = await getTokenDsw();
+    // console.log("Token:", token);
 
-  
-  const cachedKey=`infografis`;
-  
-  const result = await api({ url: `${API_DSW}/index.php/api/slider` });
-  
-  if ('error' in result) {
-    consoleError('get_content()', result.error);
-  } else {
-    Infografis = result ? result.data : [];
+    const result = await api({
+      url: "https://cmsdsw.depok.go.id/api/api/Slider?Status=ST01&GroupSlider=SL01",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      revalidate: 600,
+    });
+    // console.log(result);
+    const sliders = result;
+
+    return sliders.Data.Slider;
+  } catch (error) {
+    console.error("Error in getInfografis:", error);
+    return [];
   }
-
-  return Infografis;
 }
 
 export async function getDokumen() {
@@ -80,7 +86,7 @@ export async function getDokumen() {
   let Dokumen: DokumenProps[] | null = null;
 
   const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K010&limit=3`});
-  if ('error' in result) {
+  if (result && typeof result === 'object' && 'error' in result) {
     consoleError('get_content()', result.error);
   } else {
     Dokumen = result ? result : [];
@@ -94,7 +100,7 @@ export async function getPengumuman() {
   let Pengumuman: PengumumanProps[] | null = null;
 
   const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K008`});
-  if ('error' in result) {
+  if (result && typeof result === 'object' && 'error' in result) {
     consoleError('get_content()', result.error);
   } else {
     Pengumuman = result ? result : [];
@@ -107,7 +113,7 @@ export async function getKomoditas() {
   const { Id } = await getDomainSite();
   let Komoditas: KomoditasProps[] | null = null;
   const result = await api({ url: `https://dsw.depok.go.id/api/komoditas/harga_depok` });
-  if ('error' in result) {
+  if (result && typeof result === 'object' && 'error' in result) {
     consoleError('get_content()', result.error);
   } else {
     Komoditas = result.data;
@@ -119,7 +125,7 @@ export async function getPotensi() {
   const { Id } = await getDomainSite();
   let Potensi: PotensiProps[] | null = null;
   const result = await api({ url: `${API_CMS}/ViewPortal/getPlace?siteId=${Id}` });
-  if ('error' in result) {
+  if (result && typeof result === 'object' && 'error' in result) {
     consoleError('get_content()', result.error);
   } else {
     Potensi = result;
@@ -151,7 +157,7 @@ export async function getBerita(p0: { limit: string; }) {
   const { Id } = await getDomainSite();
   let Berita: BeritaProps[] | null = null;
   const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K001&limit=${limit}` });
-  if ('error' in result) {
+  if (result && typeof result === 'object' && 'error' in result) {
     consoleError('get_content()', result.error);
   } else {
     Berita = result;
@@ -164,7 +170,7 @@ export async function getBerita(p0: { limit: string; }) {
 //   const { Id } = await getDomainSite();
 //   let BeritaKelurahan: BeritaKelurahanProps[] | null = null;
 //   const result = await api({ url: `${API_CMS}/ViewPortal/getContentByKecamatan?siteId=${Id}&kanalType=K001` });
-//   if ('error' in result) {
+//   if (result && typeof result === 'object' && 'error' in result) {
 //     consoleError('get_content()', result.error);
 //   } else {
 //     BeritaKelurahan = result;
@@ -215,7 +221,7 @@ export async function getWidgetData() {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       },
-      body: JSON.stringify({ tahun: '2023', kecamatan: Kecamatan })
+      body: JSON.stringify({ tahun: '2025', kecamatan: Kecamatan })
     };
 
     const [response, disease] = await Promise.all([

@@ -8,6 +8,7 @@ import 'swiper/css/pagination';
 import { InfografisProps } from '@/controllers/types/home-controller.type';
 
 export default function Content({ infografis }: { infografis: InfografisProps[] | null }) {
+  // return JSON.stringify(infografis);
   return (
     <>
       <Swiper

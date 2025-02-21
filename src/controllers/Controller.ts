@@ -23,43 +23,64 @@ interface ApiProps {
 
 type ApiResponse = { error: string } | any;
 
-export async function api({ url, method = "GET", revalidate = 30 }: ApiProps): Promise<ApiResponse> {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 10000); // Timeout 10 detik
-
+export async function api({ url, method = "GET", headers = {}, revalidate = 30, useAuth = false, body }: ApiProps): Promise<ApiResponse> {
   try {
+    if (!url) {
+      throw new Error("URL is required for the API call.");
+    }
+
+    let authHeaders = { ...headers };
+
+    if (useAuth) {
+      const token = localStorage.getItem('token'); // Retrieve token from localStorage
+      if (!token) {
+        throw new Error("No token found. Please login."); // Handle missing token
+      }
+      authHeaders.Authorization = `Bearer ${token}`; // Add token to headers
+    }
+
+
     const res = await fetch(url, {
       method,
-      next: { revalidate },
-      headers: { "Cache-Control": `public, max-age=${revalidate}` },
-      signal: controller.signal, // Menggunakan AbortController
+      headers: authHeaders, // Use headers with potential token
+      body,
+      next: {
+        revalidate,
+      },
     });
-
-    clearTimeout(timeout);
 
     if (!res.ok) {
       console.error(`HTTP Error: ${res.status} ${res.statusText}`);
+      // Check for specific auth errors and handle them (e.g., token expired)
+      if (res.status === 401) {
+        localStorage.removeItem('token'); // Clear invalid token
+        // Redirect to login or show a message
+        window.location.href = '/login'; // Example redirect
+        return { error: `Authentication failed. Please login.` }; // Or throw error
+      }
       return { error: `Request failed with status ${res.status} - ${res.statusText}` };
     }
 
     const textResponse = await res.text();
+
     if (textResponse.trim() === "") {
       console.error("Received empty response.");
       return { error: "Received empty response from API." };
     }
 
     try {
-      return JSON.parse(textResponse);
+      const result = JSON.parse(textResponse);
+      return result;
     } catch (jsonError) {
       console.error("JSON Parsing Error:", jsonError);
       return { error: "Failed to parse response as JSON." };
     }
   } catch (error) {
-    if (error instanceof Error) {
-      console.error('There was an error:', error.message);
-    } else {
-      console.error('An unknown error occurred:', error);
-    }
+    console.error('There was an error:', error);
+    const msg = getErrorMessage(error);
+    return {
+      error: msg,
+    };
   }
 }
 
