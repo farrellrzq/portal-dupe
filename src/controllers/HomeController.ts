@@ -85,7 +85,7 @@ export async function getDokumen() {
   const { Id } = await getDomainSite();
   let Dokumen: DokumenProps[] | null = null;
 
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K010&limit=3`});
+  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K010&limit=3&groupId=Dokumen`});
   if (result && typeof result === 'object' && 'error' in result) {
     consoleError('get_content()', result.error);
   } else {
