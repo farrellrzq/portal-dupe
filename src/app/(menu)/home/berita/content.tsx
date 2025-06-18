@@ -63,7 +63,7 @@ export default function Content({ beritaKota, berita, }: { beritaKota: BeritaKot
                                                 </a>
                                             </h2>
                                             <p className="text-sm dark:text-jacarta-200 line-clamp-2">
-                                                {item.description?.slice(0, 150) ?? " ..."}
+                                                {/* {item.description?.slice(0, 150) ?? " ..."} */}
                                             </p>
 
                                             {/* <!-- Date / Time --> */}
@@ -146,12 +146,12 @@ export default function Content({ beritaKota, berita, }: { beritaKota: BeritaKot
                                                 </a>
                                             </h2>
                                             <p className="text-sm dark:text-jacarta-200 line-clamp-2">
-                                                {item.content
+                                                {/* {item.content
                                                     .replace(
                                                         /<[^>]+>|&nbsp;|&#8203;|[\u200B-\u200D\uFEFF]|-->/g,
                                                         ""
                                                     )
-                                                    .slice(0, 150) + "..."}
+                                                    .slice(0, 150) + "..."} */}
                                             </p>
                                         </div>
                                     </div>
