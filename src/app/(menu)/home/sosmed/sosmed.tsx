@@ -26,11 +26,14 @@ export default async function sosmed() {
                     <p className="dark:text-jacarta-300">
                         Informasi Kecamatan Kota Depok yang dipublikasikan melalui
                         instagram
+
                     </p>
-                </a>
-                <div className="relative">
+
+   <div className="relative">
                     <ElfsightWidget />
                 </div>
+                </a>
+
             </div>
             <Modal />
         </>

@@ -44,7 +44,7 @@ export default async function berita() {
                 aria-selected="true"
             >
                 <span className="font-display text-base font-medium">
-                Berita Kecamatan
+                Berita Kelurahan
                 </span>
             </button>
             </li>

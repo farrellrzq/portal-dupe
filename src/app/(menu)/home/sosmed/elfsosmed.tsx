@@ -1,13 +1,16 @@
-// components/ElfsightWidget.js
-'use client'
+'use client';
 import { useEffect } from 'react';
 
 const ElfsightWidget = () => {
     useEffect(() => {
+        console.log('[Elfsight] Injecting script...');
         const script = document.createElement('script');
-        script.src = "https://static.elfsight.com/platform/platform.js";
+        script.src = 'https://static.elfsight.com/platform/platform.js';
         script.setAttribute('data-use-service-core', '');
         script.defer = true;
+
+        script.onload = () => console.log('[Elfsight] Script loaded');
+        script.onerror = () => console.error('[Elfsight] Script failed to load');
 
         document.body.appendChild(script);
 
@@ -17,7 +20,7 @@ const ElfsightWidget = () => {
     }, []);
 
     return (
-        <div className="elfsight-app-fa38e882-2136-4654-aa6b-127994e44e6e" data-elfsight-app-lazy></div>
+        <div className="elfsight-app-12e7d545-07f0-457e-b16f-aa9ac47b7ee9" data-elfsight-app-lazy></div>
     );
 };
 
