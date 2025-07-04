@@ -8,7 +8,7 @@ export default function Content({ agenda }: { agenda: AgendaProps[] | null }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedYear, setSelectedYear] = useState(''); // State untuk tahun yang dipilih
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5; // Jumlah item per halaman
+  const itemsPerPage = 6; // Jumlah item per halaman
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -67,7 +67,7 @@ export default function Content({ agenda }: { agenda: AgendaProps[] | null }) {
                   <span className="px-2 font-display text-lg font-medium md:text-2xl text-gray-900 text-jacarta-700 dark:text-jacarta-300">Semua Tahun</span>
                 </button>
               </li>
-              {['2024', '2023', '2022', '2021', '2020'].map((year) => (
+              {['2025','2024', '2023', '2022', '2021', '2020'].map((year) => (
                 <li className="nav-item" key={year} role="presentation">
                   <button
                     className={`nav-link nav-link--style-3 relative flex items-center whitespace-nowrap ${selectedYear === year ? 'active' : ''} text-gray-900 text-jacarta-700 dark:text-jacarta-300 hover:text-black`}
@@ -112,7 +112,7 @@ export default function Content({ agenda }: { agenda: AgendaProps[] | null }) {
                                 </span>
                               </div>
                               <h2 className="mb-4 mt-2 font-display text-xl text-jacarta-700 dark:text-white">{item.Title}</h2>
-                              <p className="text-sm text-jacarta-200 dark:text-white">{item.Deskripsi.replace(/<[^>]+>|&nbsp;|&#8203;|[\u200B-\u200D\uFEFF]|-->/g, '').slice(0, 100)}</p>
+                              {/* <p className="text-sm text-jacarta-200 dark:text-white">{item.Deskripsi.replace(/<[^>]+>|&nbsp;|&#8203;|[\u200B-\u200D\uFEFF]|-->/g, '').slice(0, 100)}</p> */}
                             </div>
                           </div>
                         </article>
@@ -126,6 +126,55 @@ export default function Content({ agenda }: { agenda: AgendaProps[] | null }) {
             </div>
           </div>
         </div>
+
+              <div className="flex items-center justify-between border-t border-gray-200 my-5 bg-white px-4 py-3 sm:px-6 dark:border-jacarta-700 dark:bg-jacarta-700">
+        <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+          <div>
+            <p className="text-sm text-gray-700 dark:text-white">
+              Showing
+              <span className="font-medium mx-1">{indexOfFirstItem + 1}</span>
+              to
+              <span className="font-medium mx-1">
+                {indexOfLastItem > (filteredAgenda?.length ?? 0) ? (filteredAgenda?.length ?? 0) : indexOfLastItem}
+              </span>
+              of
+              <span className="font-medium mx-1">{filteredAgenda?.length ?? 0}</span>
+              results
+            </p>
+          </div>
+          <nav className="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+            <button
+              onClick={() => paginate(Math.max(1, currentPage - 1))} // Fungsi untuk halaman sebelumnya
+              className={`relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 ${currentPage === 1 ? 'hidden' : ''
+                }`}
+            >
+              <span className="sr-only">Previous</span>
+              Prev
+            </button>
+            {Array.from({ length: endPage - startPage + 1 }, (_, index) => {
+              const pageNumber = startPage + index;
+              return (
+                <button
+                  key={pageNumber}
+                  onClick={() => paginate(pageNumber)}
+                  className={`relative dark:text-white inline-flex items-center px-4 py-2 text-sm font-semibold ${currentPage === pageNumber ? 'bg-indigo-600 text-white' : 'text-gray-900'
+                    } ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0`}
+                >
+                  {pageNumber}
+                </button>
+              );
+            })}
+            <button
+              onClick={() => paginate(Math.min(endPage + 1, Math.ceil((filteredAgenda?.length ?? 0) / itemsPerPage)))} // Fungsi untuk halaman selanjutnya
+              className={`relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 ${indexOfLastItem >= (filteredAgenda?.length ?? 0) ? 'hidden' : ''
+                }`}
+            >
+              <span className="sr-only">Next</span>
+              Next
+            </button>
+          </nav>
+        </div>
+      </div>
       </section>
     </>
   );

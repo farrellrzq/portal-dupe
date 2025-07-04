@@ -99,7 +99,7 @@ export default function Content({ berita }: { berita: BeritaProps[] | null }) {
                   <a href={`/publikasi/berita/${item?.slug_title}`}> {item.title.slice(0, 38)} </a>
                 </h2>
                 <p className="mb-8 text-sm dark:text-jacarta-200 line-clamp-2">
-                  {item.content.replace(/<[^>]+>|&nbsp;|&#8203;|[\u200B-\u200D\uFEFF]|-->/g, '').slice(0, 100)}
+                  {/* {item.content.replace(/<[^>]+>|&nbsp;|&#8203;|[\u200B-\u200D\uFEFF]|-->/g, '').slice(0, 100)} */}
                 </p>
               </div>
             </div>

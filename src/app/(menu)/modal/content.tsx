@@ -129,12 +129,12 @@ export default function Content({ berita }: { berita: BeritaProps[] | null }) {
                           </a>
                         </h2>
                         <p className="mb-8 text-sm dark:text-jacarta-200">
-                          {item.content
+                          {/* {item.content
                             .replace(
                               /<[^>]+>|&nbsp;|&#8203;|[\u200B-\u200D\uFEFF]|-->/g,
                               ""
                             )
-                            .slice(0, 90) + "..."}
+                            .slice(0, 90) + "..."} */}
                         </p>
                       </div>
                     </div>

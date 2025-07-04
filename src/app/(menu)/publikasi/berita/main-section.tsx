@@ -4,7 +4,7 @@ import Content from './content';
 
 export default async function MainSection() {
   const [berita] = await Promise.all([
-    await getBerita({limit:'3'})
+    await getBerita({limit:''})
 ])
 
   const mainBerita = berita && berita.length > 0 ? berita[0] : null;
@@ -47,7 +47,7 @@ export default async function MainSection() {
                   <a href={`/publikasi/berita/${mainBerita.slug_title}`}> {mainBerita.title.slice(0, 38)} </a>
                 </h2>
                 <p className="mb-8 dark:text-jacarta-200">
-                  {mainBerita.content.replace(/<[^>]+>|&nbsp;|&#8203;|[\u200B-\u200D\uFEFF]|-->/g, '').slice(0, 100) + '...'}
+                  {/* {mainBerita.content.replace(/<[^>]+>|&nbsp;|&#8203;|[\u200B-\u200D\uFEFF]|-->/g, '').slice(0, 100) + '...'} */}
                 </p>
                 <div className="mt-4 flex items-center justify-between">
                   <a href={`/publikasi/berita/${mainBerita.slug_title}`}>

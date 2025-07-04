@@ -40,7 +40,7 @@ export async function getAgendaKegiatan(): Promise<AgendaProps[] | null> {
     const { Id } = await getDomainSite();
     let agendaKegiatan: AgendaProps[] | null = null;
 
-    const result = await api({ url: `${API_CMS}/ViewPortal/getEvent?siteId=${Id}&type=AG01&limit=` });
+    const result = await api({ url: `${API_CMS}/ViewPortal/getEventListWithoutDescription?siteId=${Id}&type=AG01&limit=` });
 
     if ('error' in result) {
       consoleError('getAgendaKegiatan()', result.error);
