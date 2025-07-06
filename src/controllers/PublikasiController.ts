@@ -157,15 +157,22 @@ export async function getDetailPengumumanPopuler() {
 
 export async function getDashboard() {
   const { Id } = await getDomainSite();
+
   let Dashboard: CmsContentProps[] | null = null;
-  const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K009&limit=&offset=&category=&slug=&key=` });
+
+  const result = await api({
+    url: `${API_CMS}/ViewPortal/get_content_publikasi?siteId=${Id}&status=ST01&kanalType=K009&limit=&offset=&category=&slug=&key=`
+  });
+
   if ('error' in result) {
-    consoleError('getDashboard()', result.error);
+    console.error('getDashboard() error:', result.error);
   } else {
     Dashboard = result.slice(0, 10);
   }
+
   return Dashboard;
 }
+
 
 export async function getDashboardStatistik() {
   let DashboardStatistik: AgendaProps[] | null = null;

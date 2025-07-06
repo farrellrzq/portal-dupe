@@ -33,7 +33,7 @@ export default function WeatherData() {
                 setWeatherData(data);
 
                 // Log the entire list for debugging
-                console.log(data.list);
+                // console.log(data.list);
             } catch (error: any) {
                 console.error('Error fetching data:', error);
                 return;

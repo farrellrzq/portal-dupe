@@ -237,7 +237,7 @@ export async function getWidgetData() {
       throw new Error(errorMessage);
     }
 
-    const resdsw = await fetch('https://dsw.depok.go.id/html/penyakitdata/');
+    const resdsw = await fetch('https://dsw.depok.go.id/Html/penyakitdata/');
     if (!resdsw.ok) {
       const errorMessage = `Fetching penyakit data failed with status: ${resdsw.status}`;
       console.error(errorMessage);
