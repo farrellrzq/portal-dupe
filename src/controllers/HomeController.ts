@@ -212,14 +212,26 @@ export async function getToken() {
   }
 }
 
-// Modified By FR 20250710 - Hotfix widget 
+// Modified By FR 20250710 - Hotfix widget
 export async function getWidgetData() {
   const { Kecamatan } = await getDomainSite();
   const profileSite = await getProfileSite();
 
+  // Gunakan fallback object jika data tidak tersedia
   if (!profileSite || !profileSite.Name) {
     console.warn("Data profileSite tidak tersedia");
-    return;
+    return {
+      total: null,
+      totalMale: null,
+      totalFemale: null,
+      totalPenyakit: null,
+      sorten: null,
+      yearPenduduk: null,
+      namaKelurahan: null,
+      dataPenyakit: [],
+      PenyakitName: [],
+      topPenyakit: []
+    };
   }
 
   const namaKelurahan = profileSite.Name.replace(/^Kelurahan\s+/i, '');
@@ -242,18 +254,17 @@ export async function getWidgetData() {
 
     // Hitung jumlah total penduduk
     const perJenis = groupPerjkel(penduduk);
-    const total = formatterNumber(sumJumlah(penduduk));
+    const total = formatterNumber(sumJumlah(penduduk)); // aktifkan kembali
     const totalMale = formatterNumber(sumJumlah(perJenis['Laki - Laki'] ?? []));
     const totalFemale = formatterNumber(sumJumlah(perJenis['Perempuan'] ?? []));
 
-    //  Agregasi jumlah penyakit
+    // Agregasi jumlah penyakit
     const penyakitGrouped: Record<string, number> = {};
     for (const item of penyakit as { penyakit: string; jumlah: string }[]) {
       const name = item.penyakit;
       const jumlah = parseInt(item.jumlah) || 0;
       penyakitGrouped[name] = (penyakitGrouped[name] || 0) + jumlah;
     }
-
 
     // Urutkan dan ambil penyakit terbanyak
     const penyakitSorted = Object.entries(penyakitGrouped)
@@ -272,6 +283,7 @@ export async function getWidgetData() {
       totalPenyakit: formatterNumber(totalPenyakit),
       sorten,
       yearPenduduk,
+      namaKelurahan,
       dataPenyakit: penyakit,
       PenyakitName,
       topPenyakit: penyakitSorted.slice(0, 10)
@@ -287,12 +299,14 @@ export async function getWidgetData() {
       totalPenyakit: null,
       sorten: null,
       yearPenduduk: null,
+      namaKelurahan,
       dataPenyakit: [],
       PenyakitName: [],
       topPenyakit: []
     };
   }
 }
+
 
 // Add By FR 20250710 - Hotfix widget
 async function _getDataPenduduk(Kecamatan: string, year: string, namaKelurahan: string) {
