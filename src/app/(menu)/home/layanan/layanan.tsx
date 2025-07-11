@@ -1,5 +1,5 @@
 import React from 'react'
-import { getBerita, getExLink, getProfileSite, getVisit } from "@/controllers/Controller";
+import { getBerita, getExLink, getProfileSite, getVisit, getJenisWilayah  } from "@/controllers/Controller";
 import Content from './content';
 import { getLayanan, getLayananKota } from '@/controllers/HomeController';
 import ModalLayanan from './modal';
@@ -10,6 +10,8 @@ export default async function layanan() {
     await getLayanan(),
     await getLayananKota(),
   ]);
+
+  const jenisWilayah = getJenisWilayah();
 
   return (
     <>
@@ -55,7 +57,7 @@ export default async function layanan() {
                               <path d="M8 4h13v2H8V4zm-5-.5h3v3H3v-3zm0 7h3v3H3v-3zm0 7h3v3H3v-3zM8 11h13v2H8v-2zm0 7h13v2H8v-2z" />
                             </svg>
                             <span className="font-display text-xs lg:text-base font-medium">
-                              Layanan Kecamatan
+                              Layanan {jenisWilayah}
                             </span>
                           </button>
                         </li>
