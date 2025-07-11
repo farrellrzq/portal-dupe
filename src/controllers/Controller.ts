@@ -11,6 +11,7 @@ import { consoleError, API_CMS } from '@/helpers/site';
 import { LandingProps } from './types/landing-controller.type';
 import { isBrowser, isMobile } from 'react-device-detect';
 import { NextResponse } from 'next/server';
+import { execSync } from 'child_process'; // Add By FR 20250710 - Hotfix widget 
 
 interface ApiProps {
   url: string;
@@ -104,11 +105,45 @@ function getErrorMessage(error: unknown): string {
   return message;
 }
 
+// Add By FR 20250710 - Hotfix widget 
+export function getGitBranch(): string {
+  try {
+    const branch = execSync('git rev-parse --abbrev-ref HEAD')
+      .toString()
+      .trim();
+    return branch;
+  } catch (err) {
+    return 'unknown';
+  }
+}
+
+// Add By FR 20250710 - Hotfix widget 
+export function getJenisWilayah(): 'kelurahan' | 'kecamatan' | 'wilayah' {
+  const envWilayah = process.env.JENIS_WILAYAH?.trim().toLowerCase();
+  
+  // Jika env ada dan tidak kosong, gunakan
+  if (envWilayah) {
+    if (envWilayah === 'kelurahan' || envWilayah === 'kecamatan') {
+      return envWilayah;
+    }
+    return 'wilayah'; // fallback kalau isi env tidak sesuai
+  }
+
+  // Jika kosong atau tidak ada, ambil dari branch git
+  const branch = getGitBranch().toLowerCase();
+
+  if (branch.includes('kel')) return 'kelurahan';
+  if (branch.includes('kec')) return 'kecamatan';
+
+  return 'wilayah'; // default
+}
+
 
 export async function getDomain() {
   const headersList = headers();
   const domain = headersList.get('x-forwarded-host');
   return domain || 'beji.depok.go.id';
+
   // return process.env.DOMAIN;
 }
 
@@ -151,6 +186,7 @@ export async function getProfileSite() {
   const {Id}=await getDomainSite();
 
   const result = await api({ url: `${API_CMS}/ViewPortal/profilsite?siteId=${Id}` });
+
 
   if ('error' in result) {
     consoleError('getProfileSite()', result.error);

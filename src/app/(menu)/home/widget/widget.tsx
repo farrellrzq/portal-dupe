@@ -3,7 +3,8 @@ import { getWidgetData } from '@/controllers/HomeController'
 
 
 export default async function widget() {
-    const { total, totalMale, totalFemale, sorten, PenyakitName }: any = await getWidgetData();
+    {/* Modified By FR 20250701 - Hotfix widget   */}
+    const { total, totalMale, totalFemale, sorten, totalPenyakit }: any = await getWidgetData();
     // const totalJumlah = data.reduce(([acc, obj] : any) => acc + obj.jumlah, 0);
 
     return (
@@ -124,12 +125,12 @@ export default async function widget() {
                         <div className="lg:text-left">
                             <a href="#" className="">
                                 <span className="font-display lg:text-3xl text-sm font-semibold text-jacarta-700 hover:text-accent dark:text-white">
-                                    {sorten}
+                                    {totalPenyakit} 
                                 </span>
                             </a>
                             <span className="text-xs dark:text-jacarta-300 lg:block hidden">
-                                Jumlah Penyakit Terbanyak : <br />{PenyakitName &&
-                                    PenyakitName.slice(0, 1)}
+                                {/* Modified By FR 20250701 - Hotfix widget   */}
+                                Jumlah Penyakit Terbanyak : <br />{sorten}
                             </span>
                         </div>
                     </div>

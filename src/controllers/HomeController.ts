@@ -1,5 +1,5 @@
 import { consoleError, API_CMS, API_DSW, getTokenDsw } from "@/helpers/site";
-import { api,  getDomainSite } from "./Controller";
+import { api,  getDomainSite, getProfileSite } from "./Controller";
 import { 
   BeritaKelurahanProps,
   BeritaKotaProps, 
@@ -212,67 +212,190 @@ export async function getToken() {
   }
 }
 
+// Modified By FR 20250710 - Hotfix widget
 export async function getWidgetData() {
   const { Kecamatan } = await getDomainSite();
+  const profileSite = await getProfileSite();
+
+  // Gunakan fallback object jika data tidak tersedia
+  if (!profileSite || !profileSite.Name) {
+    console.warn("Data profileSite tidak tersedia");
+    return {
+      total: null,
+      totalMale: null,
+      totalFemale: null,
+      totalPenyakit: null,
+      sorten: null,
+      yearPenduduk: null,
+      namaKelurahan: null,
+      dataPenyakit: [],
+      PenyakitName: [],
+      topPenyakit: []
+    };
+  }
+
+  const namaKelurahan = profileSite.Name.replace(/^Kelurahan\s+/i, '');
 
   try {
-    const { token, url } = await getToken();
-    const body = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify({ tahun: '2025', kecamatan: Kecamatan })
+    const currentYear = new Date().getFullYear();
+
+    const [
+      { data: penduduk, year: yearPenduduk },
+      { data: penyakitRaw }
+    ] = await Promise.all([
+      _getLatestValidData(_getDataPenduduk, Kecamatan, currentYear, namaKelurahan),
+      _getLatestValidData(_getDataPenyakit, Kecamatan, currentYear)
+    ]);
+
+    // Filter penyakit selain 'Penyakit Lain-Lainnya'
+    const penyakit = penyakitRaw.filter(
+      (item: any) => item.penyakit !== 'Penyakit Lain-Lainnya'
+    );
+
+    // Hitung jumlah total penduduk
+    const perJenis = groupPerjkel(penduduk);
+    const total = formatterNumber(sumJumlah(penduduk)); // aktifkan kembali
+    const totalMale = formatterNumber(sumJumlah(perJenis['Laki - Laki'] ?? []));
+    const totalFemale = formatterNumber(sumJumlah(perJenis['Perempuan'] ?? []));
+
+    // Agregasi jumlah penyakit
+    const penyakitGrouped: Record<string, number> = {};
+    for (const item of penyakit as { penyakit: string; jumlah: string }[]) {
+      const name = item.penyakit;
+      const jumlah = parseInt(item.jumlah) || 0;
+      penyakitGrouped[name] = (penyakitGrouped[name] || 0) + jumlah;
+    }
+
+    // Urutkan dan ambil penyakit terbanyak
+    const penyakitSorted = Object.entries(penyakitGrouped)
+      .map(([penyakit, jumlah]) => ({ penyakit, jumlah }))
+      .sort((a, b) => b.jumlah - a.jumlah);
+
+    const totalPenyakit = penyakitSorted[0]?.jumlah ?? 0;
+    const sorten = penyakitSorted[0]?.penyakit ?? null;
+
+    const PenyakitName = penyakit.map((item: any) => item.penyakit);
+
+    return {
+      total,
+      totalMale,
+      totalFemale,
+      totalPenyakit: formatterNumber(totalPenyakit),
+      sorten,
+      yearPenduduk,
+      namaKelurahan,
+      dataPenyakit: penyakit,
+      PenyakitName,
+      topPenyakit: penyakitSorted.slice(0, 10)
     };
 
-    const [response, disease] = await Promise.all([
-      fetch(`${url}/api/kependudukan/aggpenduduk/perjkel`, body),
-      fetch(`${url}/api/kesehatan/aggkesehatan/penyakitperjkel`, body)
-    ]);
-
-    if (!response.ok || !disease.ok) {
-      const errorMessage = `Fetching widget data failed with status: ${response.status}, ${disease.status}`;
-      console.error(errorMessage);
-      throw new Error(errorMessage);
-    }
-
-    const resdsw = await fetch('https://dsw.depok.go.id/Html/penyakitdata/');
-    if (!resdsw.ok) {
-      const errorMessage = `Fetching penyakit data failed with status: ${resdsw.status}`;
-      console.error(errorMessage);
-      throw new Error(errorMessage);
-    }
-
-    const jumlahPenyakit = await resdsw.json();
-    const dataPenyakit = jumlahPenyakit.data;
-    const getHighest = dataPenyakit.map((item: any) => item.total);
-    const sorten = formatterNumber(parseInt(getHighest.sort()[0]));
-
-    const Penyakit = jumlahPenyakit.data;
-    const getPenyakit = Penyakit.map((item: any) => item.penyakit);
-    const PenyakitName = getPenyakit;
-
-    const [dataAll, dataDisease] = await Promise.all([
-      response.json(),
-      disease.json()
-    ]);
-
-    const kepen = dataAll.data;
-    const yearPenduduk = kepen && kepen.length > 0 ? kepen[0].tahun : null; // Kondisi untuk menangani data null
-    const perjenis = groupPerjkel(kepen);
-    const total = formatterNumber(sumJumlah(kepen));
-    const totalPenyakit = formatterNumber(sumJumlah(dataDisease.data));
-    const totalMale = formatterNumber(sumJumlah(perjenis['Laki - Laki']));
-    const totalFemale = formatterNumber(sumJumlah(perjenis['Perempuan']));
-
-    return { total, totalMale, totalFemale, totalPenyakit, sorten, yearPenduduk, dataPenyakit, PenyakitName };
   } catch (error) {
     console.error('Error in getWidgetData:', error);
-    // Handle error here, for example return a default response
-    return { total: null, totalMale: null, totalFemale: null, totalPenyakit: null, sorten: null, yearPenduduk: null, dataPenyakit: [], PenyakitName: [] };
+
+    return {
+      total: null,
+      totalMale: null,
+      totalFemale: null,
+      totalPenyakit: null,
+      sorten: null,
+      yearPenduduk: null,
+      namaKelurahan,
+      dataPenyakit: [],
+      PenyakitName: [],
+      topPenyakit: []
+    };
   }
 }
+
+
+// Add By FR 20250710 - Hotfix widget
+async function _getDataPenduduk(Kecamatan: string, year: string, namaKelurahan: string) {
+  const { token, url } = await getToken();
+
+  // Bangun body secara dinamis
+  const bodyRequest: Record<string, any> = {
+    tahun: year,
+    kecamatan: Kecamatan
+  };
+
+  if (namaKelurahan && namaKelurahan.trim() !== "") {
+    bodyRequest.kelurahan = namaKelurahan;
+  }
+
+  const response = await fetch(`${url}/api/kependudukan/aggpenduduk/perjkel`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+    body: JSON.stringify(bodyRequest),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Gagal fetch data penduduk: ${response.status}`);
+  }
+
+  return await response.json();
+}
+
+
+// Add By FR 20250710 - Hotfix widget 
+async function _getDataPenyakit(Kecamatan: string, year: string) {
+  const { token, url } = await getToken();
+
+  const bodyPayload = {
+    tahun: year,
+    kecamatan: Kecamatan
+  };
+
+  const response = await fetch(`${url}/api/kesehatan/aggkesehatan/penyakitperjkel`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify(bodyPayload)
+  });
+
+  if (!response.ok) {
+    throw new Error(`Gagal fetch data penyakit: ${response.status}`);
+  }
+
+  return await response.json(); // akan mengandung .data
+}
+
+// Add By FR 20250710 - Hotfix widget
+async function _getLatestValidData<T>(
+  fetchFn: (...args: any[]) => Promise<{ data: T[] }>,
+  kecamatan: string,
+  startYear: number,
+  extraArg?: any, // seperti namaKelurahan
+  maxTries: number = 5
+): Promise<{ data: T[], year: number }> {
+  let currentYear = startYear;
+
+  for (let i = 0; i < maxTries; i++) {
+    try {
+      const result = extraArg !== undefined
+        ? await fetchFn(kecamatan, currentYear.toString(), extraArg)
+        : await fetchFn(kecamatan, currentYear.toString());
+
+      if (result?.data?.length > 0) {
+        return { data: result.data, year: currentYear };
+      }
+    } catch (e) {
+      console.warn(`Gagal mengambil data tahun ${currentYear}:`, e);
+    }
+
+    currentYear--;
+  }
+
+  console.warn(`Tidak ditemukan data valid dari ${startYear} ke belakang.`);
+  return { data: [], year: startYear };
+}
+
+
+
 
 
 export function sumJumlah(data: any) {
