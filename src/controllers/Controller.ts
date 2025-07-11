@@ -142,8 +142,8 @@ export function getJenisWilayah(): 'kelurahan' | 'kecamatan' | 'wilayah' {
 export async function getDomain() {
   const headersList = headers();
   const domain = headersList.get('x-forwarded-host');
-  // return domain || 'beji.depok.go.id';
-  return 'kel-ratujaya.depok.go.id';
+  return domain || 'beji.depok.go.id';
+
   // return process.env.DOMAIN;
 }
 
