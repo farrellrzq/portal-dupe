@@ -8,12 +8,12 @@ import Slider from "./slider/slider";
 import Sosmed from "./sosmed/sosmed";
 import Widget from "./widget/widget";
 import Agenda from "./agenda/agenda";
-import Komoditas from "./komoditas/komoditas";
-import Potensi from "./potensi/potensi";
+// import Komoditas from "./komoditas/komoditas";
+// import Potensi from "./potensi/potensi";
 import Berita from "./berita/berita";
 import ModalPengumuman from "./modal/modalPengumuman";
 import ModalSearchBerita from "../modal/page";
-import { getProfileSite } from "@/controllers/Controller";
+// import { getProfileSite } from "@/controllers/Controller";
 import { HydrationOverlay } from "@builder.io/react-hydration-overlay";
 
 // Loader Skeleton

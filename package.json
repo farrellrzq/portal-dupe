@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@builder.io/react-hydration-overlay": "^0.0.8",
+    "@next/bundle-analyzer": "^15.5.2",
     "@types/datatables.net": "^1.10.28",
     "axios": "^1.7.9",
     "datatables.net": "^2.0.1",
