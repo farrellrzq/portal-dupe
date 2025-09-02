@@ -1,4 +1,7 @@
 import React, { Suspense } from "react"
+import { getSlider, getWidgetData, getLayanan, getLayananKota, getInfografis, getDokumen, getPengumuman, getAgenda, getBerita, getBeritaKota } from "@/controllers/HomeController";
+import { getProfileSite, getJenisWilayah } from "@/controllers/Controller";
+import { ProfileSiteProps } from '@/controllers/types/controller.type'; // Pastikan tipe ini diimpor
 import Pengumuman from "./pengumuman/pengumuman";
 import Dokumen from "./dokumen/dokumen";
 import Government from "./government/government";
@@ -28,12 +31,57 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
+  const [
+    sliderData,
+    widgetData,
+    layananData,
+    layananKotaData, // Tambahkan ini
+    infografisData,
+    dokumenData,
+    pengumumanData,
+    agendaData,
+    beritaData,
+    beritaKotaData,
+    profilSiteData,   // Tambahkan ini
+  ] = await Promise.all([
+    getSlider(),
+    getWidgetData(),
+    getLayanan(),
+    getLayananKota(), // Tambahkan ini
+    getInfografis(),
+    getDokumen(),
+    getPengumuman(),
+    getAgenda(),
+    getBerita({ limit: '5' }),
+    getBeritaKota(),
+    getProfileSite(), // Tambahkan ini
+  ]);
+
+  const jenisWilayah = getJenisWilayah();
+
+  const cleanProfileSite: ProfileSiteProps | null = 
+        (profilSiteData && !('error' in profilSiteData)) ? profilSiteData : null;
+
+    // Gabungkan data untuk komponen Layanan
+    const layananComponentData = {
+        profilSite: cleanProfileSite, // Gunakan variabel yang sudah bersih
+        layanan: layananData,
+        layananKota: layananKotaData,
+        jenisWilayah: jenisWilayah,
+    };
+
+  const beritaComponentData = {
+        berita: beritaData,
+        beritaKota: beritaKotaData,
+    };
+
   return (
+
     <HydrationOverlay>
       <main>
-        <Slider />
-        <Widget />
-        <Layanan />
+        <Slider data={sliderData} />
+        <Widget data={widgetData} />
+        <Layanan data={layananComponentData} />
         <section className="lg:py-20 lg:px-20 py-5 px-4">
           <div className="lg:flex mb-4">
             <Suspense fallback={<div>Loading Section...</div>}>
@@ -63,7 +111,7 @@ export default async function Home() {
         <Suspense fallback={<div>Loading Content...</div>}>
           {/* <Komoditas /> */}
           {/* <Potensi /> */}
-          <Berita />
+          <Berita data={beritaComponentData} />
           <ModalPengumuman />
           <ModalSearchBerita />
         </Suspense>

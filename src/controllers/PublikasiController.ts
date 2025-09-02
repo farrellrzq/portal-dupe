@@ -62,11 +62,14 @@ export async function getMenu() {
 
   const result = await api({ url: `${API_CMS}/ViewPortal/getExLink?siteId=${Id}&typeId=&limit=&offset=&code=publikasi` });
 
-  if ('error' in result) {
+  // Tambahkan pengecekan untuk memastikan 'result' tidak null sebelum digunakan
+  if (result && 'error' in result) {
+    // Jika ada error, biarkan Menu tetap null (atau tangani sesuai kebutuhan)
+    consoleError('getMenu()', result.error);
   } else {
+    // Jika tidak ada error dan result tidak null, proses seperti biasa
     Menu = result ? result : [];
   }
-
 
   return Menu;
 }

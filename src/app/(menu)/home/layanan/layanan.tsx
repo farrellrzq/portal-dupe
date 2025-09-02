@@ -1,17 +1,27 @@
-import React from 'react'
-import { getBerita, getExLink, getProfileSite, getVisit, getJenisWilayah  } from "@/controllers/Controller";
+// src/app/(menu)/home/layanan/layanan.tsx
+
+import React from 'react';
 import Content from './content';
-import { getLayanan, getLayananKota } from '@/controllers/HomeController';
 import ModalLayanan from './modal';
+import { LayananProps, LayananKotaProps } from '@/controllers/types/home-controller.type';
+import { ProfileSiteProps } from '@/controllers/types/controller.type';
 
-export default async function layanan() {
-  const [profilSite, layanan, layananKota] = await Promise.all([
-    await getProfileSite(),
-    await getLayanan(),
-    await getLayananKota(),
-  ]);
+// 1. Definisikan tipe untuk props yang akan diterima komponen
+interface LayananComponentProps {
+  data: {
+    profilSite: ProfileSiteProps | null;
+    layanan: LayananProps[] | null;
+    layananKota: LayananKotaProps[] | null;
+    jenisWilayah: 'kelurahan' | 'kecamatan' | 'wilayah';
+  }
+}
 
-  const jenisWilayah = getJenisWilayah();
+// 2. Ubah komponen menjadi komponen standar (bukan async) dan ganti nama fungsinya
+export default function Layanan({ data }: LayananComponentProps) {
+  // 3. Hapus semua baris 'await' dan 'get...()' dari sini.
+
+  // 4. Ambil data dari props
+  const { profilSite, layanan, layananKota, jenisWilayah } = data;
 
   return (
     <>
@@ -20,10 +30,11 @@ export default async function layanan() {
           <div className="lg:flex">
             <div className="lg:w-full w-full grid grid-cols-1 text-center lg:text-start">
               <h3 className="font-display p-4 text-3xl text-jacarta-700 dark:text-white">
-                Layanan {profilSite?.Name ? profilSite.Name : ""}
+                {/* Gunakan data profilSite dari props */}
+                Layanan {profilSite?.Name ?? ""}
               </h3>
               <span className="text-md px-4 pb-2">
-                Layanan {profilSite?.Name ? profilSite.Name : ""}
+                Layanan {profilSite?.Name ?? ""}
               </span>
               <div className="scrollbar-custom overflow-x-auto rounded-lg">
                 <div className="min-w-fit">
@@ -34,7 +45,7 @@ export default async function layanan() {
                         className="nav nav-tabs flex items-center lg:place-content-start place-content-center"
                         role="tablist"
                       >
-                        {/* Offers */}
+                        {/* Tab Layanan Wilayah */}
                         <li className="nav-item" role="presentation">
                           <button
                             className="nav-link active mr-2.5 mb-2.5 rounded-t-xl bg-white border border-jacarta-100 relative flex items-center whitespace-nowrap px-4 py-3 hover:border-transparent hover:bg-accent hover:text-white dark:border-jacarta-600 dark:bg-jacarta-700 dark:text-white dark:hover:border-transparent dark:hover:bg-accent"
@@ -56,13 +67,14 @@ export default async function layanan() {
                               <path fill="none" d="M0 0h24v24H0z" />
                               <path d="M8 4h13v2H8V4zm-5-.5h3v3H3v-3zm0 7h3v3H3v-3zm0 7h3v3H3v-3zM8 11h13v2H8v-2zm0 7h13v2H8v-2z" />
                             </svg>
-                            <span className="font-display text-xs lg:text-base font-medium">
+                            <span className="font-display text-xs lg:text-base font-medium capitalize">
+                              {/* Gunakan data jenisWilayah dari props */}
                               Layanan {jenisWilayah}
                             </span>
                           </button>
                         </li>
 
-                        {/* Properties */}
+                        {/* Tab Layanan Kota */}
                         <li className="nav-item" role="presentation">
                           <button
                             className="nav-link mr-2.5 mb-2.5 rounded-t-xl border border-jacarta-100 bg-white relative flex items-center whitespace-nowrap px-4 py-3 hover:border-transparent hover:bg-accent hover:text-white dark:border-jacarta-600 dark:bg-jacarta-700 dark:text-white dark:hover:border-transparent dark:hover:bg-accent"
@@ -99,6 +111,7 @@ export default async function layanan() {
                       </a>
                     </div>
                   </div>
+                  {/* 5. Teruskan data dari props ke komponen Content */}
                   <Content layanan={layanan} layananKota={layananKota} />
                 </div>
               </div>
@@ -108,5 +121,5 @@ export default async function layanan() {
       </section>
       <ModalLayanan />
     </>
-  )
+  );
 }
