@@ -1,40 +1,62 @@
-// src/controllers/HomeController.ts
-
-import { consoleError, API_CMS } from "@/helpers/site";
+import { consoleError, API_CMS, API_DSW, getTokenDsw } from "@/helpers/site";
 import { api, getDomainSite, getProfileSite } from "./Controller";
 import {
     BeritaKotaProps,
     BeritaProps,
     DokumenProps,
     InfografisProps,
+    KomoditasProps,
     LayananKotaProps,
     LayananProps,
     PengumumanProps,
+    PotensiProps,
     SliderProps
 } from "./types/home-controller.type";
-import { ProfileSiteProps } from "./types/controller.type"; // Impor tipe ini
+import { ProfileSiteProps } from "./types/controller.type";
+
+// Helper function to safely get an error message from an unknown type
+function getErrorMessage(error: unknown): string {
+    if (error instanceof Error) {
+        return error.message;
+    }
+    return String(error);
+}
 
 // --- FUNGSI-FUNGSI STANDAR ---
 export async function getSlider() {
-    const { Id } = await getDomainSite();
-    const result = await api({ url: `${API_CMS}/ViewPortal/getSlider?siteId=${Id}&typeId=SL01&status=ST01&fileType=FL02` });
-    return (result && !result.error) ? result : [];
+    try {
+        const { Id } = await getDomainSite();
+        const result = await api({ url: `${API_CMS}/ViewPortal/getSlider?siteId=${Id}&typeId=SL01&status=ST01&fileType=FL02` });
+        return (result && !result.error) ? result as SliderProps[] : [];
+    } catch (e) {
+        consoleError('getSlider', getErrorMessage(e));
+        return [];
+    }
 }
 
 export async function getLayanan() {
-    const { Id } = await getDomainSite();
-    const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&kanalType=K010&limit=&offset=&category=&slug=&key=&groupId=Aplikasi` });
-    return (result && !result.error) ? result : [];
+    try {
+        const { Id } = await getDomainSite();
+        const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&kanalType=K010&limit=&offset=&category=&slug=&key=&groupId=Aplikasi` });
+        return (result && !result.error) ? result as LayananProps[] : [];
+    } catch (e) {
+        consoleError('getLayanan', getErrorMessage(e));
+        return [];
+    }
 }
 
 export async function getLayananKota() {
-    const result = await api({ url: `${API_CMS}/ViewPortal/getExLink?siteId=2&code=&groupId=&typeId=LM&limit=&offset=&slug=` });
-    return (result && !result.error) ? result : [];
+     try {
+        const result = await api({ url: `${API_CMS}/ViewPortal/getExLink?siteId=2&code=&groupId=&typeId=LM&limit=&offset=&slug=` });
+        return (result && !result.error) ? result as LayananKotaProps[] : [];
+    } catch (e) {
+        consoleError('getLayananKota', getErrorMessage(e));
+        return [];
+    }
 }
 
 export async function getInfografis(): Promise<InfografisProps[]> {
     try {
-        const { getTokenDsw } = await import('@/helpers/site');
         const token = await getTokenDsw();
         const result = await api({
             url: "https://cmsdsw.depok.go.id/api/api/Slider?Status=ST01&GroupSlider=SL01",
@@ -43,34 +65,54 @@ export async function getInfografis(): Promise<InfografisProps[]> {
         });
         return result?.Data?.Slider || [];
     } catch (error) {
-        console.error("Error in getInfografis:", error);
+        consoleError("getInfografis", getErrorMessage(error));
         return [];
     }
 }
 
 export async function getDokumen() {
-    const { Id } = await getDomainSite();
-    const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K010&limit=3&groupId=Dokumen` });
-    return (result && !result.error) ? result : [];
+    try {
+        const { Id } = await getDomainSite();
+        const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K010&limit=3&groupId=Dokumen` });
+        return (result && !result.error) ? result as DokumenProps[] : [];
+    } catch (e) {
+        consoleError('getDokumen', getErrorMessage(e));
+        return [];
+    }
 }
 
 export async function getPengumuman() {
-    const { Id } = await getDomainSite();
-    const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K008` });
-    return (result && !result.error) ? result : [];
+    try {
+        const { Id } = await getDomainSite();
+        const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K008` });
+        return (result && !result.error) ? result as PengumumanProps[] : [];
+    } catch (e) {
+        consoleError('getPengumuman', getErrorMessage(e));
+        return [];
+    }
 }
 
 export async function getAgenda() {
-    const { Id } = await getDomainSite();
-    const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K007` });
-    return (result && !result.error) ? result : [];
+    try {
+        const { Id } = await getDomainSite();
+        const result = await api({ url: `${API_CMS}/ViewPortal/get_content?siteId=${Id}&status=ST01&kanalType=K007` });
+        return (result && !result.error) ? result : [];
+    } catch (e) {
+        consoleError('getAgenda', getErrorMessage(e));
+        return [];
+    }
 }
 
 export async function getBerita(p0: { limit: string; }) {
-    const { limit } = p0;
-    const { Id } = await getDomainSite();
-    const result = await api({ url: `${API_CMS}/ViewPortal/get_content_publikasi?siteId=${Id}&status=ST01&kanalType=K001&limit=${limit}` });
-    return (result && !result.error) ? result : null;
+    try {
+        const { limit } = p0;
+        const { Id } = await getDomainSite();
+        const result = await api({ url: `${API_CMS}/ViewPortal/get_content_publikasi?siteId=${Id}&status=ST01&kanalType=K001&limit=${limit}` });
+        return (result && !result.error) ? result as BeritaProps[] : null;
+    } catch (e) {
+        consoleError('getBerita', getErrorMessage(e));
+        return null;
+    }
 }
 
 export async function getBeritaKota(): Promise<BeritaKotaProps[]> {
@@ -83,15 +125,36 @@ export async function getBeritaKota(): Promise<BeritaKotaProps[]> {
         });
         return result.error ? [] : result.data || [];
     } catch (error) {
-        consoleError('getBeritaKota()', error instanceof Error ? error.message : 'Unknown error');
+        consoleError('getBeritaKota()', getErrorMessage(error));
         return [];
     }
 }
 
+export async function getKomoditas() {
+    try {
+        const result = await api({ url: `https://dsw.depok.go.id/api/komoditas/harga_depok` });
+        return (result && !result.error) ? result.data as KomoditasProps[] : [];
+    } catch (e) {
+        consoleError('getKomoditas', getErrorMessage(e));
+        return [];
+    }
+}
 
-// --- FUNGSI WIDGET DENGAN PENANGANAN TIPE YANG BENAR ---
+export async function getPotensi() {
+    try {
+        const { Id } = await getDomainSite();
+        const result = await api({ url: `${API_CMS}/ViewPortal/getPlace?siteId=${Id}` });
+        return (result && !result.error) ? result as PotensiProps[] : [];
+    } catch (e) {
+        consoleError('getPotensi', getErrorMessage(e));
+        return [];
+    }
+}
+
+// --- FUNGSI WIDGET DENGAN PENANGANAN ERROR DAN DATA DUMMY ---
 
 export async function getToken() {
+    // ... (Fungsi getToken tetap sama, tidak perlu diubah)
     try {
         const url = process.env.NEXT_PUBLIC_DWURL;
         const user = process.env.NEXT_PUBLIC_DWUSR;
@@ -112,6 +175,7 @@ export async function getToken() {
 }
 
 async function fetchDataWithToken(endpoint: string, payload: object, token: string, url: string) {
+    // ... (Fungsi fetchDataWithToken tetap sama)
     const response = await fetch(`${url}/api/${endpoint}`, {
         method: 'POST',
         headers: {
@@ -126,10 +190,8 @@ async function fetchDataWithToken(endpoint: string, payload: object, token: stri
 }
 
 export async function getWidgetData() {
-    // --- TRIK UNTUK DEVELOPMENT LOKAL ---
     if (process.env.NODE_ENV === 'development') {
         console.log("Mode development: Menggunakan data widget dummy untuk mempercepat loading.");
-        // Kembalikan data contoh secara langsung
         return {
             total: '2.156.789',
             totalMale: '1.078.345',
@@ -139,12 +201,9 @@ export async function getWidgetData() {
             yearPenduduk: new Date().getFullYear(),
         };
     }
-    // ------------------------------------
 
-    // Logika di bawah ini hanya akan berjalan di server produksi
     try {
         const profileSite = await getProfileSite();
-
         if (!profileSite || 'error' in profileSite) {
             console.warn("Data profileSite tidak tersedia atau error, proses widget dihentikan.");
             return { total: null, totalMale: null, totalFemale: null, totalPenyakit: null, sorten: null, yearPenduduk: null };
@@ -165,9 +224,7 @@ export async function getWidgetData() {
         const currentYear = new Date().getFullYear();
         
         const payloadPenduduk: any = { kecamatan: Kecamatan, tahun: currentYear.toString() };
-        if (namaKelurahan) {
-            payloadPenduduk.kelurahan = namaKelurahan;
-        }
+        if (namaKelurahan) payloadPenduduk.kelurahan = namaKelurahan;
         const payloadPenyakit = { kecamatan: Kecamatan, tahun: currentYear.toString() };
 
         const [pendudukResponse, penyakitResponse] = await Promise.all([
@@ -201,7 +258,8 @@ export async function getWidgetData() {
         };
 
     } catch (error) {
-        console.error('Terjadi error signifikan saat mengambil data widget:', error);
+        console.error('Terjadi error signifikan saat mengambil data widget:', getErrorMessage(error));
         return { total: null, totalMale: null, totalFemale: null, totalPenyakit: null, sorten: null, yearPenduduk: null };
     }
 }
+

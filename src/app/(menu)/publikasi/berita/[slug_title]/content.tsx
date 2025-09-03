@@ -1,12 +1,18 @@
 import { getProfileSite } from '@/controllers/Controller';
 import { getDetailBerita } from '@/controllers/PublikasiController';
 import { DetailBeritaProps } from '@/controllers/types/publikasi-controller.type';
+import { ProfileSiteProps } from '@/controllers/types/controller.type'; // Impor dari file yang benar
 import { formatDate } from '@/helpers/site';
-import React from 'react'
+import React from 'react';
 
 export default async function Content({ berita, beritaPopuler, params }: { berita: DetailBeritaProps[] | null, beritaPopuler: DetailBeritaProps[] | null, params: { slug_title: string } }) {
     const profilSite = await getProfileSite();
     const beritaDetail = await getDetailBerita(params.slug_title);
+
+    // 1. Terapkan "Type Guard" untuk membersihkan data
+    const cleanProfileSite: ProfileSiteProps | null =
+        (profilSite && !('error' in profilSite)) ? profilSite : null;
+
     return (
         <>
             {beritaDetail && beritaDetail.slice(0, 1).map((itemBeritaUtama: any) => {
@@ -30,7 +36,8 @@ export default async function Content({ berita, beritaPopuler, params }: { berit
                                     <div className="mb-16 flex items-center">
                                         <span className="mr-4 text-sm font-bold dark:text-jacarta-300">Share:</span>
                                         <div className="flex space-x-2">
-                                            <a href={profilSite?.Facebook ?? 'Facebook'} target="_blank" className="group inline-flex h-10 w-10 items-center justify-center rounded-full border border-jacarta-100 bg-white transition-colors hover:border-transparent hover:bg-accent dark:border-jacarta-600 dark:bg-jacarta-700 dark:hover:bg-accent">
+                                            {/* 2. Gunakan variabel yang sudah aman */}
+                                            <a href={cleanProfileSite?.Facebook ?? '#'} target="_blank" rel="noopener noreferrer" className="group inline-flex h-10 w-10 items-center justify-center rounded-full border border-jacarta-100 bg-white transition-colors hover:border-transparent hover:bg-accent dark:border-jacarta-600 dark:bg-jacarta-700 dark:hover:bg-accent">
                                                 <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="facebook"
                                                     className="h-5 w-5 fill-jacarta-300 group-hover:fill-green-600 dark:group-hover:fill-white" role="img"
                                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -39,7 +46,7 @@ export default async function Content({ berita, beritaPopuler, params }: { berit
                                                     </path>
                                                 </svg>
                                             </a>
-                                            <a href={profilSite?.Twitter ?? 'Twitter'} target="_blank" className="group inline-flex h-10 w-10 items-center justify-center rounded-full border border-jacarta-100 bg-white transition-colors hover:border-transparent hover:bg-accent dark:border-jacarta-600 dark:bg-jacarta-700 dark:hover:bg-accent">
+                                            <a href={cleanProfileSite?.Twitter ?? '#'} target="_blank" rel="noopener noreferrer" className="group inline-flex h-10 w-10 items-center justify-center rounded-full border border-jacarta-100 bg-white transition-colors hover:border-transparent hover:bg-accent dark:border-jacarta-600 dark:bg-jacarta-700 dark:hover:bg-accent">
                                                 <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="twitter"
                                                     className="h-5 w-5 fill-jacarta-300 group-hover:fill-green-600 dark:group-hover:fill-white" role="img"
                                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -48,7 +55,7 @@ export default async function Content({ berita, beritaPopuler, params }: { berit
                                                     </path>
                                                 </svg>
                                             </a>
-                                            <a href={profilSite?.Instagram ?? 'Instagram'} target="_blank" className="group inline-flex h-10 w-10 items-center justify-center rounded-full border border-jacarta-100 bg-white transition-colors hover:border-transparent hover:bg-accent dark:border-jacarta-600 dark:bg-jacarta-700 dark:hover:bg-accent">
+                                            <a href={cleanProfileSite?.Instagram ?? '#'} target="_blank" rel="noopener noreferrer" className="group inline-flex h-10 w-10 items-center justify-center rounded-full border border-jacarta-100 bg-white transition-colors hover:border-transparent hover:bg-accent dark:border-jacarta-600 dark:bg-jacarta-700 dark:hover:bg-accent">
                                                 <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="instagram"
                                                     className="h-5 w-5 fill-jacarta-300 group-hover:fill-green-600 dark:group-hover:fill-white" role="img"
                                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
@@ -57,7 +64,7 @@ export default async function Content({ berita, beritaPopuler, params }: { berit
                                                     </path>
                                                 </svg>
                                             </a>
-                                            <a href={profilSite?.Youtube ?? 'Youtube'} target="_blank" className="group inline-flex h-10 w-10 items-center justify-center rounded-full border border-jacarta-100 bg-white transition-colors hover:border-transparent hover:bg-accent dark:border-jacarta-600 dark:bg-jacarta-700 dark:hover:bg-accent">
+                                            <a href={cleanProfileSite?.Youtube ?? '#'} target="_blank" rel="noopener noreferrer" className="group inline-flex h-10 w-10 items-center justify-center rounded-full border border-jacarta-100 bg-white transition-colors hover:border-transparent hover:bg-accent dark:border-jacarta-600 dark:bg-jacarta-700 dark:hover:bg-accent">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" aria-hidden="true" focusable="false" className="h-5 w-5 fill-jacarta-300 group-hover:fill-green-600 dark:group-hover:fill-white">
                                                     <path d="M43.6 9.4c-0.4-2.8-2.8-5.2-5.6-5.6C35.2 3.6 24 3 24 3S12.8 3.6 9.6 3.8C6.8 4.2 4.4 6.6 4 9.4C3.6 12.4 3 24 3 24s0.6 11.6 1 14.6c0.4 2.8 2.8 5.2 5.6 5.6C12.8 44.4 24 45 24 45s11.2-0.6 14.4-0.8c2.8-0.4 5.2-2.8 5.6-5.6C44.4 35.2 45 24 45 24S44.4 12.4 43.6 9.4zM18.8 32V16l13.6 8L18.8 32z"></path>
                                                 </svg>
